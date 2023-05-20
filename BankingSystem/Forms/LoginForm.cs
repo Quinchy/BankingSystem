@@ -15,7 +15,7 @@ namespace BankingSystem.Forms
         public LoginForm()
         {
             InitializeComponent();
-            //test1
+           
         }
     }
 }

@@ -13,10 +13,18 @@
         }
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Text = "UserProfileForm";
+            SuspendLayout();
+            // 
+            // UserProfileForm
+            // 
+            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleMode = AutoScaleMode.Font;
+            BackColor = Color.MistyRose;
+            ClientSize = new Size(1110, 723);
+            FormBorderStyle = FormBorderStyle.None;
+            Name = "UserProfileForm";
+            Text = "UserProfileForm";
+            ResumeLayout(false);
         }
     }
 }

@@ -6,7 +6,7 @@ namespace BankingSystem
         static void Main()
         {
             ApplicationConfiguration.Initialize();
-            Application.Run(new Forms.LoginForm());
+            Application.Run(new Forms.BaseForm());
         }
     }
 }

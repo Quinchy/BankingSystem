@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace BankingSystem.Forms
 {
-    public partial class MainForm : Form
+    public partial class BaseForm : Form
     {
-        public MainForm()
+        public BaseForm()
         {
             InitializeComponent();
         }

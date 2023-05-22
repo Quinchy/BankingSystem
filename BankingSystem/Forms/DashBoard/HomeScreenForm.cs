@@ -8,11 +8,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace BankingSystem.Forms
+namespace BankingSystem.Forms.DashBoard
 {
-    public partial class SignUpForm : Form
+    public partial class HomeScreenForm : Form
     {
-        public SignUpForm()
+        public HomeScreenForm()
         {
             InitializeComponent();
         }

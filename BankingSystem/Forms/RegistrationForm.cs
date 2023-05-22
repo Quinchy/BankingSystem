@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BankingSystem.Utils;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,9 +13,16 @@ namespace BankingSystem.Forms
 {
     public partial class RegistrationForm : Form
     {
+        Control baseFormPanel = BaseForm.GetContentPanel();
         public RegistrationForm()
         {
             InitializeComponent();
+        }
+
+        private void submitButton_Click(object sender, EventArgs e)
+        {
+            Form dashboardForm = new DashBoard.DashboardForm();
+            Helpers.ChangeScreen(baseFormPanel, dashboardForm);
         }
     }
 }

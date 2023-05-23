@@ -25,7 +25,7 @@ namespace BankingSystem.Forms
             Helpers.ChangeScreen(baseFormPanel, dashboardForm);
         }
 
-        private void registerButton_Click(object sender, EventArgs e)
+        private void createAccountLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             Form registrationForm = new RegistrationForm();
             Helpers.ChangeScreen(baseFormPanel, registrationForm);

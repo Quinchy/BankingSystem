@@ -15,6 +15,8 @@
         {
             mainPanel = new Panel();
             SuspendLayout();
+            this.FormBorderStyle = FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
             // 
             // mainPanel
             // 

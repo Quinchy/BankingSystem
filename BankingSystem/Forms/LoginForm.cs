@@ -30,5 +30,14 @@ namespace BankingSystem.Forms
             Form registrationForm = new RegistrationForm();
             Helpers.ChangeScreen(baseFormPanel, registrationForm);
         }
+        private void showPasswordCheckbox_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void forgetPasswordLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+
+        }
     }
 }

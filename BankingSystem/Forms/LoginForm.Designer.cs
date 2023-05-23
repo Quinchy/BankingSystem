@@ -25,7 +25,6 @@ namespace BankingSystem.Forms
             noAccountLabel = new Label();
             forgetPasswordLinkLabel = new LinkLabel();
             showPasswordCheckbox = new CheckBox();
-            appLogoName = new Label();
             loginDescriptionLabel = new Label();
             loginLabel = new Label();
             passwordLabel = new Label();
@@ -48,8 +47,8 @@ namespace BankingSystem.Forms
             loginButton.ButtonColor = Color.FromArgb(92, 184, 92);
             loginButton.Cursor = Cursors.Hand;
             loginButton.FlatAppearance.BorderSize = 0;
-            loginButton.FlatAppearance.MouseDownBackColor = Color.FromArgb(32, 32, 35);
-            loginButton.FlatAppearance.MouseOverBackColor = Color.FromArgb(32, 32, 35);
+            loginButton.FlatAppearance.MouseDownBackColor = Color.FromArgb(48, 48, 51);
+            loginButton.FlatAppearance.MouseOverBackColor = Color.FromArgb(48, 48, 51);
             loginButton.FlatStyle = FlatStyle.Flat;
             loginButton.Font = new Font("Arial Rounded MT Bold", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
             loginButton.ForeColor = Color.WhiteSmoke;
@@ -68,6 +67,8 @@ namespace BankingSystem.Forms
             // loginFormPanel
             // 
             loginFormPanel.BackColor = Color.FromArgb(92, 184, 92);
+            loginFormPanel.BackgroundImage = Properties.Resources.LoginBackground;
+            loginFormPanel.BackgroundImageLayout = ImageLayout.Center;
             loginFormPanel.Controls.Add(loginFormLeftPanel);
             loginFormPanel.Location = new Point(0, 0);
             loginFormPanel.Name = "loginFormPanel";
@@ -76,13 +77,12 @@ namespace BankingSystem.Forms
             // 
             // loginFormLeftPanel
             // 
-            loginFormLeftPanel.BackColor = Color.FromArgb(32, 32, 35);
+            loginFormLeftPanel.BackColor = Color.FromArgb(48, 48, 51);
             loginFormLeftPanel.Controls.Add(panel1);
             loginFormLeftPanel.Controls.Add(createAccountLinkLabel);
             loginFormLeftPanel.Controls.Add(noAccountLabel);
             loginFormLeftPanel.Controls.Add(forgetPasswordLinkLabel);
             loginFormLeftPanel.Controls.Add(showPasswordCheckbox);
-            loginFormLeftPanel.Controls.Add(appLogoName);
             loginFormLeftPanel.Controls.Add(loginDescriptionLabel);
             loginFormLeftPanel.Controls.Add(loginLabel);
             loginFormLeftPanel.Controls.Add(passwordLabel);
@@ -107,6 +107,7 @@ namespace BankingSystem.Forms
             // 
             // createAccountLinkLabel
             // 
+            createAccountLinkLabel.ActiveLinkColor = Color.FromArgb(124, 205, 124);
             createAccountLinkLabel.AutoSize = true;
             createAccountLinkLabel.Font = new Font("Arial", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             createAccountLinkLabel.LinkColor = Color.FromArgb(92, 184, 92);
@@ -131,15 +132,17 @@ namespace BankingSystem.Forms
             // 
             // forgetPasswordLinkLabel
             // 
+            forgetPasswordLinkLabel.ActiveLinkColor = Color.FromArgb(124, 205, 124);
             forgetPasswordLinkLabel.AutoSize = true;
             forgetPasswordLinkLabel.Font = new Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point);
             forgetPasswordLinkLabel.LinkColor = Color.FromArgb(92, 184, 92);
-            forgetPasswordLinkLabel.Location = new Point(400, 423);
+            forgetPasswordLinkLabel.Location = new Point(400, 430);
             forgetPasswordLinkLabel.Name = "forgetPasswordLinkLabel";
             forgetPasswordLinkLabel.Size = new Size(108, 15);
             forgetPasswordLinkLabel.TabIndex = 13;
             forgetPasswordLinkLabel.TabStop = true;
             forgetPasswordLinkLabel.Text = "Forgot Password?";
+            forgetPasswordLinkLabel.LinkClicked += forgetPasswordLinkLabel_LinkClicked;
             // 
             // showPasswordCheckbox
             // 
@@ -147,33 +150,23 @@ namespace BankingSystem.Forms
             showPasswordCheckbox.FlatAppearance.CheckedBackColor = Color.FromArgb(92, 184, 92);
             showPasswordCheckbox.Font = new Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point);
             showPasswordCheckbox.ForeColor = Color.WhiteSmoke;
-            showPasswordCheckbox.Location = new Point(132, 423);
+            showPasswordCheckbox.Location = new Point(132, 430);
             showPasswordCheckbox.Name = "showPasswordCheckbox";
             showPasswordCheckbox.Size = new Size(123, 19);
             showPasswordCheckbox.TabIndex = 12;
             showPasswordCheckbox.Text = "Show Password?";
             showPasswordCheckbox.UseVisualStyleBackColor = true;
-            // 
-            // appLogoName
-            // 
-            appLogoName.AutoSize = true;
-            appLogoName.Font = new Font("Arial Rounded MT Bold", 14.25F, FontStyle.Italic, GraphicsUnit.Point);
-            appLogoName.ForeColor = Color.WhiteSmoke;
-            appLogoName.Location = new Point(12, 9);
-            appLogoName.Name = "appLogoName";
-            appLogoName.Size = new Size(93, 22);
-            appLogoName.TabIndex = 11;
-            appLogoName.Text = "AppLogo";
+            showPasswordCheckbox.CheckedChanged += showPasswordCheckbox_CheckedChanged;
             // 
             // loginDescriptionLabel
             // 
             loginDescriptionLabel.AutoSize = true;
             loginDescriptionLabel.BackColor = Color.Transparent;
-            loginDescriptionLabel.Font = new Font("Arial Rounded MT Bold", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            loginDescriptionLabel.Font = new Font("Arial", 15.75F, FontStyle.Regular, GraphicsUnit.Point);
             loginDescriptionLabel.ForeColor = Color.WhiteSmoke;
-            loginDescriptionLabel.Location = new Point(132, 176);
+            loginDescriptionLabel.Location = new Point(132, 154);
             loginDescriptionLabel.Name = "loginDescriptionLabel";
-            loginDescriptionLabel.Size = new Size(239, 18);
+            loginDescriptionLabel.Size = new Size(281, 24);
             loginDescriptionLabel.TabIndex = 10;
             loginDescriptionLabel.Text = "Please login to your account.";
             // 
@@ -181,31 +174,32 @@ namespace BankingSystem.Forms
             // 
             loginLabel.AutoSize = true;
             loginLabel.BackColor = Color.Transparent;
-            loginLabel.Font = new Font("Arial Rounded MT Bold", 36F, FontStyle.Regular, GraphicsUnit.Point);
+            loginLabel.Font = new Font("Arial", 27.75F, FontStyle.Bold, GraphicsUnit.Point);
             loginLabel.ForeColor = Color.FromArgb(92, 184, 92);
-            loginLabel.Location = new Point(120, 101);
+            loginLabel.Location = new Point(122, 96);
             loginLabel.Name = "loginLabel";
-            loginLabel.Size = new Size(154, 55);
+            loginLabel.Size = new Size(400, 44);
             loginLabel.TabIndex = 9;
-            loginLabel.Text = "Login";
+            loginLabel.Text = "Hello! Welcome back.";
             // 
             // passwordLabel
             // 
             passwordLabel.AutoSize = true;
             passwordLabel.BackColor = Color.Transparent;
-            passwordLabel.Font = new Font("Arial Rounded MT Bold", 15.75F, FontStyle.Regular, GraphicsUnit.Point);
+            passwordLabel.Font = new Font("Arial", 12F, FontStyle.Bold, GraphicsUnit.Point);
             passwordLabel.ForeColor = Color.WhiteSmoke;
-            passwordLabel.Location = new Point(132, 336);
+            passwordLabel.Location = new Point(132, 351);
             passwordLabel.Name = "passwordLabel";
-            passwordLabel.Size = new Size(110, 24);
+            passwordLabel.Size = new Size(86, 19);
             passwordLabel.TabIndex = 8;
             passwordLabel.Text = "Password";
             // 
             // passwordTextBox
             // 
-            passwordTextBox.BackColor = Color.White;
+            passwordTextBox.BackColor = Color.WhiteSmoke;
             passwordTextBox.BorderStyle = BorderStyle.None;
             passwordTextBox.Font = new Font("Arial Narrow", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            passwordTextBox.ForeColor = Color.FromArgb(48, 48, 51);
             passwordTextBox.Location = new Point(143, 385);
             passwordTextBox.Name = "passwordTextBox";
             passwordTextBox.PasswordChar = '*';
@@ -216,17 +210,17 @@ namespace BankingSystem.Forms
             // 
             emailLabel.AutoSize = true;
             emailLabel.BackColor = Color.Transparent;
-            emailLabel.Font = new Font("Arial Rounded MT Bold", 15.75F, FontStyle.Regular, GraphicsUnit.Point);
+            emailLabel.Font = new Font("Arial", 12F, FontStyle.Bold, GraphicsUnit.Point);
             emailLabel.ForeColor = Color.WhiteSmoke;
-            emailLabel.Location = new Point(132, 238);
+            emailLabel.Location = new Point(132, 253);
             emailLabel.Name = "emailLabel";
-            emailLabel.Size = new Size(67, 24);
+            emailLabel.Size = new Size(51, 19);
             emailLabel.TabIndex = 5;
             emailLabel.Text = "Email";
             // 
             // passwordPanel
             // 
-            passwordPanel.BackColor = Color.White;
+            passwordPanel.BackColor = Color.WhiteSmoke;
             passwordPanel.Controls.Add(line2);
             passwordPanel.Location = new Point(132, 372);
             passwordPanel.Name = "passwordPanel";
@@ -235,7 +229,7 @@ namespace BankingSystem.Forms
             // 
             // line2
             // 
-            line2.BackColor = Color.FromArgb(32, 32, 35);
+            line2.BackColor = Color.FromArgb(48, 48, 51);
             line2.Location = new Point(11, 38);
             line2.Name = "line2";
             line2.Size = new Size(355, 2);
@@ -243,9 +237,10 @@ namespace BankingSystem.Forms
             // 
             // textBox1
             // 
-            textBox1.BackColor = Color.White;
+            textBox1.BackColor = Color.WhiteSmoke;
             textBox1.BorderStyle = BorderStyle.None;
             textBox1.Font = new Font("Arial Narrow", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            textBox1.ForeColor = Color.FromArgb(48, 48, 51);
             textBox1.Location = new Point(143, 287);
             textBox1.Name = "textBox1";
             textBox1.Size = new Size(355, 19);
@@ -253,7 +248,7 @@ namespace BankingSystem.Forms
             // 
             // emailPanel
             // 
-            emailPanel.BackColor = Color.White;
+            emailPanel.BackColor = Color.WhiteSmoke;
             emailPanel.Controls.Add(line1);
             emailPanel.Location = new Point(132, 274);
             emailPanel.Name = "emailPanel";
@@ -262,7 +257,7 @@ namespace BankingSystem.Forms
             // 
             // line1
             // 
-            line1.BackColor = Color.FromArgb(32, 32, 35);
+            line1.BackColor = Color.FromArgb(48, 48, 51);
             line1.Location = new Point(11, 38);
             line1.Name = "line1";
             line1.Size = new Size(355, 2);
@@ -299,7 +294,6 @@ namespace BankingSystem.Forms
         private Panel line2;
         private Label loginLabel;
         private Label loginDescriptionLabel;
-        private Label appLogoName;
         private LinkLabel forgetPasswordLinkLabel;
         private CheckBox showPasswordCheckbox;
         private Panel panel1;

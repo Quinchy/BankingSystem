@@ -150,7 +150,7 @@ namespace BankingSystem.Forms
             showPasswordCheckbox.FlatAppearance.CheckedBackColor = Color.FromArgb(92, 184, 92);
             showPasswordCheckbox.Font = new Font("Arial", 9F, FontStyle.Bold, GraphicsUnit.Point);
             showPasswordCheckbox.ForeColor = Color.WhiteSmoke;
-            showPasswordCheckbox.Location = new Point(132, 430);
+            showPasswordCheckbox.Location = new Point(143, 430);
             showPasswordCheckbox.Name = "showPasswordCheckbox";
             showPasswordCheckbox.Size = new Size(126, 19);
             showPasswordCheckbox.TabIndex = 12;

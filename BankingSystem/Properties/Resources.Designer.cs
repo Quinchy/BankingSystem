@@ -63,9 +63,9 @@ namespace BankingSystem.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap LoginBackground {
+        internal static System.Drawing.Bitmap OnlyFundsLoginBackground {
             get {
-                object obj = ResourceManager.GetObject("LoginBackground", resourceCulture);
+                object obj = ResourceManager.GetObject("OnlyFundsLoginBackground", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

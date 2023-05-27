@@ -433,11 +433,11 @@
             // transactionHistoryLabel
             // 
             transactionHistoryLabel.AutoSize = true;
-            transactionHistoryLabel.Font = new Font("Microsoft Sans Serif", 27.75F, FontStyle.Bold, GraphicsUnit.Point);
+            transactionHistoryLabel.Font = new Font("Arial Black", 27.75F, FontStyle.Bold, GraphicsUnit.Point);
             transactionHistoryLabel.ForeColor = Color.WhiteSmoke;
             transactionHistoryLabel.Location = new Point(61, 665);
             transactionHistoryLabel.Name = "transactionHistoryLabel";
-            transactionHistoryLabel.Size = new Size(359, 42);
+            transactionHistoryLabel.Size = new Size(425, 52);
             transactionHistoryLabel.TabIndex = 29;
             transactionHistoryLabel.Text = "Transaction History";
             // 
@@ -459,11 +459,11 @@
             // greetUserLabel
             // 
             greetUserLabel.AutoSize = true;
-            greetUserLabel.Font = new Font("Microsoft Sans Serif", 27.75F, FontStyle.Bold, GraphicsUnit.Point);
+            greetUserLabel.Font = new Font("Arial Black", 27.75F, FontStyle.Bold, GraphicsUnit.Point);
             greetUserLabel.ForeColor = Color.WhiteSmoke;
             greetUserLabel.Location = new Point(61, 33);
             greetUserLabel.Name = "greetUserLabel";
-            greetUserLabel.Size = new Size(160, 42);
+            greetUserLabel.Size = new Size(184, 52);
             greetUserLabel.TabIndex = 26;
             greetUserLabel.Text = "Hi, User";
             // 

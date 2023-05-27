@@ -14,50 +14,57 @@
         private void InitializeComponent()
         {
             submitButton = new Utils.Components.RoundedButton();
-            panel1 = new Panel();
-            panel9 = new Panel();
+            registrationPanel = new Panel();
+            phoneNumberIcon = new Panel();
+            lastNameIcon = new Panel();
+            firstNameIcon = new Panel();
+            confirmPasswordIcon = new Panel();
+            passwordIconLabel = new Panel();
+            emailIconLabel = new Panel();
+            showPasswordCheckbox = new CheckBox();
+            line7 = new Panel();
             registrationLabel = new Label();
             registrationDescriptionLabel = new Label();
-            panel6 = new Panel();
-            label5 = new Label();
-            textBox5 = new TextBox();
+            line3 = new Panel();
+            confirmPasswordLabel = new Label();
+            confirmPasswordTextBox = new TextBox();
             roundedPanel4 = new Utils.Components.RoundedPanel();
-            label4 = new Label();
-            panel7 = new Panel();
-            panel5 = new Panel();
-            label3 = new Label();
-            textBox4 = new TextBox();
+            passwordLabel = new Label();
+            line4 = new Panel();
+            line2 = new Panel();
+            phoneNumberLabel = new Label();
+            passwordTextBox = new TextBox();
             roundedPanel3 = new Utils.Components.RoundedPanel();
-            textBox6 = new TextBox();
+            phoneNumberTextBox = new TextBox();
             roundedPanel5 = new Utils.Components.RoundedPanel();
-            label2 = new Label();
-            label1 = new Label();
-            panel3 = new Panel();
-            panel8 = new Panel();
-            textBox2 = new TextBox();
+            emailLabel = new Label();
+            lastNameLabel = new Label();
+            line5 = new Panel();
+            line6 = new Panel();
+            lastNameTextBox = new TextBox();
             roundedPanel1 = new Utils.Components.RoundedPanel();
             firstNameLabel = new Label();
-            textBox1 = new TextBox();
-            panel4 = new Panel();
+            firstNameTextBox = new TextBox();
+            line1 = new Panel();
             roundedPanel6 = new Utils.Components.RoundedPanel();
-            textBox3 = new TextBox();
+            emailTextBox = new TextBox();
             roundedPanel2 = new Utils.Components.RoundedPanel();
-            panel2 = new Panel();
-            showPasswordCheckbox = new CheckBox();
-            panel1.SuspendLayout();
+            registerBackgroundLabel = new Panel();
+            registrationPanel.SuspendLayout();
             SuspendLayout();
             // 
             // submitButton
             // 
             submitButton.BorderColor = Color.Transparent;
             submitButton.ButtonColor = Color.FromArgb(92, 184, 92);
+            submitButton.CornerRadius = 10;
             submitButton.Cursor = Cursors.Hand;
             submitButton.FlatAppearance.BorderSize = 0;
             submitButton.FlatAppearance.MouseDownBackColor = Color.Transparent;
             submitButton.FlatAppearance.MouseOverBackColor = Color.Transparent;
             submitButton.FlatStyle = FlatStyle.Flat;
-            submitButton.Font = new Font("Arial Rounded MT Bold", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
-            submitButton.Location = new Point(246, 554);
+            submitButton.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Bold, GraphicsUnit.Point);
+            submitButton.Location = new Point(246, 575);
             submitButton.Name = "submitButton";
             submitButton.OnHoverBorderColor = Color.Transparent;
             submitButton.OnHoverButtonColor = Color.FromArgb(124, 205, 124);
@@ -69,252 +76,325 @@
             submitButton.UseVisualStyleBackColor = true;
             submitButton.Click += submitButton_Click;
             // 
-            // panel1
+            // registrationPanel
             // 
-            panel1.BackColor = Color.FromArgb(48, 48, 51);
-            panel1.Controls.Add(showPasswordCheckbox);
-            panel1.Controls.Add(panel9);
-            panel1.Controls.Add(registrationLabel);
-            panel1.Controls.Add(registrationDescriptionLabel);
-            panel1.Controls.Add(panel6);
-            panel1.Controls.Add(submitButton);
-            panel1.Controls.Add(label5);
-            panel1.Controls.Add(textBox5);
-            panel1.Controls.Add(roundedPanel4);
-            panel1.Controls.Add(label4);
-            panel1.Controls.Add(panel7);
-            panel1.Controls.Add(panel5);
-            panel1.Controls.Add(label3);
-            panel1.Controls.Add(textBox4);
-            panel1.Controls.Add(roundedPanel3);
-            panel1.Controls.Add(textBox6);
-            panel1.Controls.Add(roundedPanel5);
-            panel1.Controls.Add(label2);
-            panel1.Controls.Add(label1);
-            panel1.Controls.Add(panel3);
-            panel1.Controls.Add(panel8);
-            panel1.Controls.Add(textBox2);
-            panel1.Controls.Add(roundedPanel1);
-            panel1.Controls.Add(firstNameLabel);
-            panel1.Controls.Add(textBox1);
-            panel1.Controls.Add(panel4);
-            panel1.Controls.Add(roundedPanel6);
-            panel1.Controls.Add(textBox3);
-            panel1.Controls.Add(roundedPanel2);
-            panel1.Location = new Point(640, 0);
-            panel1.Name = "panel1";
-            panel1.Size = new Size(640, 720);
-            panel1.TabIndex = 3;
+            registrationPanel.BackColor = Color.FromArgb(48, 48, 51);
+            registrationPanel.Controls.Add(phoneNumberIcon);
+            registrationPanel.Controls.Add(lastNameIcon);
+            registrationPanel.Controls.Add(firstNameIcon);
+            registrationPanel.Controls.Add(confirmPasswordIcon);
+            registrationPanel.Controls.Add(passwordIconLabel);
+            registrationPanel.Controls.Add(emailIconLabel);
+            registrationPanel.Controls.Add(showPasswordCheckbox);
+            registrationPanel.Controls.Add(line7);
+            registrationPanel.Controls.Add(registrationLabel);
+            registrationPanel.Controls.Add(registrationDescriptionLabel);
+            registrationPanel.Controls.Add(line3);
+            registrationPanel.Controls.Add(submitButton);
+            registrationPanel.Controls.Add(confirmPasswordLabel);
+            registrationPanel.Controls.Add(confirmPasswordTextBox);
+            registrationPanel.Controls.Add(roundedPanel4);
+            registrationPanel.Controls.Add(passwordLabel);
+            registrationPanel.Controls.Add(line4);
+            registrationPanel.Controls.Add(line2);
+            registrationPanel.Controls.Add(phoneNumberLabel);
+            registrationPanel.Controls.Add(passwordTextBox);
+            registrationPanel.Controls.Add(roundedPanel3);
+            registrationPanel.Controls.Add(phoneNumberTextBox);
+            registrationPanel.Controls.Add(roundedPanel5);
+            registrationPanel.Controls.Add(emailLabel);
+            registrationPanel.Controls.Add(lastNameLabel);
+            registrationPanel.Controls.Add(line5);
+            registrationPanel.Controls.Add(line6);
+            registrationPanel.Controls.Add(lastNameTextBox);
+            registrationPanel.Controls.Add(roundedPanel1);
+            registrationPanel.Controls.Add(firstNameLabel);
+            registrationPanel.Controls.Add(firstNameTextBox);
+            registrationPanel.Controls.Add(line1);
+            registrationPanel.Controls.Add(roundedPanel6);
+            registrationPanel.Controls.Add(emailTextBox);
+            registrationPanel.Controls.Add(roundedPanel2);
+            registrationPanel.Location = new Point(640, 0);
+            registrationPanel.Name = "registrationPanel";
+            registrationPanel.Size = new Size(640, 720);
+            registrationPanel.TabIndex = 3;
             // 
-            // panel9
+            // phoneNumberIcon
             // 
-            panel9.BackColor = Color.WhiteSmoke;
-            panel9.Location = new Point(32, 98);
-            panel9.Name = "panel9";
-            panel9.Size = new Size(571, 2);
-            panel9.TabIndex = 31;
+            phoneNumberIcon.BackgroundImage = Properties.Resources.telephone;
+            phoneNumberIcon.BackgroundImageLayout = ImageLayout.Stretch;
+            phoneNumberIcon.Location = new Point(340, 322);
+            phoneNumberIcon.Name = "phoneNumberIcon";
+            phoneNumberIcon.Size = new Size(20, 20);
+            phoneNumberIcon.TabIndex = 36;
+            // 
+            // lastNameIcon
+            // 
+            lastNameIcon.BackgroundImage = Properties.Resources.id_card;
+            lastNameIcon.BackgroundImageLayout = ImageLayout.Stretch;
+            lastNameIcon.Location = new Point(340, 222);
+            lastNameIcon.Name = "lastNameIcon";
+            lastNameIcon.Size = new Size(20, 20);
+            lastNameIcon.TabIndex = 35;
+            // 
+            // firstNameIcon
+            // 
+            firstNameIcon.BackgroundImage = Properties.Resources.id_card;
+            firstNameIcon.BackgroundImageLayout = ImageLayout.Stretch;
+            firstNameIcon.Location = new Point(36, 222);
+            firstNameIcon.Name = "firstNameIcon";
+            firstNameIcon.Size = new Size(20, 20);
+            firstNameIcon.TabIndex = 34;
+            // 
+            // confirmPasswordIcon
+            // 
+            confirmPasswordIcon.BackgroundImage = Properties.Resources.locked_computer;
+            confirmPasswordIcon.BackgroundImageLayout = ImageLayout.Stretch;
+            confirmPasswordIcon.Location = new Point(340, 430);
+            confirmPasswordIcon.Name = "confirmPasswordIcon";
+            confirmPasswordIcon.Size = new Size(20, 20);
+            confirmPasswordIcon.TabIndex = 35;
+            // 
+            // passwordIconLabel
+            // 
+            passwordIconLabel.BackgroundImage = Properties.Resources.locked_computer;
+            passwordIconLabel.BackgroundImageLayout = ImageLayout.Stretch;
+            passwordIconLabel.Location = new Point(36, 430);
+            passwordIconLabel.Name = "passwordIconLabel";
+            passwordIconLabel.Size = new Size(20, 20);
+            passwordIconLabel.TabIndex = 34;
+            // 
+            // emailIconLabel
+            // 
+            emailIconLabel.BackgroundImage = Properties.Resources.envelope;
+            emailIconLabel.BackgroundImageLayout = ImageLayout.Stretch;
+            emailIconLabel.Location = new Point(36, 322);
+            emailIconLabel.Name = "emailIconLabel";
+            emailIconLabel.Size = new Size(20, 20);
+            emailIconLabel.TabIndex = 33;
+            // 
+            // showPasswordCheckbox
+            // 
+            showPasswordCheckbox.AutoSize = true;
+            showPasswordCheckbox.FlatAppearance.CheckedBackColor = Color.FromArgb(92, 184, 92);
+            showPasswordCheckbox.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            showPasswordCheckbox.ForeColor = Color.WhiteSmoke;
+            showPasswordCheckbox.Location = new Point(47, 518);
+            showPasswordCheckbox.Name = "showPasswordCheckbox";
+            showPasswordCheckbox.Size = new Size(121, 19);
+            showPasswordCheckbox.TabIndex = 32;
+            showPasswordCheckbox.Text = "Show Password?";
+            showPasswordCheckbox.UseVisualStyleBackColor = true;
+            // 
+            // line7
+            // 
+            line7.BackColor = Color.WhiteSmoke;
+            line7.Location = new Point(25, 130);
+            line7.Name = "line7";
+            line7.Size = new Size(571, 2);
+            line7.TabIndex = 31;
             // 
             // registrationLabel
             // 
             registrationLabel.AutoSize = true;
-            registrationLabel.Font = new Font("Arial", 27.75F, FontStyle.Bold, GraphicsUnit.Point);
+            registrationLabel.Font = new Font("Microsoft Sans Serif", 27.75F, FontStyle.Bold, GraphicsUnit.Point);
             registrationLabel.ForeColor = Color.FromArgb(92, 184, 92);
-            registrationLabel.Location = new Point(32, 41);
+            registrationLabel.Location = new Point(25, 73);
             registrationLabel.Name = "registrationLabel";
-            registrationLabel.Size = new Size(236, 44);
+            registrationLabel.Size = new Size(229, 42);
             registrationLabel.TabIndex = 3;
             registrationLabel.Text = "Registration";
             // 
             // registrationDescriptionLabel
             // 
             registrationDescriptionLabel.AutoSize = true;
-            registrationDescriptionLabel.Font = new Font("Arial", 15.75F, FontStyle.Bold, GraphicsUnit.Point);
+            registrationDescriptionLabel.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
             registrationDescriptionLabel.ForeColor = Color.WhiteSmoke;
-            registrationDescriptionLabel.Location = new Point(43, 117);
+            registrationDescriptionLabel.Location = new Point(36, 149);
             registrationDescriptionLabel.Name = "registrationDescriptionLabel";
-            registrationDescriptionLabel.Size = new Size(412, 24);
+            registrationDescriptionLabel.Size = new Size(345, 24);
             registrationDescriptionLabel.TabIndex = 4;
             registrationDescriptionLabel.Text = "Please provide your basic details below.";
             // 
-            // panel6
+            // line3
             // 
-            panel6.BackColor = Color.Silver;
-            panel6.Location = new Point(347, 476);
-            panel6.Name = "panel6";
-            panel6.Size = new Size(245, 2);
-            panel6.TabIndex = 17;
+            line3.BackColor = Color.Silver;
+            line3.Location = new Point(351, 497);
+            line3.Name = "line3";
+            line3.Size = new Size(245, 2);
+            line3.TabIndex = 17;
             // 
-            // label5
+            // confirmPasswordLabel
             // 
-            label5.AutoSize = true;
-            label5.Font = new Font("Arial", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            label5.ForeColor = Color.WhiteSmoke;
-            label5.Location = new Point(336, 409);
-            label5.Name = "label5";
-            label5.Size = new Size(151, 19);
-            label5.TabIndex = 30;
-            label5.Text = "Confirm Password";
+            confirmPasswordLabel.AutoSize = true;
+            confirmPasswordLabel.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            confirmPasswordLabel.ForeColor = Color.WhiteSmoke;
+            confirmPasswordLabel.Location = new Point(366, 430);
+            confirmPasswordLabel.Name = "confirmPasswordLabel";
+            confirmPasswordLabel.Size = new Size(137, 20);
+            confirmPasswordLabel.TabIndex = 30;
+            confirmPasswordLabel.Text = "Confirm Password";
             // 
-            // textBox5
+            // confirmPasswordTextBox
             // 
-            textBox5.BackColor = Color.WhiteSmoke;
-            textBox5.BorderStyle = BorderStyle.None;
-            textBox5.Font = new Font("Arial Narrow", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            textBox5.ForeColor = Color.FromArgb(48, 48, 51);
-            textBox5.Location = new Point(347, 456);
-            textBox5.Name = "textBox5";
-            textBox5.Size = new Size(245, 19);
-            textBox5.TabIndex = 19;
+            confirmPasswordTextBox.BackColor = Color.WhiteSmoke;
+            confirmPasswordTextBox.BorderStyle = BorderStyle.None;
+            confirmPasswordTextBox.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            confirmPasswordTextBox.ForeColor = Color.FromArgb(48, 48, 51);
+            confirmPasswordTextBox.Location = new Point(351, 477);
+            confirmPasswordTextBox.Name = "confirmPasswordTextBox";
+            confirmPasswordTextBox.Size = new Size(245, 19);
+            confirmPasswordTextBox.TabIndex = 19;
             // 
             // roundedPanel4
             // 
             roundedPanel4.BackColor = Color.Transparent;
             roundedPanel4.BorderColor = Color.WhiteSmoke;
-            roundedPanel4.CornerRadius = 10;
+            roundedPanel4.CornerRadius = 5;
             roundedPanel4.ForeColor = Color.Transparent;
-            roundedPanel4.Location = new Point(336, 448);
+            roundedPanel4.Location = new Point(340, 469);
             roundedPanel4.Name = "roundedPanel4";
             roundedPanel4.Size = new Size(267, 34);
             roundedPanel4.TabIndex = 18;
             // 
-            // label4
+            // passwordLabel
             // 
-            label4.AutoSize = true;
-            label4.Font = new Font("Arial", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            label4.ForeColor = Color.WhiteSmoke;
-            label4.Location = new Point(32, 409);
-            label4.Name = "label4";
-            label4.Size = new Size(86, 19);
-            label4.TabIndex = 29;
-            label4.Text = "Password";
+            passwordLabel.AutoSize = true;
+            passwordLabel.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            passwordLabel.ForeColor = Color.WhiteSmoke;
+            passwordLabel.Location = new Point(62, 430);
+            passwordLabel.Name = "passwordLabel";
+            passwordLabel.Size = new Size(78, 20);
+            passwordLabel.TabIndex = 29;
+            passwordLabel.Text = "Password";
             // 
-            // panel7
+            // line4
             // 
-            panel7.BackColor = Color.Silver;
-            panel7.Location = new Point(347, 371);
-            panel7.Name = "panel7";
-            panel7.Size = new Size(245, 2);
-            panel7.TabIndex = 20;
+            line4.BackColor = Color.Silver;
+            line4.Location = new Point(351, 392);
+            line4.Name = "line4";
+            line4.Size = new Size(245, 2);
+            line4.TabIndex = 20;
             // 
-            // panel5
+            // line2
             // 
-            panel5.BackColor = Color.Silver;
-            panel5.Location = new Point(43, 476);
-            panel5.Name = "panel5";
-            panel5.Size = new Size(245, 2);
-            panel5.TabIndex = 14;
+            line2.BackColor = Color.Silver;
+            line2.Location = new Point(47, 497);
+            line2.Name = "line2";
+            line2.Size = new Size(245, 2);
+            line2.TabIndex = 14;
             // 
-            // label3
+            // phoneNumberLabel
             // 
-            label3.AutoSize = true;
-            label3.Font = new Font("Arial", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            label3.ForeColor = Color.WhiteSmoke;
-            label3.Location = new Point(336, 301);
-            label3.Name = "label3";
-            label3.Size = new Size(124, 19);
-            label3.TabIndex = 28;
-            label3.Text = "Phone Number";
+            phoneNumberLabel.AutoSize = true;
+            phoneNumberLabel.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            phoneNumberLabel.ForeColor = Color.WhiteSmoke;
+            phoneNumberLabel.Location = new Point(366, 322);
+            phoneNumberLabel.Name = "phoneNumberLabel";
+            phoneNumberLabel.Size = new Size(115, 20);
+            phoneNumberLabel.TabIndex = 28;
+            phoneNumberLabel.Text = "Phone Number";
             // 
-            // textBox4
+            // passwordTextBox
             // 
-            textBox4.BackColor = Color.WhiteSmoke;
-            textBox4.BorderStyle = BorderStyle.None;
-            textBox4.Font = new Font("Arial Narrow", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            textBox4.ForeColor = Color.FromArgb(48, 48, 51);
-            textBox4.Location = new Point(43, 456);
-            textBox4.Name = "textBox4";
-            textBox4.Size = new Size(245, 19);
-            textBox4.TabIndex = 16;
+            passwordTextBox.BackColor = Color.WhiteSmoke;
+            passwordTextBox.BorderStyle = BorderStyle.None;
+            passwordTextBox.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            passwordTextBox.ForeColor = Color.FromArgb(48, 48, 51);
+            passwordTextBox.Location = new Point(47, 477);
+            passwordTextBox.Name = "passwordTextBox";
+            passwordTextBox.Size = new Size(245, 19);
+            passwordTextBox.TabIndex = 16;
             // 
             // roundedPanel3
             // 
             roundedPanel3.BackColor = Color.Transparent;
             roundedPanel3.BorderColor = Color.WhiteSmoke;
-            roundedPanel3.CornerRadius = 10;
+            roundedPanel3.CornerRadius = 5;
             roundedPanel3.ForeColor = Color.Transparent;
-            roundedPanel3.Location = new Point(32, 448);
+            roundedPanel3.Location = new Point(36, 469);
             roundedPanel3.Name = "roundedPanel3";
             roundedPanel3.Size = new Size(267, 34);
             roundedPanel3.TabIndex = 15;
             // 
-            // textBox6
+            // phoneNumberTextBox
             // 
-            textBox6.BackColor = Color.WhiteSmoke;
-            textBox6.BorderStyle = BorderStyle.None;
-            textBox6.Font = new Font("Arial Narrow", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            textBox6.ForeColor = Color.FromArgb(48, 48, 51);
-            textBox6.Location = new Point(347, 351);
-            textBox6.Name = "textBox6";
-            textBox6.Size = new Size(245, 19);
-            textBox6.TabIndex = 22;
+            phoneNumberTextBox.BackColor = Color.WhiteSmoke;
+            phoneNumberTextBox.BorderStyle = BorderStyle.None;
+            phoneNumberTextBox.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            phoneNumberTextBox.ForeColor = Color.FromArgb(48, 48, 51);
+            phoneNumberTextBox.Location = new Point(351, 372);
+            phoneNumberTextBox.Name = "phoneNumberTextBox";
+            phoneNumberTextBox.Size = new Size(245, 19);
+            phoneNumberTextBox.TabIndex = 22;
             // 
             // roundedPanel5
             // 
             roundedPanel5.BackColor = Color.Transparent;
             roundedPanel5.BorderColor = Color.WhiteSmoke;
-            roundedPanel5.CornerRadius = 10;
+            roundedPanel5.CornerRadius = 5;
             roundedPanel5.ForeColor = Color.Transparent;
-            roundedPanel5.Location = new Point(336, 343);
+            roundedPanel5.Location = new Point(340, 364);
             roundedPanel5.Name = "roundedPanel5";
             roundedPanel5.Size = new Size(267, 34);
             roundedPanel5.TabIndex = 21;
             // 
-            // label2
+            // emailLabel
             // 
-            label2.AutoSize = true;
-            label2.Font = new Font("Arial", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            label2.ForeColor = Color.WhiteSmoke;
-            label2.Location = new Point(32, 301);
-            label2.Name = "label2";
-            label2.Size = new Size(51, 19);
-            label2.TabIndex = 27;
-            label2.Text = "Email";
+            emailLabel.AutoSize = true;
+            emailLabel.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            emailLabel.ForeColor = Color.WhiteSmoke;
+            emailLabel.Location = new Point(62, 322);
+            emailLabel.Name = "emailLabel";
+            emailLabel.Size = new Size(48, 20);
+            emailLabel.TabIndex = 27;
+            emailLabel.Text = "Email";
             // 
-            // label1
+            // lastNameLabel
             // 
-            label1.AutoSize = true;
-            label1.Font = new Font("Arial", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            label1.ForeColor = Color.WhiteSmoke;
-            label1.Location = new Point(336, 201);
-            label1.Name = "label1";
-            label1.Size = new Size(90, 19);
-            label1.TabIndex = 26;
-            label1.Text = "Last Name";
+            lastNameLabel.AutoSize = true;
+            lastNameLabel.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            lastNameLabel.ForeColor = Color.WhiteSmoke;
+            lastNameLabel.Location = new Point(366, 222);
+            lastNameLabel.Name = "lastNameLabel";
+            lastNameLabel.Size = new Size(86, 20);
+            lastNameLabel.TabIndex = 26;
+            lastNameLabel.Text = "Last Name";
             // 
-            // panel3
+            // line5
             // 
-            panel3.BackColor = Color.Silver;
-            panel3.Location = new Point(347, 269);
-            panel3.Name = "panel3";
-            panel3.Size = new Size(245, 2);
-            panel3.TabIndex = 23;
+            line5.BackColor = Color.Silver;
+            line5.Location = new Point(351, 290);
+            line5.Name = "line5";
+            line5.Size = new Size(245, 2);
+            line5.TabIndex = 23;
             // 
-            // panel8
+            // line6
             // 
-            panel8.BackColor = Color.Silver;
-            panel8.Location = new Point(43, 269);
-            panel8.Name = "panel8";
-            panel8.Size = new Size(245, 2);
-            panel8.TabIndex = 23;
+            line6.BackColor = Color.Silver;
+            line6.Location = new Point(47, 290);
+            line6.Name = "line6";
+            line6.Size = new Size(245, 2);
+            line6.TabIndex = 23;
             // 
-            // textBox2
+            // lastNameTextBox
             // 
-            textBox2.BackColor = Color.WhiteSmoke;
-            textBox2.BorderStyle = BorderStyle.None;
-            textBox2.Font = new Font("Arial Narrow", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            textBox2.ForeColor = Color.FromArgb(48, 48, 51);
-            textBox2.Location = new Point(347, 249);
-            textBox2.Name = "textBox2";
-            textBox2.Size = new Size(245, 19);
-            textBox2.TabIndex = 25;
+            lastNameTextBox.BackColor = Color.WhiteSmoke;
+            lastNameTextBox.BorderStyle = BorderStyle.None;
+            lastNameTextBox.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            lastNameTextBox.ForeColor = Color.FromArgb(48, 48, 51);
+            lastNameTextBox.Location = new Point(351, 270);
+            lastNameTextBox.Name = "lastNameTextBox";
+            lastNameTextBox.Size = new Size(245, 19);
+            lastNameTextBox.TabIndex = 25;
             // 
             // roundedPanel1
             // 
             roundedPanel1.BackColor = Color.Transparent;
             roundedPanel1.BorderColor = Color.WhiteSmoke;
-            roundedPanel1.CornerRadius = 10;
+            roundedPanel1.CornerRadius = 5;
             roundedPanel1.ForeColor = Color.Transparent;
-            roundedPanel1.Location = new Point(336, 241);
+            roundedPanel1.Location = new Point(340, 262);
             roundedPanel1.Name = "roundedPanel1";
             roundedPanel1.Size = new Size(267, 34);
             roundedPanel1.TabIndex = 24;
@@ -322,85 +402,72 @@
             // firstNameLabel
             // 
             firstNameLabel.AutoSize = true;
-            firstNameLabel.Font = new Font("Arial", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            firstNameLabel.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point);
             firstNameLabel.ForeColor = Color.WhiteSmoke;
-            firstNameLabel.Location = new Point(32, 201);
+            firstNameLabel.Location = new Point(62, 222);
             firstNameLabel.Name = "firstNameLabel";
-            firstNameLabel.Size = new Size(91, 19);
+            firstNameLabel.Size = new Size(86, 20);
             firstNameLabel.TabIndex = 5;
             firstNameLabel.Text = "First Name";
             // 
-            // textBox1
+            // firstNameTextBox
             // 
-            textBox1.BackColor = Color.WhiteSmoke;
-            textBox1.BorderStyle = BorderStyle.None;
-            textBox1.Font = new Font("Arial Narrow", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            textBox1.ForeColor = Color.FromArgb(48, 48, 51);
-            textBox1.Location = new Point(43, 249);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(245, 19);
-            textBox1.TabIndex = 25;
+            firstNameTextBox.BackColor = Color.WhiteSmoke;
+            firstNameTextBox.BorderStyle = BorderStyle.None;
+            firstNameTextBox.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            firstNameTextBox.ForeColor = Color.FromArgb(48, 48, 51);
+            firstNameTextBox.Location = new Point(47, 270);
+            firstNameTextBox.Name = "firstNameTextBox";
+            firstNameTextBox.Size = new Size(245, 19);
+            firstNameTextBox.TabIndex = 25;
             // 
-            // panel4
+            // line1
             // 
-            panel4.BackColor = Color.Silver;
-            panel4.Location = new Point(43, 371);
-            panel4.Name = "panel4";
-            panel4.Size = new Size(245, 2);
-            panel4.TabIndex = 11;
+            line1.BackColor = Color.Silver;
+            line1.Location = new Point(47, 392);
+            line1.Name = "line1";
+            line1.Size = new Size(245, 2);
+            line1.TabIndex = 11;
             // 
             // roundedPanel6
             // 
             roundedPanel6.BackColor = Color.Transparent;
             roundedPanel6.BorderColor = Color.WhiteSmoke;
-            roundedPanel6.CornerRadius = 10;
+            roundedPanel6.CornerRadius = 5;
             roundedPanel6.ForeColor = Color.Transparent;
-            roundedPanel6.Location = new Point(32, 241);
+            roundedPanel6.Location = new Point(36, 262);
             roundedPanel6.Name = "roundedPanel6";
             roundedPanel6.Size = new Size(267, 34);
             roundedPanel6.TabIndex = 24;
             // 
-            // textBox3
+            // emailTextBox
             // 
-            textBox3.BackColor = Color.WhiteSmoke;
-            textBox3.BorderStyle = BorderStyle.None;
-            textBox3.Font = new Font("Arial Narrow", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            textBox3.ForeColor = Color.FromArgb(48, 48, 51);
-            textBox3.Location = new Point(43, 351);
-            textBox3.Name = "textBox3";
-            textBox3.Size = new Size(245, 19);
-            textBox3.TabIndex = 13;
+            emailTextBox.BackColor = Color.WhiteSmoke;
+            emailTextBox.BorderStyle = BorderStyle.None;
+            emailTextBox.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            emailTextBox.ForeColor = Color.FromArgb(48, 48, 51);
+            emailTextBox.Location = new Point(47, 372);
+            emailTextBox.Name = "emailTextBox";
+            emailTextBox.Size = new Size(245, 19);
+            emailTextBox.TabIndex = 13;
             // 
             // roundedPanel2
             // 
             roundedPanel2.BackColor = Color.Transparent;
             roundedPanel2.BorderColor = Color.WhiteSmoke;
-            roundedPanel2.CornerRadius = 10;
+            roundedPanel2.CornerRadius = 5;
             roundedPanel2.ForeColor = Color.Transparent;
-            roundedPanel2.Location = new Point(32, 343);
+            roundedPanel2.Location = new Point(36, 364);
             roundedPanel2.Name = "roundedPanel2";
             roundedPanel2.Size = new Size(267, 34);
             roundedPanel2.TabIndex = 12;
             // 
-            // panel2
+            // registerBackgroundLabel
             // 
-            panel2.Location = new Point(0, 0);
-            panel2.Name = "panel2";
-            panel2.Size = new Size(640, 720);
-            panel2.TabIndex = 4;
-            // 
-            // showPasswordCheckbox
-            // 
-            showPasswordCheckbox.AutoSize = true;
-            showPasswordCheckbox.FlatAppearance.CheckedBackColor = Color.FromArgb(92, 184, 92);
-            showPasswordCheckbox.Font = new Font("Arial", 9F, FontStyle.Bold, GraphicsUnit.Point);
-            showPasswordCheckbox.ForeColor = Color.WhiteSmoke;
-            showPasswordCheckbox.Location = new Point(43, 497);
-            showPasswordCheckbox.Name = "showPasswordCheckbox";
-            showPasswordCheckbox.Size = new Size(126, 19);
-            showPasswordCheckbox.TabIndex = 32;
-            showPasswordCheckbox.Text = "Show Password?";
-            showPasswordCheckbox.UseVisualStyleBackColor = true;
+            registerBackgroundLabel.Location = new Point(0, 0);
+            registerBackgroundLabel.Name = "registerBackgroundLabel";
+            registerBackgroundLabel.Size = new Size(640, 720);
+            registerBackgroundLabel.TabIndex = 4;
             // 
             // RegistrationForm
             // 
@@ -408,46 +475,52 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.WhiteSmoke;
             ClientSize = new Size(1280, 720);
-            Controls.Add(panel2);
-            Controls.Add(panel1);
+            Controls.Add(registerBackgroundLabel);
+            Controls.Add(registrationPanel);
             FormBorderStyle = FormBorderStyle.None;
             Name = "RegistrationForm";
             Text = "RegistrationForm";
-            panel1.ResumeLayout(false);
-            panel1.PerformLayout();
+            registrationPanel.ResumeLayout(false);
+            registrationPanel.PerformLayout();
             ResumeLayout(false);
         }
 
         private Utils.Components.RoundedButton submitButton;
-        private Panel panel1;
-        private Panel panel2;
+        private Panel registrationPanel;
+        private Panel registerBackgroundLabel;
         private Label registrationLabel;
         private Label registrationDescriptionLabel;
         private Label firstNameLabel;
-        private Panel panel4;
-        private TextBox textBox3;
+        private Panel line1;
+        private TextBox emailTextBox;
         private Utils.Components.RoundedPanel roundedPanel2;
-        private Panel panel5;
-        private TextBox textBox4;
+        private Panel line2;
+        private TextBox passwordTextBox;
         private Utils.Components.RoundedPanel roundedPanel3;
-        private Panel panel6;
-        private TextBox textBox5;
+        private Panel line3;
+        private TextBox confirmPasswordTextBox;
         private Utils.Components.RoundedPanel roundedPanel4;
-        private Panel panel7;
-        private TextBox textBox6;
+        private Panel line4;
+        private TextBox phoneNumberTextBox;
         private Utils.Components.RoundedPanel roundedPanel5;
-        private Label label1;
-        private Panel panel3;
-        private Panel panel8;
-        private TextBox textBox2;
+        private Label lastNameLabel;
+        private Panel line5;
+        private Panel line6;
+        private TextBox lastNameTextBox;
         private Utils.Components.RoundedPanel roundedPanel1;
-        private TextBox textBox1;
+        private TextBox firstNameTextBox;
         private Utils.Components.RoundedPanel roundedPanel6;
-        private Label label5;
-        private Label label4;
-        private Label label3;
-        private Label label2;
-        private Panel panel9;
+        private Label confirmPasswordLabel;
+        private Label passwordLabel;
+        private Label phoneNumberLabel;
+        private Label emailLabel;
+        private Panel line7;
         private CheckBox showPasswordCheckbox;
+        private Panel emailIconLabel;
+        private Panel passwordIconLabel;
+        private Panel phoneNumberIcon;
+        private Panel lastNameIcon;
+        private Panel firstNameIcon;
+        private Panel confirmPasswordIcon;
     }
 }

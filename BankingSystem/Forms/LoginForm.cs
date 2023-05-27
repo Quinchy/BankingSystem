@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Text;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,8 +18,8 @@ namespace BankingSystem.Forms
         public LoginForm()
         {
             InitializeComponent();
-        }
 
+        }
         private void loginButton_Click(object sender, EventArgs e)
         {
             Form dashboardForm = new DashBoard.DashboardForm();

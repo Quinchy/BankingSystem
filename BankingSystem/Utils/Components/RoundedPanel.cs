@@ -15,12 +15,10 @@ namespace BankingSystem.Utils.Components
         private int _borderThickness = 6;
         private int _borderThicknessByTwo = 3;
         private int _cornerRadius = 10;
-
         public RoundedPanel()
         {
             DoubleBuffered = true;
         }
-
         protected override void OnPaint(PaintEventArgs e)
         {
             base.OnPaint(e);
@@ -33,13 +31,11 @@ namespace BankingSystem.Utils.Components
 
             brush.Dispose();
         }
-
         protected override void OnResize(EventArgs eventargs)
         {
             base.OnResize(eventargs);
             Invalidate();
         }
-
         public Color BorderColor
         {
             get => _borderColor;
@@ -49,7 +45,6 @@ namespace BankingSystem.Utils.Components
                 Invalidate();
             }
         }
-
         public int CornerRadius
         {
             get => _cornerRadius;
@@ -63,7 +58,6 @@ namespace BankingSystem.Utils.Components
             }
         }
     }
-
     // Extension method to draw a rounded rectangle
     public static class GraphicsExtensions
     {

@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static System.Net.Mime.MediaTypeNames;
+using System.Drawing;
+using System.Drawing.Drawing2D;
+using System.Windows.Forms;
 
 namespace BankingSystem.Utils.Components
 {
@@ -18,7 +16,7 @@ namespace BankingSystem.Utils.Components
         private bool _isHovering;
         private int _borderThickness = 6;
         private int _borderThicknessByTwo = 3;
-
+        private int _cornerRadius = 10; // default corner radius
         public RoundedButton()
         {
             DoubleBuffered = true;
@@ -37,29 +35,33 @@ namespace BankingSystem.Utils.Components
         {
             base.OnPaint(e);
             Graphics g = e.Graphics;
-            g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+            g.SmoothingMode = SmoothingMode.AntiAlias;
             Brush brush = new SolidBrush(_isHovering ? _onHoverBorderColor : _borderColor);
-
-            //Border
-            g.FillEllipse(brush, 0, 0, Height, Height);
-            g.FillEllipse(brush, Width - Height, 0, Height, Height);
-            g.FillRectangle(brush, Height / 2, 0, Width - Height, Height);
-
+            // Border
+            RectangleF rectangle = new RectangleF(0, 0, Width, Height);
+            float diameter = _cornerRadius * 2; // Recalculate the diameter here
+            GraphicsPath path = new GraphicsPath();
+            path.AddArc(rectangle.Left, rectangle.Top, diameter, diameter, 180, 90);
+            path.AddArc(rectangle.Right - diameter, rectangle.Top, diameter, diameter, 270, 90);
+            path.AddArc(rectangle.Right - diameter, rectangle.Bottom - diameter, diameter, diameter, 0, 90);
+            path.AddArc(rectangle.Left, rectangle.Bottom - diameter, diameter, diameter, 90, 90);
+            path.CloseFigure();
+            g.FillPath(brush, path);
             brush.Dispose();
             brush = new SolidBrush(_isHovering ? _onHoverButtonColor : _buttonColor);
-
-            //Inner part. Button itself
-            g.FillEllipse(brush, _borderThicknessByTwo, _borderThicknessByTwo, Height - _borderThickness,
-                Height - _borderThickness);
-            g.FillEllipse(brush, (Width - Height) + _borderThicknessByTwo, _borderThicknessByTwo,
-                Height - _borderThickness, Height - _borderThickness);
-            g.FillRectangle(brush, Height / 2 + _borderThicknessByTwo, _borderThicknessByTwo,
-                Width - Height - _borderThickness, Height - _borderThickness);
-
+            // Inner part. Button itself
+            rectangle = new RectangleF(_borderThicknessByTwo, _borderThicknessByTwo, Width - _borderThickness, Height - _borderThickness);
+            diameter = (_cornerRadius - _borderThicknessByTwo) * 2; // Recalculate the diameter here
+            path = new GraphicsPath();
+            path.AddArc(rectangle.Left, rectangle.Top, diameter, diameter, 180, 90);
+            path.AddArc(rectangle.Right - diameter, rectangle.Top, diameter, diameter, 270, 90);
+            path.AddArc(rectangle.Right - diameter, rectangle.Bottom - diameter, diameter, diameter, 0, 90);
+            path.AddArc(rectangle.Left, rectangle.Bottom - diameter, diameter, diameter, 90, 90);
+            path.CloseFigure();
+            g.FillPath(brush, path);
             brush.Dispose();
             brush = new SolidBrush(_isHovering ? _onHoverTextColor : _textColor);
-
-            //Button Text
+            // Button Text
             SizeF stringSize = g.MeasureString(Text, Font);
             g.DrawString(Text, Font, brush, (Width - stringSize.Width) / 2, (Height - stringSize.Height) / 2);
         }
@@ -114,6 +116,18 @@ namespace BankingSystem.Utils.Components
             set
             {
                 _onHoverTextColor = value;
+                Invalidate();
+            }
+        }
+        public int CornerRadius
+        {
+            get => _cornerRadius;
+            set
+            {
+                if (value < 0)
+                    throw new ArgumentOutOfRangeException("CornerRadius", "The corner radius cannot be negative.");
+
+                _cornerRadius = value;
                 Invalidate();
             }
         }

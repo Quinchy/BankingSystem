@@ -13,14 +13,39 @@
         }
         private void InitializeComponent()
         {
+            line1 = new Panel();
+            line2 = new Panel();
+            appLogoIcon = new Panel();
             dashboardPanel = new Panel();
             homeScreenButton = new Utils.Components.RoundedButton();
             accountButton = new Utils.Components.RoundedButton();
             logoutButton = new Utils.Components.RoundedButton();
-            line1 = new Panel();
-            panel1 = new Panel();
-            panel2 = new Panel();
             SuspendLayout();
+            // 
+            // line1
+            // 
+            line1.BackColor = Color.WhiteSmoke;
+            line1.Location = new Point(12, 80);
+            line1.Name = "line1";
+            line1.Size = new Size(215, 2);
+            line1.TabIndex = 5;
+            // 
+            // line2
+            // 
+            line2.BackColor = Color.WhiteSmoke;
+            line2.Location = new Point(12, 610);
+            line2.Name = "line2";
+            line2.Size = new Size(215, 2);
+            line2.TabIndex = 6;
+            // 
+            // appLogoIcon
+            // 
+            appLogoIcon.BackColor = Color.Transparent;
+            appLogoIcon.BackgroundImage = Properties.Resources.OnlyFundsLogoDashboard;
+            appLogoIcon.Location = new Point(96, 12);
+            appLogoIcon.Name = "appLogoIcon";
+            appLogoIcon.Size = new Size(61, 50);
+            appLogoIcon.TabIndex = 7;
             // 
             // dashboardPanel
             // 
@@ -102,31 +127,6 @@
             logoutButton.UseVisualStyleBackColor = false;
             logoutButton.Click += logoutButton_Click;
             // 
-            // line1
-            // 
-            line1.BackColor = Color.WhiteSmoke;
-            line1.Location = new Point(12, 80);
-            line1.Name = "line1";
-            line1.Size = new Size(215, 2);
-            line1.TabIndex = 5;
-            // 
-            // panel1
-            // 
-            panel1.BackColor = Color.Transparent;
-            panel1.BackgroundImage = Properties.Resources.OnlyFundsLogoDashboard;
-            panel1.Location = new Point(86, 12);
-            panel1.Name = "panel1";
-            panel1.Size = new Size(61, 50);
-            panel1.TabIndex = 7;
-            // 
-            // panel2
-            // 
-            panel2.BackColor = Color.WhiteSmoke;
-            panel2.Location = new Point(12, 610);
-            panel2.Name = "panel2";
-            panel2.Size = new Size(215, 2);
-            panel2.TabIndex = 6;
-            // 
             // DashboardForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -135,8 +135,8 @@
             ClientSize = new Size(1280, 720);
             Controls.Add(logoutButton);
             Controls.Add(accountButton);
-            Controls.Add(panel2);
-            Controls.Add(panel1);
+            Controls.Add(line2);
+            Controls.Add(appLogoIcon);
             Controls.Add(line1);
             Controls.Add(homeScreenButton);
             Controls.Add(dashboardPanel);
@@ -147,12 +147,12 @@
         }
 
         private HomeScreenForm homeScreenForm = new HomeScreenForm();
+        private Panel line1;
+        private Panel line2;
+        private Panel appLogoIcon;
         private Utils.Components.RoundedButton homeScreenButton;
         private Utils.Components.RoundedButton accountButton;
         private Utils.Components.RoundedButton logoutButton;
-        private Panel line1;
-        private Panel panel1;
-        private Panel panel2;
         public static Panel dashboardPanel;
     }
 }

@@ -33,27 +33,24 @@ namespace BankingSystem.Forms.DashBoard
             dashboardPanel.Controls.Add(newForm);
             newForm.Show();
         }
-        private void homeButton_Click(object sender, EventArgs e)
-        {
-            HomeScreenForm homeScreenForm = new HomeScreenForm();
-            ChangeDashboardForm(homeScreenForm);
-        }
-        private void userButton_Click(object sender, EventArgs e)
-        {
-            UserProfileForm userProfileForm = new UserProfileForm();
-            ChangeDashboardForm(userProfileForm);
-        }
-
         private void homeScreenButton_Click(object sender, EventArgs e)
         {
             HomeScreenForm homeScreenForm = new HomeScreenForm();
             ChangeDashboardForm(homeScreenForm);
+            homeScreenButton.ButtonColor = Color.FromArgb(92, 184, 92);
+            homeScreenButton.OnHoverButtonColor = Color.FromArgb(124, 205, 124);
+            accountButton.ButtonColor = Color.FromArgb(38, 38, 41);
+            accountButton.OnHoverButtonColor = Color.FromArgb(48, 48, 51);
         }
 
         private void accountButton_Click(object sender, EventArgs e)
         {
             UserProfileForm userProfileForm = new UserProfileForm();
             ChangeDashboardForm(userProfileForm);
+            accountButton.ButtonColor = Color.FromArgb(92, 184, 92);
+            accountButton.OnHoverButtonColor = Color.FromArgb(124, 205, 124);
+            homeScreenButton.ButtonColor = Color.FromArgb(38, 38, 41);
+            homeScreenButton.OnHoverButtonColor = Color.FromArgb(48, 48, 51);
         }
 
         private void logoutButton_Click(object sender, EventArgs e)

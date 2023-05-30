@@ -1,4 +1,6 @@
-﻿using BankingSystem.Utils;
+﻿using BankingSystem.Models;
+using BankingSystem.Services;
+using BankingSystem.Utils;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -21,8 +23,19 @@ namespace BankingSystem.Forms
 
         private void submitButton_Click(object sender, EventArgs e)
         {
-            Form dashboardForm = new DashBoard.DashboardForm();
-            Helpers.ChangeScreen(baseFormPanel, dashboardForm);
+            // Create a new Customer Object
+            Customer newCustomer = new Customer(
+                firstNameTextBox.Text,
+                lastNameTextBox.Text,
+                emailTextBox.Text,
+                phoneNumberTextBox.Text,
+                passwordTextBox.Text
+            );
+            // Call the RegisterUser function to put the Customer into the database.
+            RegistrationServices.registerUser(newCustomer);
+            // Change the screen to Login.
+            Form loginForm = new LoginForm();
+            Helpers.changeScreen(baseFormPanel, loginForm);
         }
     }
 }

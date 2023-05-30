@@ -13,10 +13,12 @@ namespace BankingSystem.Forms.DashBoard
 {
     public partial class DashboardForm : Form
     {
+        private string email;
         Control baseFormPanel = BaseForm.GetContentPanel();
-        public DashboardForm()
+        public DashboardForm(string email)
         {
             InitializeComponent();
+            this.email = email;
             dashboardPanel.Controls.Clear();
             homeScreenForm.TopLevel = false;
             homeScreenForm.FormBorderStyle = FormBorderStyle.None;
@@ -45,8 +47,8 @@ namespace BankingSystem.Forms.DashBoard
 
         private void accountButton_Click(object sender, EventArgs e)
         {
-            UserProfileForm userProfileForm = new UserProfileForm();
-            ChangeDashboardForm(userProfileForm);
+            CustomerProfileForm customerProfileForm = new CustomerProfileForm(email);
+            ChangeDashboardForm(customerProfileForm);
             accountButton.ButtonColor = Color.FromArgb(92, 184, 92);
             accountButton.OnHoverButtonColor = Color.FromArgb(124, 205, 124);
             homeScreenButton.ButtonColor = Color.FromArgb(38, 38, 41);
@@ -56,7 +58,7 @@ namespace BankingSystem.Forms.DashBoard
         private void logoutButton_Click(object sender, EventArgs e)
         {
             Form loginForm = new LoginForm();
-            Helpers.ChangeScreen(baseFormPanel, loginForm);
+            Helpers.changeScreen(baseFormPanel, loginForm);
         }
     }
 }

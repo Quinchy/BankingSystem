@@ -1,4 +1,5 @@
-﻿using BankingSystem.Utils;
+﻿using BankingSystem.Services;
+using BankingSystem.Utils;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -22,14 +23,26 @@ namespace BankingSystem.Forms
         }
         private void loginButton_Click(object sender, EventArgs e)
         {
-            Form dashboardForm = new DashBoard.DashboardForm();
-            Helpers.ChangeScreen(baseFormPanel, dashboardForm);
+            // Get the email and password from the TextBox
+            String email = emailTextBox.Text;
+            String password = passwordTextBox.Text;
+            // Call the Authenticate user function to check if the user logging in is in database.
+            if (LoginServices.authenticateUser(email, password))
+            {
+                // If exist then Change the screen to Dashboard.
+                Form dashboardForm = new DashBoard.DashboardForm(email);
+                Helpers.changeScreen(baseFormPanel, dashboardForm);
+            } 
+            else
+            {
+                // Show a messagebox that will alert the user to register.
+            }
         }
-
         private void createAccountLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
+            // Change the screen to Registration.
             Form registrationForm = new RegistrationForm();
-            Helpers.ChangeScreen(baseFormPanel, registrationForm);
+            Helpers.changeScreen(baseFormPanel, registrationForm);
         }
         private void showPasswordCheckbox_CheckedChanged(object sender, EventArgs e)
         {

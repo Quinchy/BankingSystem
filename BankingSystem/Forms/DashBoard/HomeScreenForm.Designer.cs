@@ -20,31 +20,37 @@
             line5 = new Panel();
             line6 = new Panel();
             homeScreenPanel = new Panel();
-            arrowDownIcon = new Panel();
-            balanceCardPanel = new Utils.Components.RoundedPanel();
-            transactionCardPanel = new Utils.Components.RoundedPanel();
-            transferCardPanel = new Utils.Components.RoundedPanel();
-            amountTransactionPanel = new Utils.Components.RoundedPanel();
-            amountTransferPanel = new Utils.Components.RoundedPanel();
-            yourIDPanel = new Utils.Components.RoundedPanel();
-            receiverIDPanel = new Utils.Components.RoundedPanel();
             greetUserLabel = new Label();
-            availableBalanceLabel = new Label();
+            transactionHistoryLabel = new Label();
+            balanceCardPanel = new Utils.Components.RoundedPanel();
             balanceLabel = new Label();
+            availableBalanceLabel = new Label();
+            transferCardPanel = new Utils.Components.RoundedPanel();
+            arrowDownIcon = new Panel();
             transferLabel = new Label();
-            transactionLabel = new Label();
-            amountTransactionLabel = new Label();
+            receiverIDPanel = new Utils.Components.RoundedPanel();
+            receiverIDTextBox = new TextBox();
+            receiverIDLabel = new Label();
             amountTransferLabel = new Label();
             yourIDLabel = new Label();
-            receiverIDLabel = new Label();
-            transactionHistoryLabel = new Label();
+            yourIDPanel = new Utils.Components.RoundedPanel();
             yourIDTextBox = new TextBox();
-            receiverIDTextBox = new TextBox();
-            amountTransactionNumeric = new NumericUpDown();
+            confirmButton = new Utils.Components.RoundedButton();
+            amountTransferPanel = new Utils.Components.RoundedPanel();
             amountTransferNumeric = new NumericUpDown();
+            transactionCardPanel = new Utils.Components.RoundedPanel();
+            transactionLabel = new Label();
+            amountTransactionLabel = new Label();
+            amountTransactionPanel = new Utils.Components.RoundedPanel();
+            amountTransactionNumeric = new NumericUpDown();
             withdrawButton = new Utils.Components.RoundedButton();
             depositButton = new Utils.Components.RoundedButton();
-            confirmButton = new Utils.Components.RoundedButton();
+            transactionHistoryView = new ListView();
+            transactionIDHeader = new ColumnHeader();
+            amountHeader = new ColumnHeader();
+            dateHeader = new ColumnHeader();
+            transactionTypeHeader = new ColumnHeader();
+            homeScreenPanel.SuspendLayout();
             balanceCardPanel.SuspendLayout();
             transferCardPanel.SuspendLayout();
             receiverIDPanel.SuspendLayout();
@@ -54,7 +60,6 @@
             transactionCardPanel.SuspendLayout();
             amountTransactionPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)amountTransactionNumeric).BeginInit();
-            homeScreenPanel.SuspendLayout();
             SuspendLayout();
             // 
             // line1
@@ -108,8 +113,9 @@
             // homeScreenPanel
             // 
             homeScreenPanel.AutoScroll = true;
-            homeScreenPanel.AutoScrollMinSize = new Size(0, 900);
+            homeScreenPanel.AutoScrollMinSize = new Size(0, 1000);
             homeScreenPanel.BackColor = Color.FromArgb(48, 48, 51);
+            homeScreenPanel.Controls.Add(transactionHistoryView);
             homeScreenPanel.Controls.Add(greetUserLabel);
             homeScreenPanel.Controls.Add(transactionHistoryLabel);
             homeScreenPanel.Controls.Add(balanceCardPanel);
@@ -120,14 +126,27 @@
             homeScreenPanel.Size = new Size(1040, 723);
             homeScreenPanel.TabIndex = 30;
             // 
-            // arrowDownIcon
+            // greetUserLabel
             // 
-            arrowDownIcon.BackgroundImage = Properties.Resources.down_arrow;
-            arrowDownIcon.BackgroundImageLayout = ImageLayout.Stretch;
-            arrowDownIcon.Location = new Point(191, 259);
-            arrowDownIcon.Name = "arrowDownIcon";
-            arrowDownIcon.Size = new Size(50, 50);
-            arrowDownIcon.TabIndex = 36;
+            greetUserLabel.AutoSize = true;
+            greetUserLabel.Font = new Font("Arial Black", 27.75F, FontStyle.Bold, GraphicsUnit.Point);
+            greetUserLabel.ForeColor = Color.WhiteSmoke;
+            greetUserLabel.Location = new Point(61, 33);
+            greetUserLabel.Name = "greetUserLabel";
+            greetUserLabel.Size = new Size(184, 52);
+            greetUserLabel.TabIndex = 26;
+            greetUserLabel.Text = "Hi, User";
+            // 
+            // transactionHistoryLabel
+            // 
+            transactionHistoryLabel.AutoSize = true;
+            transactionHistoryLabel.Font = new Font("Arial Black", 27.75F, FontStyle.Bold, GraphicsUnit.Point);
+            transactionHistoryLabel.ForeColor = Color.WhiteSmoke;
+            transactionHistoryLabel.Location = new Point(61, 665);
+            transactionHistoryLabel.Name = "transactionHistoryLabel";
+            transactionHistoryLabel.Size = new Size(425, 52);
+            transactionHistoryLabel.TabIndex = 29;
+            transactionHistoryLabel.Text = "Transaction History";
             // 
             // balanceCardPanel
             // 
@@ -142,22 +161,27 @@
             balanceCardPanel.Size = new Size(451, 206);
             balanceCardPanel.TabIndex = 25;
             // 
-            // transactionCardPanel
+            // balanceLabel
             // 
-            transactionCardPanel.BackColor = Color.Transparent;
-            transactionCardPanel.BorderColor = Color.WhiteSmoke;
-            transactionCardPanel.Controls.Add(line2);
-            transactionCardPanel.Controls.Add(transactionLabel);
-            transactionCardPanel.Controls.Add(amountTransactionLabel);
-            transactionCardPanel.Controls.Add(amountTransactionPanel);
-            transactionCardPanel.Controls.Add(withdrawButton);
-            transactionCardPanel.Controls.Add(depositButton);
-            transactionCardPanel.CornerRadius = 10;
-            transactionCardPanel.ForeColor = Color.Transparent;
-            transactionCardPanel.Location = new Point(61, 332);
-            transactionCardPanel.Name = "transactionCardPanel";
-            transactionCardPanel.Size = new Size(451, 312);
-            transactionCardPanel.TabIndex = 26;
+            balanceLabel.AutoSize = true;
+            balanceLabel.Font = new Font("Microsoft Sans Serif", 36F, FontStyle.Regular, GraphicsUnit.Point);
+            balanceLabel.ForeColor = Color.WhiteSmoke;
+            balanceLabel.Location = new Point(139, 90);
+            balanceLabel.Name = "balanceLabel";
+            balanceLabel.Size = new Size(163, 55);
+            balanceLabel.TabIndex = 0;
+            balanceLabel.Text = "₱ 0.00";
+            // 
+            // availableBalanceLabel
+            // 
+            availableBalanceLabel.AutoSize = true;
+            availableBalanceLabel.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            availableBalanceLabel.ForeColor = Color.WhiteSmoke;
+            availableBalanceLabel.Location = new Point(150, 70);
+            availableBalanceLabel.Name = "availableBalanceLabel";
+            availableBalanceLabel.Size = new Size(151, 20);
+            availableBalanceLabel.TabIndex = 28;
+            availableBalanceLabel.Text = "Available Balance";
             // 
             // transferCardPanel
             // 
@@ -180,44 +204,25 @@
             transferCardPanel.Size = new Size(422, 548);
             transferCardPanel.TabIndex = 27;
             // 
-            // amountTransactionPanel
+            // arrowDownIcon
             // 
-            amountTransactionPanel.BackColor = Color.Transparent;
-            amountTransactionPanel.BorderColor = Color.FromArgb(48, 48, 51);
-            amountTransactionPanel.Controls.Add(amountTransactionNumeric);
-            amountTransactionPanel.Controls.Add(line1);
-            amountTransactionPanel.CornerRadius = 5;
-            amountTransactionPanel.ForeColor = Color.Transparent;
-            amountTransactionPanel.Location = new Point(100, 96);
-            amountTransactionPanel.Name = "amountTransactionPanel";
-            amountTransactionPanel.Size = new Size(250, 45);
-            amountTransactionPanel.TabIndex = 29;
+            arrowDownIcon.BackgroundImage = Properties.Resources.down_arrow;
+            arrowDownIcon.BackgroundImageLayout = ImageLayout.Stretch;
+            arrowDownIcon.Location = new Point(191, 259);
+            arrowDownIcon.Name = "arrowDownIcon";
+            arrowDownIcon.Size = new Size(50, 50);
+            arrowDownIcon.TabIndex = 36;
             // 
-            // amountTransferPanel
+            // transferLabel
             // 
-            amountTransferPanel.BackColor = Color.Transparent;
-            amountTransferPanel.BorderColor = Color.FromArgb(48, 48, 51);
-            amountTransferPanel.Controls.Add(amountTransferNumeric);
-            amountTransferPanel.Controls.Add(line5);
-            amountTransferPanel.CornerRadius = 10;
-            amountTransferPanel.ForeColor = Color.Transparent;
-            amountTransferPanel.Location = new Point(91, 188);
-            amountTransferPanel.Name = "amountTransferPanel";
-            amountTransferPanel.Size = new Size(250, 45);
-            amountTransferPanel.TabIndex = 33;
-            // 
-            // yourIDPanel
-            // 
-            yourIDPanel.BackColor = Color.Transparent;
-            yourIDPanel.BorderColor = Color.FromArgb(48, 48, 51);
-            yourIDPanel.Controls.Add(yourIDTextBox);
-            yourIDPanel.Controls.Add(line4);
-            yourIDPanel.CornerRadius = 10;
-            yourIDPanel.ForeColor = Color.Transparent;
-            yourIDPanel.Location = new Point(91, 103);
-            yourIDPanel.Name = "yourIDPanel";
-            yourIDPanel.Size = new Size(248, 45);
-            yourIDPanel.TabIndex = 31;
+            transferLabel.AutoSize = true;
+            transferLabel.Font = new Font("Microsoft Sans Serif", 20.25F, FontStyle.Bold, GraphicsUnit.Point);
+            transferLabel.ForeColor = Color.FromArgb(48, 48, 51);
+            transferLabel.Location = new Point(86, 19);
+            transferLabel.Name = "transferLabel";
+            transferLabel.Size = new Size(218, 31);
+            transferLabel.TabIndex = 30;
+            transferLabel.Text = "Transfer Money";
             // 
             // receiverIDPanel
             // 
@@ -232,72 +237,28 @@
             receiverIDPanel.Size = new Size(248, 45);
             receiverIDPanel.TabIndex = 33;
             // 
-            // greetUserLabel
+            // receiverIDTextBox
             // 
-            greetUserLabel.AutoSize = true;
-            greetUserLabel.Font = new Font("Arial Black", 27.75F, FontStyle.Bold, GraphicsUnit.Point);
-            greetUserLabel.ForeColor = Color.WhiteSmoke;
-            greetUserLabel.Location = new Point(61, 33);
-            greetUserLabel.Name = "greetUserLabel";
-            greetUserLabel.Size = new Size(184, 52);
-            greetUserLabel.TabIndex = 26;
-            greetUserLabel.Text = "Hi, User";
+            receiverIDTextBox.BackColor = Color.FromArgb(48, 48, 51);
+            receiverIDTextBox.BorderStyle = BorderStyle.None;
+            receiverIDTextBox.Font = new Font("Arial Narrow", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            receiverIDTextBox.ForeColor = Color.WhiteSmoke;
+            receiverIDTextBox.Location = new Point(11, 13);
+            receiverIDTextBox.Name = "receiverIDTextBox";
+            receiverIDTextBox.Size = new Size(226, 19);
+            receiverIDTextBox.TabIndex = 32;
             // 
-            // availableBalanceLabel
+            // receiverIDLabel
             // 
-            availableBalanceLabel.AutoSize = true;
-            availableBalanceLabel.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            availableBalanceLabel.ForeColor = Color.WhiteSmoke;
-            availableBalanceLabel.Location = new Point(150, 70);
-            availableBalanceLabel.Name = "availableBalanceLabel";
-            availableBalanceLabel.Size = new Size(151, 20);
-            availableBalanceLabel.TabIndex = 28;
-            availableBalanceLabel.Text = "Available Balance";
-            // 
-            // balanceLabel
-            // 
-            balanceLabel.AutoSize = true;
-            balanceLabel.Font = new Font("Microsoft Sans Serif", 36F, FontStyle.Regular, GraphicsUnit.Point);
-            balanceLabel.ForeColor = Color.WhiteSmoke;
-            balanceLabel.Location = new Point(139, 90);
-            balanceLabel.Name = "balanceLabel";
-            balanceLabel.Size = new Size(163, 55);
-            balanceLabel.TabIndex = 0;
-            balanceLabel.Text = "₱ 0.00";
-            // 
-            // transactionLabel
-            // 
-            transactionLabel.AutoSize = true;
-            transactionLabel.Font = new Font("Microsoft Sans Serif", 20.25F, FontStyle.Bold, GraphicsUnit.Point);
-            transactionLabel.ForeColor = Color.FromArgb(48, 48, 51);
-            transactionLabel.Location = new Point(94, 33);
-            transactionLabel.Name = "transactionLabel";
-            transactionLabel.Size = new Size(168, 31);
-            transactionLabel.TabIndex = 36;
-            transactionLabel.Text = "Transaction";
-            // 
-            // transferLabel
-            // 
-            transferLabel.AutoSize = true;
-            transferLabel.Font = new Font("Microsoft Sans Serif", 20.25F, FontStyle.Bold, GraphicsUnit.Point);
-            transferLabel.ForeColor = Color.FromArgb(48, 48, 51);
-            transferLabel.Location = new Point(86, 19);
-            transferLabel.Name = "transferLabel";
-            transferLabel.Size = new Size(218, 31);
-            transferLabel.TabIndex = 30;
-            transferLabel.Text = "Transfer Money";
-            // 
-            // amountTransactionLabel
-            // 
-            amountTransactionLabel.AutoSize = true;
-            amountTransactionLabel.BackColor = Color.Transparent;
-            amountTransactionLabel.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            amountTransactionLabel.ForeColor = Color.FromArgb(48, 48, 51);
-            amountTransactionLabel.Location = new Point(100, 73);
-            amountTransactionLabel.Name = "amountTransactionLabel";
-            amountTransactionLabel.Size = new Size(65, 20);
-            amountTransactionLabel.TabIndex = 36;
-            amountTransactionLabel.Text = "Amount";
+            receiverIDLabel.AutoSize = true;
+            receiverIDLabel.BackColor = Color.Transparent;
+            receiverIDLabel.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            receiverIDLabel.ForeColor = Color.FromArgb(48, 48, 51);
+            receiverIDLabel.Location = new Point(91, 332);
+            receiverIDLabel.Name = "receiverIDLabel";
+            receiverIDLabel.Size = new Size(103, 20);
+            receiverIDLabel.TabIndex = 35;
+            receiverIDLabel.Text = "Receiver's ID";
             // 
             // amountTransferLabel
             // 
@@ -323,28 +284,18 @@
             yourIDLabel.TabIndex = 29;
             yourIDLabel.Text = "Your Account ID";
             // 
-            // receiverIDLabel
+            // yourIDPanel
             // 
-            receiverIDLabel.AutoSize = true;
-            receiverIDLabel.BackColor = Color.Transparent;
-            receiverIDLabel.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            receiverIDLabel.ForeColor = Color.FromArgb(48, 48, 51);
-            receiverIDLabel.Location = new Point(91, 332);
-            receiverIDLabel.Name = "receiverIDLabel";
-            receiverIDLabel.Size = new Size(103, 20);
-            receiverIDLabel.TabIndex = 35;
-            receiverIDLabel.Text = "Receiver's ID";
-            // 
-            // transactionHistoryLabel
-            // 
-            transactionHistoryLabel.AutoSize = true;
-            transactionHistoryLabel.Font = new Font("Arial Black", 27.75F, FontStyle.Bold, GraphicsUnit.Point);
-            transactionHistoryLabel.ForeColor = Color.WhiteSmoke;
-            transactionHistoryLabel.Location = new Point(61, 665);
-            transactionHistoryLabel.Name = "transactionHistoryLabel";
-            transactionHistoryLabel.Size = new Size(425, 52);
-            transactionHistoryLabel.TabIndex = 29;
-            transactionHistoryLabel.Text = "Transaction History";
+            yourIDPanel.BackColor = Color.Transparent;
+            yourIDPanel.BorderColor = Color.FromArgb(48, 48, 51);
+            yourIDPanel.Controls.Add(yourIDTextBox);
+            yourIDPanel.Controls.Add(line4);
+            yourIDPanel.CornerRadius = 10;
+            yourIDPanel.ForeColor = Color.Transparent;
+            yourIDPanel.Location = new Point(91, 103);
+            yourIDPanel.Name = "yourIDPanel";
+            yourIDPanel.Size = new Size(248, 45);
+            yourIDPanel.TabIndex = 31;
             // 
             // yourIDTextBox
             // 
@@ -357,31 +308,41 @@
             yourIDTextBox.Size = new Size(226, 19);
             yourIDTextBox.TabIndex = 32;
             // 
-            // receiverIDTextBox
+            // confirmButton
             // 
-            receiverIDTextBox.BackColor = Color.FromArgb(48, 48, 51);
-            receiverIDTextBox.BorderStyle = BorderStyle.None;
-            receiverIDTextBox.Font = new Font("Arial Narrow", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            receiverIDTextBox.ForeColor = Color.WhiteSmoke;
-            receiverIDTextBox.Location = new Point(11, 13);
-            receiverIDTextBox.Name = "receiverIDTextBox";
-            receiverIDTextBox.Size = new Size(226, 19);
-            receiverIDTextBox.TabIndex = 32;
+            confirmButton.BorderColor = Color.Transparent;
+            confirmButton.ButtonColor = Color.FromArgb(92, 184, 92);
+            confirmButton.CornerRadius = 10;
+            confirmButton.Cursor = Cursors.Hand;
+            confirmButton.FlatAppearance.BorderSize = 0;
+            confirmButton.FlatAppearance.MouseDownBackColor = Color.WhiteSmoke;
+            confirmButton.FlatAppearance.MouseOverBackColor = Color.WhiteSmoke;
+            confirmButton.FlatStyle = FlatStyle.Flat;
+            confirmButton.Font = new Font("Microsoft Sans Serif", 15.75F, FontStyle.Regular, GraphicsUnit.Point);
+            confirmButton.ForeColor = Color.WhiteSmoke;
+            confirmButton.Location = new Point(91, 446);
+            confirmButton.Name = "confirmButton";
+            confirmButton.OnHoverBorderColor = Color.Transparent;
+            confirmButton.OnHoverButtonColor = Color.FromArgb(124, 205, 124);
+            confirmButton.OnHoverTextColor = Color.WhiteSmoke;
+            confirmButton.Size = new Size(248, 56);
+            confirmButton.TabIndex = 7;
+            confirmButton.Text = "Confirm";
+            confirmButton.TextColor = Color.WhiteSmoke;
+            confirmButton.UseVisualStyleBackColor = false;
             // 
-            // amountTransactionNumeric
+            // amountTransferPanel
             // 
-            amountTransactionNumeric.BackColor = Color.FromArgb(48, 48, 51);
-            amountTransactionNumeric.BorderStyle = BorderStyle.None;
-            amountTransactionNumeric.DecimalPlaces = 2;
-            amountTransactionNumeric.Font = new Font("Arial", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            amountTransactionNumeric.ForeColor = Color.WhiteSmoke;
-            amountTransactionNumeric.Location = new Point(13, 9);
-            amountTransactionNumeric.Maximum = new decimal(new int[] { 100000, 0, 0, 0 });
-            amountTransactionNumeric.Name = "amountTransactionNumeric";
-            amountTransactionNumeric.RightToLeft = RightToLeft.No;
-            amountTransactionNumeric.Size = new Size(226, 22);
-            amountTransactionNumeric.TabIndex = 1;
-            amountTransactionNumeric.TextAlign = HorizontalAlignment.Center;
+            amountTransferPanel.BackColor = Color.Transparent;
+            amountTransferPanel.BorderColor = Color.FromArgb(48, 48, 51);
+            amountTransferPanel.Controls.Add(amountTransferNumeric);
+            amountTransferPanel.Controls.Add(line5);
+            amountTransferPanel.CornerRadius = 10;
+            amountTransferPanel.ForeColor = Color.Transparent;
+            amountTransferPanel.Location = new Point(91, 188);
+            amountTransferPanel.Name = "amountTransferPanel";
+            amountTransferPanel.Size = new Size(250, 45);
+            amountTransferPanel.TabIndex = 33;
             // 
             // amountTransferNumeric
             // 
@@ -397,6 +358,74 @@
             amountTransferNumeric.Size = new Size(226, 22);
             amountTransferNumeric.TabIndex = 1;
             amountTransferNumeric.TextAlign = HorizontalAlignment.Center;
+            // 
+            // transactionCardPanel
+            // 
+            transactionCardPanel.BackColor = Color.Transparent;
+            transactionCardPanel.BorderColor = Color.WhiteSmoke;
+            transactionCardPanel.Controls.Add(line2);
+            transactionCardPanel.Controls.Add(transactionLabel);
+            transactionCardPanel.Controls.Add(amountTransactionLabel);
+            transactionCardPanel.Controls.Add(amountTransactionPanel);
+            transactionCardPanel.Controls.Add(withdrawButton);
+            transactionCardPanel.Controls.Add(depositButton);
+            transactionCardPanel.CornerRadius = 10;
+            transactionCardPanel.ForeColor = Color.Transparent;
+            transactionCardPanel.Location = new Point(61, 332);
+            transactionCardPanel.Name = "transactionCardPanel";
+            transactionCardPanel.Size = new Size(451, 312);
+            transactionCardPanel.TabIndex = 26;
+            // 
+            // transactionLabel
+            // 
+            transactionLabel.AutoSize = true;
+            transactionLabel.Font = new Font("Microsoft Sans Serif", 20.25F, FontStyle.Bold, GraphicsUnit.Point);
+            transactionLabel.ForeColor = Color.FromArgb(48, 48, 51);
+            transactionLabel.Location = new Point(94, 33);
+            transactionLabel.Name = "transactionLabel";
+            transactionLabel.Size = new Size(168, 31);
+            transactionLabel.TabIndex = 36;
+            transactionLabel.Text = "Transaction";
+            // 
+            // amountTransactionLabel
+            // 
+            amountTransactionLabel.AutoSize = true;
+            amountTransactionLabel.BackColor = Color.Transparent;
+            amountTransactionLabel.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            amountTransactionLabel.ForeColor = Color.FromArgb(48, 48, 51);
+            amountTransactionLabel.Location = new Point(100, 73);
+            amountTransactionLabel.Name = "amountTransactionLabel";
+            amountTransactionLabel.Size = new Size(65, 20);
+            amountTransactionLabel.TabIndex = 36;
+            amountTransactionLabel.Text = "Amount";
+            // 
+            // amountTransactionPanel
+            // 
+            amountTransactionPanel.BackColor = Color.Transparent;
+            amountTransactionPanel.BorderColor = Color.FromArgb(48, 48, 51);
+            amountTransactionPanel.Controls.Add(amountTransactionNumeric);
+            amountTransactionPanel.Controls.Add(line1);
+            amountTransactionPanel.CornerRadius = 5;
+            amountTransactionPanel.ForeColor = Color.Transparent;
+            amountTransactionPanel.Location = new Point(100, 96);
+            amountTransactionPanel.Name = "amountTransactionPanel";
+            amountTransactionPanel.Size = new Size(250, 45);
+            amountTransactionPanel.TabIndex = 29;
+            // 
+            // amountTransactionNumeric
+            // 
+            amountTransactionNumeric.BackColor = Color.FromArgb(48, 48, 51);
+            amountTransactionNumeric.BorderStyle = BorderStyle.None;
+            amountTransactionNumeric.DecimalPlaces = 2;
+            amountTransactionNumeric.Font = new Font("Arial", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            amountTransactionNumeric.ForeColor = Color.WhiteSmoke;
+            amountTransactionNumeric.Location = new Point(13, 9);
+            amountTransactionNumeric.Maximum = new decimal(new int[] { 100000, 0, 0, 0 });
+            amountTransactionNumeric.Name = "amountTransactionNumeric";
+            amountTransactionNumeric.RightToLeft = RightToLeft.No;
+            amountTransactionNumeric.Size = new Size(226, 22);
+            amountTransactionNumeric.TabIndex = 1;
+            amountTransactionNumeric.TextAlign = HorizontalAlignment.Center;
             // 
             // withdrawButton
             // 
@@ -444,39 +473,55 @@
             depositButton.TextColor = Color.WhiteSmoke;
             depositButton.UseVisualStyleBackColor = false;
             // 
-            // confirmButton
+            // transactionHistoryView
             // 
-            confirmButton.BorderColor = Color.Transparent;
-            confirmButton.ButtonColor = Color.FromArgb(92, 184, 92);
-            confirmButton.CornerRadius = 10;
-            confirmButton.Cursor = Cursors.Hand;
-            confirmButton.FlatAppearance.BorderSize = 0;
-            confirmButton.FlatAppearance.MouseDownBackColor = Color.WhiteSmoke;
-            confirmButton.FlatAppearance.MouseOverBackColor = Color.WhiteSmoke;
-            confirmButton.FlatStyle = FlatStyle.Flat;
-            confirmButton.Font = new Font("Microsoft Sans Serif", 15.75F, FontStyle.Regular, GraphicsUnit.Point);
-            confirmButton.ForeColor = Color.WhiteSmoke;
-            confirmButton.Location = new Point(91, 446);
-            confirmButton.Name = "confirmButton";
-            confirmButton.OnHoverBorderColor = Color.Transparent;
-            confirmButton.OnHoverButtonColor = Color.FromArgb(124, 205, 124);
-            confirmButton.OnHoverTextColor = Color.WhiteSmoke;
-            confirmButton.Size = new Size(248, 56);
-            confirmButton.TabIndex = 7;
-            confirmButton.Text = "Confirm";
-            confirmButton.TextColor = Color.WhiteSmoke;
-            confirmButton.UseVisualStyleBackColor = false;
+            transactionHistoryView.BackColor = Color.FromArgb(48, 48, 51);
+            transactionHistoryView.BorderStyle = BorderStyle.None;
+            transactionHistoryView.Columns.AddRange(new ColumnHeader[] { transactionIDHeader, amountHeader, dateHeader, transactionTypeHeader });
+            transactionHistoryView.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            transactionHistoryView.ForeColor = Color.WhiteSmoke;
+            transactionHistoryView.HeaderStyle = ColumnHeaderStyle.Nonclickable;
+            transactionHistoryView.Location = new Point(61, 725);
+            transactionHistoryView.Name = "transactionHistoryView";
+            transactionHistoryView.Size = new Size(901, 248);
+            transactionHistoryView.TabIndex = 31;
+            transactionHistoryView.UseCompatibleStateImageBehavior = false;
+            transactionHistoryView.View = View.Details;
+            // 
+            // transactionIDHeader
+            // 
+            transactionIDHeader.Tag = "";
+            transactionIDHeader.Text = "Transaction ID";
+            transactionIDHeader.Width = 200;
+            // 
+            // amountHeader
+            // 
+            amountHeader.Text = "Amount";
+            amountHeader.Width = 200;
+            // 
+            // dateHeader
+            // 
+            dateHeader.Text = "Date of Transaction";
+            dateHeader.Width = 250;
+            // 
+            // transactionTypeHeader
+            // 
+            transactionTypeHeader.Text = "Transaction Type";
+            transactionTypeHeader.Width = 251;
             // 
             // HomeScreenForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.WhiteSmoke;
-            ClientSize = new Size(1039, 723);
+            ClientSize = new Size(1039, 1000);
             Controls.Add(homeScreenPanel);
             FormBorderStyle = FormBorderStyle.None;
+            MinimumSize = new Size(1039, 723);
             Name = "HomeScreenForm";
             Text = "HomeScreenForm";
+            homeScreenPanel.ResumeLayout(false);
+            homeScreenPanel.PerformLayout();
             balanceCardPanel.ResumeLayout(false);
             balanceCardPanel.PerformLayout();
             transferCardPanel.ResumeLayout(false);
@@ -491,8 +536,6 @@
             transactionCardPanel.PerformLayout();
             amountTransactionPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)amountTransactionNumeric).EndInit();
-            homeScreenPanel.ResumeLayout(false);
-            homeScreenPanel.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -528,5 +571,10 @@
         private Utils.Components.RoundedButton depositButton;
         private Utils.Components.RoundedButton withdrawButton;
         private Utils.Components.RoundedButton confirmButton;
+        private ListView transactionHistoryView;
+        private ColumnHeader transactionIDHeader;
+        private ColumnHeader amountHeader;
+        private ColumnHeader dateHeader;
+        private ColumnHeader transactionTypeHeader;
     }
 }

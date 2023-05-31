@@ -146,7 +146,6 @@
             ResumeLayout(false);
         }
 
-        private HomeScreenForm homeScreenForm = new HomeScreenForm();
         private Panel line1;
         private Panel line2;
         private Panel appLogoIcon;

@@ -19,6 +19,7 @@ namespace BankingSystem.Forms.DashBoard
         {
             InitializeComponent();
             this.email = email;
+            HomeScreenForm homeScreenForm = new HomeScreenForm(email);
             dashboardPanel.Controls.Clear();
             homeScreenForm.TopLevel = false;
             homeScreenForm.FormBorderStyle = FormBorderStyle.None;
@@ -37,7 +38,7 @@ namespace BankingSystem.Forms.DashBoard
         }
         private void homeScreenButton_Click(object sender, EventArgs e)
         {
-            HomeScreenForm homeScreenForm = new HomeScreenForm();
+            HomeScreenForm homeScreenForm = new HomeScreenForm(email);
             ChangeDashboardForm(homeScreenForm);
             homeScreenButton.ButtonColor = Color.FromArgb(92, 184, 92);
             homeScreenButton.OnHoverButtonColor = Color.FromArgb(124, 205, 124);

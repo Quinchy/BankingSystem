@@ -12,11 +12,11 @@ namespace BankingSystem.Services
         public static Customer loadCustomerInformation(string email)
         {
             Customer currentCustomer;
-            String firstName = "";
-            String lastName = "";
-            String emailAddress = "";
-            String phoneNumber = "";
-            String password = "";
+            string firstName = "";
+            string lastName = "";
+            string emailAddress = "";
+            string phoneNumber = "";
+            string password = "";
             // This method will load the user information from the database
             // Open Connection
             // Write an SQL statement that will retrieve the data from the database and store it in the Customer Object.

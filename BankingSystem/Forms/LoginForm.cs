@@ -26,16 +26,29 @@ namespace BankingSystem.Forms
             // Get the email and password from the TextBox
             String email = emailTextBox.Text;
             String password = passwordTextBox.Text;
-            // Call the Authenticate user function to check if the user logging in is in database.
-            if (LoginServices.authenticateUser(email, password))
+            // Check if email and password fields are not empty
+            if (string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(password))
             {
-                // If exist then Change the screen to Dashboard.
+                MessageBox.Show("Please fill out both the email and password fields.", "Input Required", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            // Call the Authenticate user function to check if the user logging in is in database.
+            int result = LoginServices.authenticateUser(email, password);
+            if (result == 1)
+            {
+                // If both email and password are correct then Change the screen to Dashboard.
                 Form dashboardForm = new DashBoard.DashboardForm(email);
                 Helpers.changeScreen(baseFormPanel, dashboardForm);
             }
+            else if (result == 0)
+            {
+                // Password is incorrect
+                MessageBox.Show("Incorrect password. Please try again.", "Login Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
             else
             {
-                // Show a messagebox that will alert the user to register.
+                // Email doesn't exist
+                MessageBox.Show("The provided email doesn't exist in our database. Please register first.", "Login Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
         private void createAccountLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)

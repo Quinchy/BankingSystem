@@ -189,6 +189,7 @@
             showPasswordCheckbox.TabIndex = 37;
             showPasswordCheckbox.Text = "Show Password?";
             showPasswordCheckbox.UseVisualStyleBackColor = true;
+            showPasswordCheckbox.CheckedChanged += showPasswordCheckbox_CheckedChanged;
             // 
             // passwordPanel
             // 
@@ -206,9 +207,9 @@
             passwordTextBox.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
             passwordTextBox.Location = new Point(16, 11);
             passwordTextBox.Name = "passwordTextBox";
-            passwordTextBox.PasswordChar = '*';
             passwordTextBox.Size = new Size(234, 19);
             passwordTextBox.TabIndex = 0;
+            passwordTextBox.UseSystemPasswordChar = true;
             // 
             // passwordLabel
             // 

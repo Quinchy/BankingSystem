@@ -228,6 +228,7 @@
             showPasswordCheckbox.TabIndex = 32;
             showPasswordCheckbox.Text = "Show Password?";
             showPasswordCheckbox.UseVisualStyleBackColor = true;
+            showPasswordCheckbox.CheckedChanged += showPasswordCheckbox_CheckedChanged;
             // 
             // registrationLabel
             // 
@@ -295,6 +296,7 @@
             confirmPasswordTextBox.Name = "confirmPasswordTextBox";
             confirmPasswordTextBox.Size = new Size(245, 19);
             confirmPasswordTextBox.TabIndex = 19;
+            confirmPasswordTextBox.UseSystemPasswordChar = true;
             // 
             // passwordLabel
             // 
@@ -326,9 +328,9 @@
             passwordTextBox.ForeColor = Color.FromArgb(48, 48, 51);
             passwordTextBox.Location = new Point(47, 477);
             passwordTextBox.Name = "passwordTextBox";
-            passwordTextBox.PasswordChar = '*';
             passwordTextBox.Size = new Size(245, 19);
             passwordTextBox.TabIndex = 16;
+            passwordTextBox.UseSystemPasswordChar = true;
             // 
             // phoneNumberTextBox
             // 

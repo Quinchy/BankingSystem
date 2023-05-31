@@ -32,7 +32,7 @@ namespace BankingSystem.Forms
                 // If exist then Change the screen to Dashboard.
                 Form dashboardForm = new DashBoard.DashboardForm(email);
                 Helpers.changeScreen(baseFormPanel, dashboardForm);
-            } 
+            }
             else
             {
                 // Show a messagebox that will alert the user to register.
@@ -46,7 +46,14 @@ namespace BankingSystem.Forms
         }
         private void showPasswordCheckbox_CheckedChanged(object sender, EventArgs e)
         {
-
+            if (showPasswordCheckbox.Checked == true)
+            {
+                passwordTextBox.UseSystemPasswordChar = false;
+            }
+            else
+            {
+                passwordTextBox.UseSystemPasswordChar = true;
+            }
         }
 
         private void forgetPasswordLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)

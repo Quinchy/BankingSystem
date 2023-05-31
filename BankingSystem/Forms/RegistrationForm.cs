@@ -37,5 +37,20 @@ namespace BankingSystem.Forms
             Form loginForm = new LoginForm();
             Helpers.changeScreen(baseFormPanel, loginForm);
         }
+
+        private void showPasswordCheckbox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (showPasswordCheckbox.Checked == true)
+            {
+                passwordTextBox.UseSystemPasswordChar = false;
+                confirmPasswordTextBox.UseSystemPasswordChar = false;
+            }
+            else
+            {
+                passwordTextBox.UseSystemPasswordChar = true;
+                confirmPasswordTextBox.UseSystemPasswordChar = true;
+            }
+
+        }
     }
 }

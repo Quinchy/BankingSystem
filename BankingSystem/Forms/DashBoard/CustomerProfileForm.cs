@@ -26,5 +26,17 @@ namespace BankingSystem.Forms
             phoneNumberTextBox.Text = customer.PhoneNumber;
             passwordTextBox.Text = customer.Password;
         }
+
+        private void showPasswordCheckbox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (showPasswordCheckbox.Checked == true)
+            {
+                passwordTextBox.UseSystemPasswordChar = false;
+            }
+            else
+            {
+                passwordTextBox.UseSystemPasswordChar = true;
+            }
+        }
     }
 }

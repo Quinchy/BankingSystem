@@ -44,7 +44,6 @@
             emailTextBox = new TextBox();
             firstNamePanel = new Utils.Components.RoundedPanel();
             firstNameTextBox = new TextBox();
-            registrationBackgroundPanel = new Panel();
             lastNamePanel = new Utils.Components.RoundedPanel();
             textBox1 = new TextBox();
             emailPanel = new Utils.Components.RoundedPanel();
@@ -55,6 +54,7 @@
             textBox4 = new TextBox();
             confirmPasswordPanel = new Utils.Components.RoundedPanel();
             textBox5 = new TextBox();
+            registrationBackgroundPanel = new Panel();
             registrationPanel.SuspendLayout();
             firstNamePanel.SuspendLayout();
             lastNamePanel.SuspendLayout();
@@ -326,6 +326,7 @@
             passwordTextBox.ForeColor = Color.FromArgb(48, 48, 51);
             passwordTextBox.Location = new Point(47, 477);
             passwordTextBox.Name = "passwordTextBox";
+            passwordTextBox.PasswordChar = '*';
             passwordTextBox.Size = new Size(245, 19);
             passwordTextBox.TabIndex = 16;
             // 
@@ -416,13 +417,6 @@
             firstNameTextBox.Name = "firstNameTextBox";
             firstNameTextBox.Size = new Size(245, 19);
             firstNameTextBox.TabIndex = 25;
-            // 
-            // registrationBackgroundPanel
-            // 
-            registrationBackgroundPanel.Location = new Point(0, 0);
-            registrationBackgroundPanel.Name = "registrationBackgroundPanel";
-            registrationBackgroundPanel.Size = new Size(640, 720);
-            registrationBackgroundPanel.TabIndex = 4;
             // 
             // lastNamePanel
             // 
@@ -533,6 +527,13 @@
             textBox5.Name = "textBox5";
             textBox5.Size = new Size(245, 19);
             textBox5.TabIndex = 25;
+            // 
+            // registrationBackgroundPanel
+            // 
+            registrationBackgroundPanel.Location = new Point(0, 0);
+            registrationBackgroundPanel.Name = "registrationBackgroundPanel";
+            registrationBackgroundPanel.Size = new Size(640, 720);
+            registrationBackgroundPanel.TabIndex = 4;
             // 
             // RegistrationForm
             // 

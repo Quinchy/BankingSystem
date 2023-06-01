@@ -17,9 +17,12 @@ namespace BankingSystem.Forms
         public CustomerProfileForm(string email)
         {
             InitializeComponent();
-            // Load the customer's information.
-            Customer customer = CustomerServices.loadCustomerInformation(email);
+            // Load the customer's and account's information.
+            var result = CustomerServices.loadCustomerInformation(email);
+            Customer customer = result.Item1;
+            Account account = result.Item2;
             // Set the customer information to the TextBox.
+            accountIDTextBox.Text = account.AccountId;
             firstNameTextBox.Text = customer.FirstName;
             lastNameTextBox.Text = customer.LastName;
             emailTextBox.Text = customer.Email;

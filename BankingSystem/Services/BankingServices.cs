@@ -13,17 +13,13 @@ namespace BankingSystem.Services
         {
             Account currentAccount;
             string accountID = "";
-            string transactionId = "";
             double balance = 0.00;
-            string transactionType = "";
             // This method will load the user information from the database
             // Open Connection
             // Write an SQL statement that will retrieve the data from the database and store it in the Customer Object.
             currentAccount = new Account(
                 accountID,
-                transactionId,
-                balance,
-                transactionType
+                balance
             );
             // Close Connection
             return currentAccount;

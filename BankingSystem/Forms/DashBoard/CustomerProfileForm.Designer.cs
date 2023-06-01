@@ -447,7 +447,7 @@ namespace BankingSystem.Forms
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackColor = Color.FromArgb(48, 46, 65);
+            BackColor = Color.FromArgb(34, 33, 46);
             ClientSize = new Size(1039, 723);
             Controls.Add(accountInfoCardPanel);
             Controls.Add(profilePanel);

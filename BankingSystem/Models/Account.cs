@@ -6,18 +6,16 @@ using System.Threading.Tasks;
 
 namespace BankingSystem.Models
 {
-    internal class Account : Transaction
+    internal class Account
     {
         public string AccountId { get; set; }
         public double Balance { get; set; }
         public List<Transaction> TransactionHistory { get; set; }
 
-        public Account(string accountId, string transactionId, double balance, string transactionType)
-            : base(transactionId, balance, transactionType)
+        public Account(string accountId, double balance)
         {
             AccountId = accountId;
             Balance = balance;
-            TransactionHistory = new List<Transaction>();
         }
     }
 }

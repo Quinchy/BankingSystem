@@ -114,7 +114,7 @@
             // 
             homeScreenPanel.AutoScroll = true;
             homeScreenPanel.AutoScrollMinSize = new Size(0, 1000);
-            homeScreenPanel.BackColor = Color.FromArgb(48, 46, 65);
+            homeScreenPanel.BackColor = Color.FromArgb(34, 33, 46);
             homeScreenPanel.Controls.Add(transactionHistoryView);
             homeScreenPanel.Controls.Add(greetUserLabel);
             homeScreenPanel.Controls.Add(transactionHistoryLabel);

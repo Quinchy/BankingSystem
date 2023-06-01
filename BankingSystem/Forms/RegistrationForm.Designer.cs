@@ -55,6 +55,7 @@
             confirmPasswordPanel = new Utils.Components.RoundedPanel();
             textBox5 = new TextBox();
             registrationBackgroundPanel = new Panel();
+            backButton = new Button();
             registrationPanel.SuspendLayout();
             firstNamePanel.SuspendLayout();
             lastNamePanel.SuspendLayout();
@@ -62,6 +63,7 @@
             passwordPanel.SuspendLayout();
             phoneNumberPanel.SuspendLayout();
             confirmPasswordPanel.SuspendLayout();
+            registrationBackgroundPanel.SuspendLayout();
             SuspendLayout();
             // 
             // line1
@@ -122,7 +124,7 @@
             // 
             // registrationPanel
             // 
-            registrationPanel.BackColor = Color.FromArgb(48, 48, 51);
+            registrationPanel.BackColor = Color.FromArgb(48, 46, 65);
             registrationPanel.Controls.Add(phoneNumberIcon);
             registrationPanel.Controls.Add(lastNameIcon);
             registrationPanel.Controls.Add(firstNameIcon);
@@ -532,10 +534,29 @@
             // 
             // registrationBackgroundPanel
             // 
+            registrationBackgroundPanel.BackgroundImage = Properties.Resources.RegistrationBackground;
+            registrationBackgroundPanel.BackgroundImageLayout = ImageLayout.Stretch;
+            registrationBackgroundPanel.Controls.Add(backButton);
             registrationBackgroundPanel.Location = new Point(0, 0);
             registrationBackgroundPanel.Name = "registrationBackgroundPanel";
             registrationBackgroundPanel.Size = new Size(640, 720);
             registrationBackgroundPanel.TabIndex = 4;
+            // 
+            // backButton
+            // 
+            backButton.BackgroundImage = Properties.Resources.back_button;
+            backButton.BackgroundImageLayout = ImageLayout.Stretch;
+            backButton.Cursor = Cursors.Hand;
+            backButton.FlatAppearance.BorderSize = 0;
+            backButton.FlatAppearance.MouseDownBackColor = Color.WhiteSmoke;
+            backButton.FlatAppearance.MouseOverBackColor = Color.WhiteSmoke;
+            backButton.FlatStyle = FlatStyle.Flat;
+            backButton.Location = new Point(20, 20);
+            backButton.Name = "backButton";
+            backButton.Size = new Size(50, 50);
+            backButton.TabIndex = 0;
+            backButton.UseVisualStyleBackColor = true;
+            backButton.Click += backButton_Click;
             // 
             // RegistrationForm
             // 
@@ -562,6 +583,7 @@
             phoneNumberPanel.PerformLayout();
             confirmPasswordPanel.ResumeLayout(false);
             confirmPasswordPanel.PerformLayout();
+            registrationBackgroundPanel.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -607,5 +629,6 @@
         private TextBox textBox4;
         private Utils.Components.RoundedPanel confirmPasswordPanel;
         private TextBox textBox5;
+        private Button backButton;
     }
 }

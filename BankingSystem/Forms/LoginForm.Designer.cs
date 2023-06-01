@@ -18,7 +18,6 @@ namespace BankingSystem.Forms
         private void InitializeComponent()
         {
             loginButton = new RoundedButton();
-            loginFormPanel = new Panel();
             loginFormLeftPanel = new Panel();
             passwordIconLabel = new Panel();
             emailIconLabel = new Panel();
@@ -36,7 +35,7 @@ namespace BankingSystem.Forms
             emailTextBox = new TextBox();
             emailPanel = new RoundedPanel();
             line1 = new Panel();
-            loginFormPanel.SuspendLayout();
+            registrationBackgroundPanel = new Panel();
             loginFormLeftPanel.SuspendLayout();
             passwordPanel.SuspendLayout();
             emailPanel.SuspendLayout();
@@ -66,20 +65,9 @@ namespace BankingSystem.Forms
             loginButton.UseVisualStyleBackColor = false;
             loginButton.Click += loginButton_Click;
             // 
-            // loginFormPanel
-            // 
-            loginFormPanel.BackColor = Color.FromArgb(92, 184, 92);
-            loginFormPanel.BackgroundImage = Properties.Resources.OnlyFundsLoginBackground;
-            loginFormPanel.BackgroundImageLayout = ImageLayout.Center;
-            loginFormPanel.Controls.Add(loginFormLeftPanel);
-            loginFormPanel.Location = new Point(0, 0);
-            loginFormPanel.Name = "loginFormPanel";
-            loginFormPanel.Size = new Size(1280, 720);
-            loginFormPanel.TabIndex = 2;
-            // 
             // loginFormLeftPanel
             // 
-            loginFormLeftPanel.BackColor = Color.FromArgb(48, 48, 51);
+            loginFormLeftPanel.BackColor = Color.FromArgb(48, 46, 65);
             loginFormLeftPanel.Controls.Add(passwordIconLabel);
             loginFormLeftPanel.Controls.Add(emailIconLabel);
             loginFormLeftPanel.Controls.Add(createAccountLinkLabel);
@@ -281,17 +269,26 @@ namespace BankingSystem.Forms
             line1.Size = new Size(355, 2);
             line1.TabIndex = 1;
             // 
+            // registrationBackgroundPanel
+            // 
+            registrationBackgroundPanel.BackgroundImage = Properties.Resources.OnlyFundsLoginBackground;
+            registrationBackgroundPanel.BackgroundImageLayout = ImageLayout.Stretch;
+            registrationBackgroundPanel.Location = new Point(640, 0);
+            registrationBackgroundPanel.Name = "registrationBackgroundPanel";
+            registrationBackgroundPanel.Size = new Size(640, 720);
+            registrationBackgroundPanel.TabIndex = 5;
+            // 
             // LoginForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.WhiteSmoke;
             ClientSize = new Size(1280, 720);
-            Controls.Add(loginFormPanel);
+            Controls.Add(registrationBackgroundPanel);
+            Controls.Add(loginFormLeftPanel);
             FormBorderStyle = FormBorderStyle.None;
             Name = "LoginForm";
             Text = "LoginForm";
-            loginFormPanel.ResumeLayout(false);
             loginFormLeftPanel.ResumeLayout(false);
             loginFormLeftPanel.PerformLayout();
             passwordPanel.ResumeLayout(false);
@@ -301,7 +298,6 @@ namespace BankingSystem.Forms
 
         private Panel line1;
         private Panel line2;
-        private Panel loginFormPanel;
         private Panel loginFormLeftPanel;
         private Label loginLabel;
         private Label loginDescriptionLabel;
@@ -318,5 +314,6 @@ namespace BankingSystem.Forms
         private LinkLabel forgetPasswordLinkLabel;
         private LinkLabel createAccountLinkLabel;
         private RoundedButton loginButton;
+        private Panel registrationBackgroundPanel;
     }
 }

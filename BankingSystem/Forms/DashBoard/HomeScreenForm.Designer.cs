@@ -20,6 +20,11 @@
             line5 = new Panel();
             line6 = new Panel();
             homeScreenPanel = new Panel();
+            transactionHistoryView = new ListView();
+            transactionIDHeader = new ColumnHeader();
+            amountHeader = new ColumnHeader();
+            dateHeader = new ColumnHeader();
+            transactionTypeHeader = new ColumnHeader();
             greetUserLabel = new Label();
             transactionHistoryLabel = new Label();
             balanceCardPanel = new Utils.Components.RoundedPanel();
@@ -45,11 +50,6 @@
             amountTransactionNumeric = new NumericUpDown();
             withdrawButton = new Utils.Components.RoundedButton();
             depositButton = new Utils.Components.RoundedButton();
-            transactionHistoryView = new ListView();
-            transactionIDHeader = new ColumnHeader();
-            amountHeader = new ColumnHeader();
-            dateHeader = new ColumnHeader();
-            transactionTypeHeader = new ColumnHeader();
             homeScreenPanel.SuspendLayout();
             balanceCardPanel.SuspendLayout();
             transferCardPanel.SuspendLayout();
@@ -114,7 +114,7 @@
             // 
             homeScreenPanel.AutoScroll = true;
             homeScreenPanel.AutoScrollMinSize = new Size(0, 1000);
-            homeScreenPanel.BackColor = Color.FromArgb(48, 48, 51);
+            homeScreenPanel.BackColor = Color.FromArgb(48, 46, 65);
             homeScreenPanel.Controls.Add(transactionHistoryView);
             homeScreenPanel.Controls.Add(greetUserLabel);
             homeScreenPanel.Controls.Add(transactionHistoryLabel);
@@ -125,6 +125,42 @@
             homeScreenPanel.Name = "homeScreenPanel";
             homeScreenPanel.Size = new Size(1040, 723);
             homeScreenPanel.TabIndex = 30;
+            // 
+            // transactionHistoryView
+            // 
+            transactionHistoryView.BackColor = Color.FromArgb(48, 48, 51);
+            transactionHistoryView.BorderStyle = BorderStyle.None;
+            transactionHistoryView.Columns.AddRange(new ColumnHeader[] { transactionIDHeader, amountHeader, dateHeader, transactionTypeHeader });
+            transactionHistoryView.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            transactionHistoryView.ForeColor = Color.WhiteSmoke;
+            transactionHistoryView.HeaderStyle = ColumnHeaderStyle.Nonclickable;
+            transactionHistoryView.Location = new Point(61, 725);
+            transactionHistoryView.Name = "transactionHistoryView";
+            transactionHistoryView.Size = new Size(901, 248);
+            transactionHistoryView.TabIndex = 31;
+            transactionHistoryView.UseCompatibleStateImageBehavior = false;
+            transactionHistoryView.View = View.Details;
+            // 
+            // transactionIDHeader
+            // 
+            transactionIDHeader.Tag = "";
+            transactionIDHeader.Text = "Transaction ID";
+            transactionIDHeader.Width = 200;
+            // 
+            // amountHeader
+            // 
+            amountHeader.Text = "Amount";
+            amountHeader.Width = 200;
+            // 
+            // dateHeader
+            // 
+            dateHeader.Text = "Date of Transaction";
+            dateHeader.Width = 250;
+            // 
+            // transactionTypeHeader
+            // 
+            transactionTypeHeader.Text = "Transaction Type";
+            transactionTypeHeader.Width = 251;
             // 
             // greetUserLabel
             // 
@@ -227,7 +263,7 @@
             // receiverIDPanel
             // 
             receiverIDPanel.BackColor = Color.Transparent;
-            receiverIDPanel.BorderColor = Color.FromArgb(48, 48, 51);
+            receiverIDPanel.BorderColor = Color.FromArgb(48, 46, 65);
             receiverIDPanel.Controls.Add(receiverIDTextBox);
             receiverIDPanel.Controls.Add(line6);
             receiverIDPanel.CornerRadius = 10;
@@ -239,7 +275,7 @@
             // 
             // receiverIDTextBox
             // 
-            receiverIDTextBox.BackColor = Color.FromArgb(48, 48, 51);
+            receiverIDTextBox.BackColor = Color.FromArgb(48, 46, 65);
             receiverIDTextBox.BorderStyle = BorderStyle.None;
             receiverIDTextBox.Font = new Font("Arial Narrow", 12F, FontStyle.Regular, GraphicsUnit.Point);
             receiverIDTextBox.ForeColor = Color.WhiteSmoke;
@@ -287,7 +323,7 @@
             // yourIDPanel
             // 
             yourIDPanel.BackColor = Color.Transparent;
-            yourIDPanel.BorderColor = Color.FromArgb(48, 48, 51);
+            yourIDPanel.BorderColor = Color.FromArgb(48, 46, 65);
             yourIDPanel.Controls.Add(yourIDTextBox);
             yourIDPanel.Controls.Add(line4);
             yourIDPanel.CornerRadius = 10;
@@ -299,7 +335,7 @@
             // 
             // yourIDTextBox
             // 
-            yourIDTextBox.BackColor = Color.FromArgb(48, 48, 51);
+            yourIDTextBox.BackColor = Color.FromArgb(48, 46, 65);
             yourIDTextBox.BorderStyle = BorderStyle.None;
             yourIDTextBox.Font = new Font("Arial Narrow", 12F, FontStyle.Regular, GraphicsUnit.Point);
             yourIDTextBox.ForeColor = Color.WhiteSmoke;
@@ -334,7 +370,7 @@
             // amountTransferPanel
             // 
             amountTransferPanel.BackColor = Color.Transparent;
-            amountTransferPanel.BorderColor = Color.FromArgb(48, 48, 51);
+            amountTransferPanel.BorderColor = Color.FromArgb(48, 46, 65);
             amountTransferPanel.Controls.Add(amountTransferNumeric);
             amountTransferPanel.Controls.Add(line5);
             amountTransferPanel.CornerRadius = 10;
@@ -346,7 +382,7 @@
             // 
             // amountTransferNumeric
             // 
-            amountTransferNumeric.BackColor = Color.FromArgb(48, 48, 51);
+            amountTransferNumeric.BackColor = Color.FromArgb(48, 46, 65);
             amountTransferNumeric.BorderStyle = BorderStyle.None;
             amountTransferNumeric.DecimalPlaces = 2;
             amountTransferNumeric.Font = new Font("Arial", 12F, FontStyle.Bold, GraphicsUnit.Point);
@@ -402,7 +438,7 @@
             // amountTransactionPanel
             // 
             amountTransactionPanel.BackColor = Color.Transparent;
-            amountTransactionPanel.BorderColor = Color.FromArgb(48, 48, 51);
+            amountTransactionPanel.BorderColor = Color.FromArgb(48, 46, 65);
             amountTransactionPanel.Controls.Add(amountTransactionNumeric);
             amountTransactionPanel.Controls.Add(line1);
             amountTransactionPanel.CornerRadius = 5;
@@ -414,7 +450,7 @@
             // 
             // amountTransactionNumeric
             // 
-            amountTransactionNumeric.BackColor = Color.FromArgb(48, 48, 51);
+            amountTransactionNumeric.BackColor = Color.FromArgb(48, 46, 65);
             amountTransactionNumeric.BorderStyle = BorderStyle.None;
             amountTransactionNumeric.DecimalPlaces = 2;
             amountTransactionNumeric.Font = new Font("Arial", 12F, FontStyle.Bold, GraphicsUnit.Point);
@@ -472,42 +508,6 @@
             depositButton.Text = "Deposit";
             depositButton.TextColor = Color.WhiteSmoke;
             depositButton.UseVisualStyleBackColor = false;
-            // 
-            // transactionHistoryView
-            // 
-            transactionHistoryView.BackColor = Color.FromArgb(48, 48, 51);
-            transactionHistoryView.BorderStyle = BorderStyle.None;
-            transactionHistoryView.Columns.AddRange(new ColumnHeader[] { transactionIDHeader, amountHeader, dateHeader, transactionTypeHeader });
-            transactionHistoryView.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            transactionHistoryView.ForeColor = Color.WhiteSmoke;
-            transactionHistoryView.HeaderStyle = ColumnHeaderStyle.Nonclickable;
-            transactionHistoryView.Location = new Point(61, 725);
-            transactionHistoryView.Name = "transactionHistoryView";
-            transactionHistoryView.Size = new Size(901, 248);
-            transactionHistoryView.TabIndex = 31;
-            transactionHistoryView.UseCompatibleStateImageBehavior = false;
-            transactionHistoryView.View = View.Details;
-            // 
-            // transactionIDHeader
-            // 
-            transactionIDHeader.Tag = "";
-            transactionIDHeader.Text = "Transaction ID";
-            transactionIDHeader.Width = 200;
-            // 
-            // amountHeader
-            // 
-            amountHeader.Text = "Amount";
-            amountHeader.Width = 200;
-            // 
-            // dateHeader
-            // 
-            dateHeader.Text = "Date of Transaction";
-            dateHeader.Width = 250;
-            // 
-            // transactionTypeHeader
-            // 
-            transactionTypeHeader.Text = "Transaction Type";
-            transactionTypeHeader.Width = 251;
             // 
             // HomeScreenForm
             // 

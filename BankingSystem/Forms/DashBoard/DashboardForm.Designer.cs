@@ -82,7 +82,7 @@
             // accountButton
             // 
             accountButton.BorderColor = Color.Transparent;
-            accountButton.ButtonColor = Color.FromArgb(38, 38, 41);
+            accountButton.ButtonColor = Color.FromArgb(48, 46, 65);
             accountButton.CornerRadius = 5;
             accountButton.Cursor = Cursors.Hand;
             accountButton.FlatAppearance.BorderSize = 0;
@@ -94,7 +94,7 @@
             accountButton.Location = new Point(12, 163);
             accountButton.Name = "accountButton";
             accountButton.OnHoverBorderColor = Color.Transparent;
-            accountButton.OnHoverButtonColor = Color.FromArgb(48, 48, 51);
+            accountButton.OnHoverButtonColor = Color.FromArgb(65, 64, 89);
             accountButton.OnHoverTextColor = Color.WhiteSmoke;
             accountButton.Size = new Size(215, 40);
             accountButton.TabIndex = 3;
@@ -131,7 +131,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackColor = Color.FromArgb(38, 38, 41);
+            BackColor = Color.FromArgb(48, 46, 65);
             ClientSize = new Size(1280, 720);
             Controls.Add(logoutButton);
             Controls.Add(accountButton);

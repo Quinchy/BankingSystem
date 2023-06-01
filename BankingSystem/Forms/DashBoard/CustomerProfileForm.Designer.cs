@@ -24,6 +24,11 @@ namespace BankingSystem.Forms
             profileCardPanel = new RoundedPanel();
             changePhotoButton = new RoundedButton();
             accountInfoCardPanel = new RoundedPanel();
+            roundedButton2 = new RoundedButton();
+            roundedButton1 = new RoundedButton();
+            accountIDPanel = new RoundedBorderPanel();
+            accountIDTextBox = new TextBox();
+            accountIDLabel = new Label();
             showPasswordCheckbox = new CheckBox();
             passwordPanel = new RoundedBorderPanel();
             passwordTextBox = new TextBox();
@@ -41,21 +46,16 @@ namespace BankingSystem.Forms
             firstNameTextBox = new TextBox();
             firstNameLabel = new Label();
             accountInfoLabel = new Label();
-            accountIDPanel = new RoundedBorderPanel();
-            accountIDTextBox = new TextBox();
-            accountIDLabel = new Label();
-            roundedButton1 = new RoundedButton();
-            roundedButton2 = new RoundedButton();
             ((System.ComponentModel.ISupportInitialize)profilePictureBox).BeginInit();
             profilePanel.SuspendLayout();
             profileCardPanel.SuspendLayout();
             accountInfoCardPanel.SuspendLayout();
+            accountIDPanel.SuspendLayout();
             passwordPanel.SuspendLayout();
             phoneNumberPanel.SuspendLayout();
             emailPanel.SuspendLayout();
             lastNamePanel.SuspendLayout();
             firstNamePanel.SuspendLayout();
-            accountIDPanel.SuspendLayout();
             SuspendLayout();
             // 
             // line1
@@ -140,7 +140,7 @@ namespace BankingSystem.Forms
             // changePhotoButton
             // 
             changePhotoButton.BorderColor = Color.Transparent;
-            changePhotoButton.ButtonColor = Color.FromArgb(38, 38, 41);
+            changePhotoButton.ButtonColor = Color.FromArgb(48, 46, 65);
             changePhotoButton.CornerRadius = 5;
             changePhotoButton.Cursor = Cursors.Hand;
             changePhotoButton.FlatAppearance.BorderSize = 0;
@@ -152,7 +152,7 @@ namespace BankingSystem.Forms
             changePhotoButton.Location = new Point(12, 232);
             changePhotoButton.Name = "changePhotoButton";
             changePhotoButton.OnHoverBorderColor = Color.Transparent;
-            changePhotoButton.OnHoverButtonColor = Color.FromArgb(48, 48, 51);
+            changePhotoButton.OnHoverButtonColor = Color.FromArgb(65, 64, 89);
             changePhotoButton.OnHoverTextColor = Color.WhiteSmoke;
             changePhotoButton.Size = new Size(200, 40);
             changePhotoButton.TabIndex = 34;
@@ -188,6 +188,84 @@ namespace BankingSystem.Forms
             accountInfoCardPanel.Name = "accountInfoCardPanel";
             accountInfoCardPanel.Size = new Size(673, 586);
             accountInfoCardPanel.TabIndex = 36;
+            // 
+            // roundedButton2
+            // 
+            roundedButton2.BorderColor = Color.Transparent;
+            roundedButton2.ButtonColor = Color.FromArgb(48, 46, 65);
+            roundedButton2.CornerRadius = 5;
+            roundedButton2.Cursor = Cursors.Hand;
+            roundedButton2.FlatAppearance.BorderSize = 0;
+            roundedButton2.FlatAppearance.MouseDownBackColor = Color.WhiteSmoke;
+            roundedButton2.FlatAppearance.MouseOverBackColor = Color.WhiteSmoke;
+            roundedButton2.FlatStyle = FlatStyle.Flat;
+            roundedButton2.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
+            roundedButton2.ForeColor = Color.FromArgb(48, 48, 51);
+            roundedButton2.Location = new Point(360, 467);
+            roundedButton2.Name = "roundedButton2";
+            roundedButton2.OnHoverBorderColor = Color.Transparent;
+            roundedButton2.OnHoverButtonColor = Color.FromArgb(65, 64, 89);
+            roundedButton2.OnHoverTextColor = Color.WhiteSmoke;
+            roundedButton2.Size = new Size(128, 40);
+            roundedButton2.TabIndex = 53;
+            roundedButton2.Text = "Cancel";
+            roundedButton2.TextColor = Color.WhiteSmoke;
+            roundedButton2.UseVisualStyleBackColor = false;
+            roundedButton2.Visible = false;
+            // 
+            // roundedButton1
+            // 
+            roundedButton1.BorderColor = Color.Transparent;
+            roundedButton1.ButtonColor = Color.FromArgb(92, 184, 92);
+            roundedButton1.CornerRadius = 5;
+            roundedButton1.Cursor = Cursors.Hand;
+            roundedButton1.FlatAppearance.BorderSize = 0;
+            roundedButton1.FlatAppearance.MouseDownBackColor = Color.WhiteSmoke;
+            roundedButton1.FlatAppearance.MouseOverBackColor = Color.WhiteSmoke;
+            roundedButton1.FlatStyle = FlatStyle.Flat;
+            roundedButton1.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
+            roundedButton1.ForeColor = Color.FromArgb(48, 48, 51);
+            roundedButton1.Location = new Point(494, 467);
+            roundedButton1.Name = "roundedButton1";
+            roundedButton1.OnHoverBorderColor = Color.Transparent;
+            roundedButton1.OnHoverButtonColor = Color.FromArgb(124, 205, 124);
+            roundedButton1.OnHoverTextColor = Color.WhiteSmoke;
+            roundedButton1.Size = new Size(128, 40);
+            roundedButton1.TabIndex = 35;
+            roundedButton1.Text = "Save";
+            roundedButton1.TextColor = Color.WhiteSmoke;
+            roundedButton1.UseVisualStyleBackColor = false;
+            roundedButton1.Visible = false;
+            // 
+            // accountIDPanel
+            // 
+            accountIDPanel.Controls.Add(accountIDTextBox);
+            accountIDPanel.Location = new Point(46, 101);
+            accountIDPanel.Name = "accountIDPanel";
+            accountIDPanel.Size = new Size(263, 42);
+            accountIDPanel.TabIndex = 52;
+            // 
+            // accountIDTextBox
+            // 
+            accountIDTextBox.BackColor = Color.WhiteSmoke;
+            accountIDTextBox.BorderStyle = BorderStyle.None;
+            accountIDTextBox.Enabled = false;
+            accountIDTextBox.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            accountIDTextBox.Location = new Point(16, 11);
+            accountIDTextBox.Name = "accountIDTextBox";
+            accountIDTextBox.Size = new Size(234, 19);
+            accountIDTextBox.TabIndex = 0;
+            // 
+            // accountIDLabel
+            // 
+            accountIDLabel.AutoSize = true;
+            accountIDLabel.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            accountIDLabel.ForeColor = Color.FromArgb(48, 48, 51);
+            accountIDLabel.Location = new Point(46, 65);
+            accountIDLabel.Name = "accountIDLabel";
+            accountIDLabel.Size = new Size(89, 20);
+            accountIDLabel.TabIndex = 51;
+            accountIDLabel.Text = "Account ID";
             // 
             // showPasswordCheckbox
             // 
@@ -365,89 +443,11 @@ namespace BankingSystem.Forms
             accountInfoLabel.TabIndex = 38;
             accountInfoLabel.Text = "Account Information";
             // 
-            // accountIDPanel
-            // 
-            accountIDPanel.Controls.Add(accountIDTextBox);
-            accountIDPanel.Location = new Point(46, 101);
-            accountIDPanel.Name = "accountIDPanel";
-            accountIDPanel.Size = new Size(263, 42);
-            accountIDPanel.TabIndex = 52;
-            // 
-            // accountIDTextBox
-            // 
-            accountIDTextBox.BackColor = Color.WhiteSmoke;
-            accountIDTextBox.BorderStyle = BorderStyle.None;
-            accountIDTextBox.Enabled = false;
-            accountIDTextBox.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            accountIDTextBox.Location = new Point(16, 11);
-            accountIDTextBox.Name = "accountIDTextBox";
-            accountIDTextBox.Size = new Size(234, 19);
-            accountIDTextBox.TabIndex = 0;
-            // 
-            // accountIDLabel
-            // 
-            accountIDLabel.AutoSize = true;
-            accountIDLabel.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            accountIDLabel.ForeColor = Color.FromArgb(48, 48, 51);
-            accountIDLabel.Location = new Point(46, 65);
-            accountIDLabel.Name = "accountIDLabel";
-            accountIDLabel.Size = new Size(89, 20);
-            accountIDLabel.TabIndex = 51;
-            accountIDLabel.Text = "Account ID";
-            // 
-            // roundedButton1
-            // 
-            roundedButton1.BorderColor = Color.Transparent;
-            roundedButton1.ButtonColor = Color.FromArgb(92, 184, 92);
-            roundedButton1.CornerRadius = 5;
-            roundedButton1.Cursor = Cursors.Hand;
-            roundedButton1.FlatAppearance.BorderSize = 0;
-            roundedButton1.FlatAppearance.MouseDownBackColor = Color.WhiteSmoke;
-            roundedButton1.FlatAppearance.MouseOverBackColor = Color.WhiteSmoke;
-            roundedButton1.FlatStyle = FlatStyle.Flat;
-            roundedButton1.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
-            roundedButton1.ForeColor = Color.FromArgb(48, 48, 51);
-            roundedButton1.Location = new Point(494, 467);
-            roundedButton1.Name = "roundedButton1";
-            roundedButton1.OnHoverBorderColor = Color.Transparent;
-            roundedButton1.OnHoverButtonColor = Color.FromArgb(124, 205, 124);
-            roundedButton1.OnHoverTextColor = Color.WhiteSmoke;
-            roundedButton1.Size = new Size(128, 40);
-            roundedButton1.TabIndex = 35;
-            roundedButton1.Text = "Save";
-            roundedButton1.TextColor = Color.WhiteSmoke;
-            roundedButton1.UseVisualStyleBackColor = false;
-            roundedButton1.Visible = false;
-            // 
-            // roundedButton2
-            // 
-            roundedButton2.BorderColor = Color.Transparent;
-            roundedButton2.ButtonColor = Color.FromArgb(38, 38, 41);
-            roundedButton2.CornerRadius = 5;
-            roundedButton2.Cursor = Cursors.Hand;
-            roundedButton2.FlatAppearance.BorderSize = 0;
-            roundedButton2.FlatAppearance.MouseDownBackColor = Color.WhiteSmoke;
-            roundedButton2.FlatAppearance.MouseOverBackColor = Color.WhiteSmoke;
-            roundedButton2.FlatStyle = FlatStyle.Flat;
-            roundedButton2.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
-            roundedButton2.ForeColor = Color.FromArgb(48, 48, 51);
-            roundedButton2.Location = new Point(360, 467);
-            roundedButton2.Name = "roundedButton2";
-            roundedButton2.OnHoverBorderColor = Color.Transparent;
-            roundedButton2.OnHoverButtonColor = Color.FromArgb(48, 48, 51);
-            roundedButton2.OnHoverTextColor = Color.WhiteSmoke;
-            roundedButton2.Size = new Size(128, 40);
-            roundedButton2.TabIndex = 53;
-            roundedButton2.Text = "Cancel";
-            roundedButton2.TextColor = Color.WhiteSmoke;
-            roundedButton2.UseVisualStyleBackColor = false;
-            roundedButton2.Visible = false;
-            // 
             // CustomerProfileForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackColor = Color.FromArgb(48, 48, 51);
+            BackColor = Color.FromArgb(48, 46, 65);
             ClientSize = new Size(1039, 723);
             Controls.Add(accountInfoCardPanel);
             Controls.Add(profilePanel);
@@ -461,6 +461,8 @@ namespace BankingSystem.Forms
             profileCardPanel.ResumeLayout(false);
             accountInfoCardPanel.ResumeLayout(false);
             accountInfoCardPanel.PerformLayout();
+            accountIDPanel.ResumeLayout(false);
+            accountIDPanel.PerformLayout();
             passwordPanel.ResumeLayout(false);
             passwordPanel.PerformLayout();
             phoneNumberPanel.ResumeLayout(false);
@@ -471,8 +473,6 @@ namespace BankingSystem.Forms
             lastNamePanel.PerformLayout();
             firstNamePanel.ResumeLayout(false);
             firstNamePanel.PerformLayout();
-            accountIDPanel.ResumeLayout(false);
-            accountIDPanel.PerformLayout();
             ResumeLayout(false);
         }
 

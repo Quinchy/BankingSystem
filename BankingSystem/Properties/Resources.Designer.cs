@@ -63,6 +63,16 @@ namespace BankingSystem.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap back_button {
+            get {
+                object obj = ResourceManager.GetObject("back-button", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap blank {
             get {
                 object obj = ResourceManager.GetObject("blank", resourceCulture);
@@ -156,6 +166,16 @@ namespace BankingSystem.Properties {
         public static System.Drawing.Bitmap OnlyFundsLogoDashboard {
             get {
                 object obj = ResourceManager.GetObject("OnlyFundsLogoDashboard", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap RegistrationBackground {
+            get {
+                object obj = ResourceManager.GetObject("RegistrationBackground", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

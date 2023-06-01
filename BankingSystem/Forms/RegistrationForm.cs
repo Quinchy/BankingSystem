@@ -62,5 +62,11 @@ namespace BankingSystem.Forms
             }
 
         }
+        private void backButton_Click(object sender, EventArgs e)
+        {
+            // Change the screen to Login.
+            Form loginForm = new LoginForm();
+            Helpers.changeScreen(baseFormPanel, loginForm);
+        }
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace BankingSystem.Forms
+﻿using BankingSystem.Utils.Components;
+
+namespace BankingSystem.Forms
 {
     partial class CustomerProfileForm
     {
@@ -16,29 +18,34 @@
             line1 = new Panel();
             line2 = new Panel();
             profilePictureBox = new PictureBox();
-            profilePanel = new Utils.Components.RoundedPanel();
+            profilePanel = new RoundedPanel();
             editButton = new Button();
             profileTitleLabel = new Label();
-            profileCardPanel = new Utils.Components.RoundedPanel();
-            changePhotoButton = new Utils.Components.RoundedButton();
-            accountInfoCardPanel = new Utils.Components.RoundedPanel();
+            profileCardPanel = new RoundedPanel();
+            changePhotoButton = new RoundedButton();
+            accountInfoCardPanel = new RoundedPanel();
             showPasswordCheckbox = new CheckBox();
-            passwordPanel = new Utils.Components.RoundedBorderPanel();
+            passwordPanel = new RoundedBorderPanel();
             passwordTextBox = new TextBox();
             passwordLabel = new Label();
-            phoneNumberPanel = new Utils.Components.RoundedBorderPanel();
+            phoneNumberPanel = new RoundedBorderPanel();
             phoneNumberTextBox = new TextBox();
             phoneNumberLabel = new Label();
-            emailPanel = new Utils.Components.RoundedBorderPanel();
+            emailPanel = new RoundedBorderPanel();
             emailTextBox = new TextBox();
             emailLabel = new Label();
-            lastNamePanel = new Utils.Components.RoundedBorderPanel();
+            lastNamePanel = new RoundedBorderPanel();
             lastNameTextBox = new TextBox();
             lastNameLabel = new Label();
-            firstNamePanel = new Utils.Components.RoundedBorderPanel();
+            firstNamePanel = new RoundedBorderPanel();
             firstNameTextBox = new TextBox();
             firstNameLabel = new Label();
             accountInfoLabel = new Label();
+            accountIDPanel = new RoundedBorderPanel();
+            accountIDTextBox = new TextBox();
+            accountIDLabel = new Label();
+            roundedButton1 = new RoundedButton();
+            roundedButton2 = new RoundedButton();
             ((System.ComponentModel.ISupportInitialize)profilePictureBox).BeginInit();
             profilePanel.SuspendLayout();
             profileCardPanel.SuspendLayout();
@@ -48,6 +55,7 @@
             emailPanel.SuspendLayout();
             lastNamePanel.SuspendLayout();
             firstNamePanel.SuspendLayout();
+            accountIDPanel.SuspendLayout();
             SuspendLayout();
             // 
             // line1
@@ -156,6 +164,10 @@
             // 
             accountInfoCardPanel.BackColor = Color.Transparent;
             accountInfoCardPanel.BorderColor = Color.WhiteSmoke;
+            accountInfoCardPanel.Controls.Add(roundedButton2);
+            accountInfoCardPanel.Controls.Add(roundedButton1);
+            accountInfoCardPanel.Controls.Add(accountIDPanel);
+            accountInfoCardPanel.Controls.Add(accountIDLabel);
             accountInfoCardPanel.Controls.Add(showPasswordCheckbox);
             accountInfoCardPanel.Controls.Add(passwordPanel);
             accountInfoCardPanel.Controls.Add(passwordLabel);
@@ -183,7 +195,7 @@
             showPasswordCheckbox.FlatAppearance.CheckedBackColor = Color.FromArgb(92, 184, 92);
             showPasswordCheckbox.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Regular, GraphicsUnit.Point);
             showPasswordCheckbox.ForeColor = Color.FromArgb(48, 48, 51);
-            showPasswordCheckbox.Location = new Point(55, 544);
+            showPasswordCheckbox.Location = new Point(58, 516);
             showPasswordCheckbox.Name = "showPasswordCheckbox";
             showPasswordCheckbox.Size = new Size(121, 19);
             showPasswordCheckbox.TabIndex = 37;
@@ -194,7 +206,7 @@
             // passwordPanel
             // 
             passwordPanel.Controls.Add(passwordTextBox);
-            passwordPanel.Location = new Point(43, 496);
+            passwordPanel.Location = new Point(46, 468);
             passwordPanel.Name = "passwordPanel";
             passwordPanel.Size = new Size(263, 42);
             passwordPanel.TabIndex = 50;
@@ -216,7 +228,7 @@
             passwordLabel.AutoSize = true;
             passwordLabel.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point);
             passwordLabel.ForeColor = Color.FromArgb(48, 48, 51);
-            passwordLabel.Location = new Point(43, 460);
+            passwordLabel.Location = new Point(46, 432);
             passwordLabel.Name = "passwordLabel";
             passwordLabel.Size = new Size(78, 20);
             passwordLabel.TabIndex = 49;
@@ -225,7 +237,7 @@
             // phoneNumberPanel
             // 
             phoneNumberPanel.Controls.Add(phoneNumberTextBox);
-            phoneNumberPanel.Location = new Point(43, 367);
+            phoneNumberPanel.Location = new Point(46, 375);
             phoneNumberPanel.Name = "phoneNumberPanel";
             phoneNumberPanel.Size = new Size(263, 42);
             phoneNumberPanel.TabIndex = 48;
@@ -246,7 +258,7 @@
             phoneNumberLabel.AutoSize = true;
             phoneNumberLabel.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point);
             phoneNumberLabel.ForeColor = Color.FromArgb(48, 48, 51);
-            phoneNumberLabel.Location = new Point(43, 331);
+            phoneNumberLabel.Location = new Point(46, 339);
             phoneNumberLabel.Name = "phoneNumberLabel";
             phoneNumberLabel.Size = new Size(115, 20);
             phoneNumberLabel.TabIndex = 47;
@@ -255,7 +267,7 @@
             // emailPanel
             // 
             emailPanel.Controls.Add(emailTextBox);
-            emailPanel.Location = new Point(43, 240);
+            emailPanel.Location = new Point(46, 286);
             emailPanel.Name = "emailPanel";
             emailPanel.Size = new Size(263, 42);
             emailPanel.TabIndex = 46;
@@ -276,7 +288,7 @@
             emailLabel.AutoSize = true;
             emailLabel.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point);
             emailLabel.ForeColor = Color.FromArgb(48, 48, 51);
-            emailLabel.Location = new Point(43, 204);
+            emailLabel.Location = new Point(46, 250);
             emailLabel.Name = "emailLabel";
             emailLabel.Size = new Size(48, 20);
             emailLabel.TabIndex = 45;
@@ -285,7 +297,7 @@
             // lastNamePanel
             // 
             lastNamePanel.Controls.Add(lastNameTextBox);
-            lastNamePanel.Location = new Point(357, 116);
+            lastNamePanel.Location = new Point(360, 196);
             lastNamePanel.Name = "lastNamePanel";
             lastNamePanel.Size = new Size(263, 42);
             lastNamePanel.TabIndex = 44;
@@ -306,7 +318,7 @@
             lastNameLabel.AutoSize = true;
             lastNameLabel.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point);
             lastNameLabel.ForeColor = Color.FromArgb(48, 48, 51);
-            lastNameLabel.Location = new Point(357, 80);
+            lastNameLabel.Location = new Point(360, 160);
             lastNameLabel.Name = "lastNameLabel";
             lastNameLabel.Size = new Size(86, 20);
             lastNameLabel.TabIndex = 43;
@@ -315,7 +327,7 @@
             // firstNamePanel
             // 
             firstNamePanel.Controls.Add(firstNameTextBox);
-            firstNamePanel.Location = new Point(43, 116);
+            firstNamePanel.Location = new Point(46, 196);
             firstNamePanel.Name = "firstNamePanel";
             firstNamePanel.Size = new Size(263, 42);
             firstNamePanel.TabIndex = 42;
@@ -336,7 +348,7 @@
             firstNameLabel.AutoSize = true;
             firstNameLabel.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point);
             firstNameLabel.ForeColor = Color.FromArgb(48, 48, 51);
-            firstNameLabel.Location = new Point(43, 80);
+            firstNameLabel.Location = new Point(46, 160);
             firstNameLabel.Name = "firstNameLabel";
             firstNameLabel.Size = new Size(86, 20);
             firstNameLabel.TabIndex = 41;
@@ -352,6 +364,84 @@
             accountInfoLabel.Size = new Size(196, 24);
             accountInfoLabel.TabIndex = 38;
             accountInfoLabel.Text = "Account Information";
+            // 
+            // accountIDPanel
+            // 
+            accountIDPanel.Controls.Add(accountIDTextBox);
+            accountIDPanel.Location = new Point(46, 101);
+            accountIDPanel.Name = "accountIDPanel";
+            accountIDPanel.Size = new Size(263, 42);
+            accountIDPanel.TabIndex = 52;
+            // 
+            // accountIDTextBox
+            // 
+            accountIDTextBox.BackColor = Color.WhiteSmoke;
+            accountIDTextBox.BorderStyle = BorderStyle.None;
+            accountIDTextBox.Enabled = false;
+            accountIDTextBox.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            accountIDTextBox.Location = new Point(16, 11);
+            accountIDTextBox.Name = "accountIDTextBox";
+            accountIDTextBox.Size = new Size(234, 19);
+            accountIDTextBox.TabIndex = 0;
+            // 
+            // accountIDLabel
+            // 
+            accountIDLabel.AutoSize = true;
+            accountIDLabel.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            accountIDLabel.ForeColor = Color.FromArgb(48, 48, 51);
+            accountIDLabel.Location = new Point(46, 65);
+            accountIDLabel.Name = "accountIDLabel";
+            accountIDLabel.Size = new Size(89, 20);
+            accountIDLabel.TabIndex = 51;
+            accountIDLabel.Text = "Account ID";
+            // 
+            // roundedButton1
+            // 
+            roundedButton1.BorderColor = Color.Transparent;
+            roundedButton1.ButtonColor = Color.FromArgb(92, 184, 92);
+            roundedButton1.CornerRadius = 5;
+            roundedButton1.Cursor = Cursors.Hand;
+            roundedButton1.FlatAppearance.BorderSize = 0;
+            roundedButton1.FlatAppearance.MouseDownBackColor = Color.WhiteSmoke;
+            roundedButton1.FlatAppearance.MouseOverBackColor = Color.WhiteSmoke;
+            roundedButton1.FlatStyle = FlatStyle.Flat;
+            roundedButton1.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
+            roundedButton1.ForeColor = Color.FromArgb(48, 48, 51);
+            roundedButton1.Location = new Point(494, 467);
+            roundedButton1.Name = "roundedButton1";
+            roundedButton1.OnHoverBorderColor = Color.Transparent;
+            roundedButton1.OnHoverButtonColor = Color.FromArgb(124, 205, 124);
+            roundedButton1.OnHoverTextColor = Color.WhiteSmoke;
+            roundedButton1.Size = new Size(128, 40);
+            roundedButton1.TabIndex = 35;
+            roundedButton1.Text = "Save";
+            roundedButton1.TextColor = Color.WhiteSmoke;
+            roundedButton1.UseVisualStyleBackColor = false;
+            roundedButton1.Visible = false;
+            // 
+            // roundedButton2
+            // 
+            roundedButton2.BorderColor = Color.Transparent;
+            roundedButton2.ButtonColor = Color.FromArgb(38, 38, 41);
+            roundedButton2.CornerRadius = 5;
+            roundedButton2.Cursor = Cursors.Hand;
+            roundedButton2.FlatAppearance.BorderSize = 0;
+            roundedButton2.FlatAppearance.MouseDownBackColor = Color.WhiteSmoke;
+            roundedButton2.FlatAppearance.MouseOverBackColor = Color.WhiteSmoke;
+            roundedButton2.FlatStyle = FlatStyle.Flat;
+            roundedButton2.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
+            roundedButton2.ForeColor = Color.FromArgb(48, 48, 51);
+            roundedButton2.Location = new Point(360, 467);
+            roundedButton2.Name = "roundedButton2";
+            roundedButton2.OnHoverBorderColor = Color.Transparent;
+            roundedButton2.OnHoverButtonColor = Color.FromArgb(48, 48, 51);
+            roundedButton2.OnHoverTextColor = Color.WhiteSmoke;
+            roundedButton2.Size = new Size(128, 40);
+            roundedButton2.TabIndex = 53;
+            roundedButton2.Text = "Cancel";
+            roundedButton2.TextColor = Color.WhiteSmoke;
+            roundedButton2.UseVisualStyleBackColor = false;
+            roundedButton2.Visible = false;
             // 
             // CustomerProfileForm
             // 
@@ -381,20 +471,22 @@
             lastNamePanel.PerformLayout();
             firstNamePanel.ResumeLayout(false);
             firstNamePanel.PerformLayout();
+            accountIDPanel.ResumeLayout(false);
+            accountIDPanel.PerformLayout();
             ResumeLayout(false);
         }
 
         private Panel line1;
         private Panel line2;
         private PictureBox profilePictureBox;
-        private Utils.Components.RoundedPanel profilePanel;
-        private Utils.Components.RoundedPanel profileCardPanel;
-        private Utils.Components.RoundedPanel accountInfoCardPanel;
-        private Utils.Components.RoundedBorderPanel firstNamePanel;
-        private Utils.Components.RoundedBorderPanel lastNamePanel;
-        private Utils.Components.RoundedBorderPanel emailPanel;
-        private Utils.Components.RoundedBorderPanel phoneNumberPanel;
-        private Utils.Components.RoundedBorderPanel passwordPanel;
+        private RoundedPanel profilePanel;
+        private RoundedPanel profileCardPanel;
+        private RoundedPanel accountInfoCardPanel;
+        private RoundedBorderPanel firstNamePanel;
+        private RoundedBorderPanel lastNamePanel;
+        private RoundedBorderPanel emailPanel;
+        private RoundedBorderPanel phoneNumberPanel;
+        private RoundedBorderPanel passwordPanel;
         private Label profileTitleLabel;
         private Label accountInfoLabel;
         private Label firstNameLabel;
@@ -408,7 +500,12 @@
         private TextBox phoneNumberTextBox;
         private TextBox passwordTextBox;
         private CheckBox showPasswordCheckbox;
-        private Utils.Components.RoundedButton changePhotoButton;
+        private RoundedButton changePhotoButton;
         private Button editButton;
+        private RoundedBorderPanel accountIDPanel;
+        private TextBox accountIDTextBox;
+        private Label accountIDLabel;
+        private RoundedButton roundedButton1;
+        private RoundedButton roundedButton2;
     }
 }

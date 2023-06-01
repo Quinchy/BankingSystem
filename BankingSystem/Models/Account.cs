@@ -10,7 +10,6 @@ namespace BankingSystem.Models
     {
         public string AccountId { get; set; }
         public double Balance { get; set; }
-        public List<Transaction> TransactionHistory { get; set; }
 
         public Account(string accountId, double balance)
         {

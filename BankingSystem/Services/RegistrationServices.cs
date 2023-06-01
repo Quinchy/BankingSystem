@@ -12,25 +12,30 @@ namespace BankingSystem.Services
     {
         public static void registerUser(Customer customer)
         {
-            // Open connection
-            using (var connection = new MySqlConnection("server=localhost;userid=root;password=;database=banking_system"))
+            // Open connection using MySQLDatabase.OpenConnection()
+            using (var connection = BankingSystem.Database.MySQLDatabase.OpenConnection())
             {
-                connection.Open();
-                // Write an SQL statement to insert the customer into the database
-                string query = "INSERT INTO customer (first_name, last_name, email, phone_number, password) VALUES (@FirstName, @LastName, @Email, @PhoneNumber, @Password)";
-                using (var command = new MySqlCommand(query, connection))
+                if (connection != null)
                 {
-                    // Use parameterized query to prevent SQL injection
-                    command.Parameters.AddWithValue("@FirstName", customer.FirstName);
-                    command.Parameters.AddWithValue("@LastName", customer.LastName);
-                    command.Parameters.AddWithValue("@Email", customer.Email);
-                    command.Parameters.AddWithValue("@PhoneNumber", customer.PhoneNumber);
-                    command.Parameters.AddWithValue("@Password", customer.Password);
-                    // Execute the query
-                    command.ExecuteNonQuery();
+                    // Write an SQL statement to insert the customer into the database
+                    string query = "INSERT INTO customer (first_name, last_name, email, phone_number, password) VALUES (@FirstName, @LastName, @Email, @PhoneNumber, @Password)";
+                    using (var command = new MySqlCommand(query, connection))
+                    {
+                        // Use parameterized query to prevent SQL injection
+                        command.Parameters.AddWithValue("@FirstName", customer.FirstName);
+                        command.Parameters.AddWithValue("@LastName", customer.LastName);
+                        command.Parameters.AddWithValue("@Email", customer.Email);
+                        command.Parameters.AddWithValue("@PhoneNumber", customer.PhoneNumber);
+                        command.Parameters.AddWithValue("@Password", customer.Password);
+                        // Execute the query
+                        command.ExecuteNonQuery();
+                    }
+                    // Close connection using MySQLDatabase.CloseConnection()
+                    BankingSystem.Database.MySQLDatabase.CloseConnection(connection);
                 }
             }
         }
+
         public static bool IsPasswordMatch(string password, string confirmPassword)
         {
             return password == confirmPassword;

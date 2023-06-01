@@ -12,26 +12,35 @@ namespace BankingSystem.Services
     {
         public static int authenticateUser(String email, String password)
         {
-            // Open connection
-            using (var connection = new MySqlConnection("server=localhost;userid=root;password=;database=banking_system"))
+            // Open connection using MySQLDatabase.OpenConnection()
+            using (var connection = BankingSystem.Database.MySQLDatabase.OpenConnection())
             {
-                connection.Open();
-                // Write an SQL statement to check if the user is in the database
-                string query = $"SELECT COUNT(*) FROM customer WHERE email = @Email";
-                using (var command = new MySqlCommand(query, connection))
+                if (connection != null)
                 {
-                    command.Parameters.AddWithValue("@Email", email);
-                    // Execute the query and get the result
-                    int count = Convert.ToInt32(command.ExecuteScalar());
-
-                    if (count == 0) return -1; // Email does not exist
-
-                    query = $"SELECT COUNT(*) FROM customer WHERE email = @Email AND password = @Password";
-                    command.CommandText = query;
-                    command.Parameters.AddWithValue("@Password", password);
-                    count = Convert.ToInt32(command.ExecuteScalar());
-
-                    return count > 0 ? 1 : 0; // If count > 0, password is correct, otherwise incorrect
+                    // Write an SQL statement to check if the user is in the database
+                    string query = $"SELECT COUNT(*) FROM customer WHERE email = @Email";
+                    using (var command = new MySqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@Email", email);
+                        // Execute the query and get the result
+                        int count = Convert.ToInt32(command.ExecuteScalar());
+                        if (count == 0)
+                        {
+                            // Email does not exist
+                            return -1;
+                        }
+                        query = $"SELECT COUNT(*) FROM customer WHERE email = @Email AND password = @Password";
+                        command.CommandText = query;
+                        command.Parameters.AddWithValue("@Password", password);
+                        count = Convert.ToInt32(command.ExecuteScalar());
+                        // If count > 0, password is correct, otherwise incorrect
+                        return count > 0 ? 1 : 0;
+                    }
+                }
+                else
+                {
+                    // Connection failed
+                    return -1;
                 }
             }
         }

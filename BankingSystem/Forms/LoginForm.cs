@@ -71,7 +71,9 @@ namespace BankingSystem.Forms
 
         private void forgetPasswordLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-
+            // Change the screen to Forget Password Form.
+            Form forgetPasswordForm = new ForgetPasswordForm();
+            Helpers.changeScreen(baseFormPanel, forgetPasswordForm);
         }
     }
 }

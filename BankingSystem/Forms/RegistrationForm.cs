@@ -60,7 +60,6 @@ namespace BankingSystem.Forms
                 passwordTextBox.UseSystemPasswordChar = true;
                 confirmPasswordTextBox.UseSystemPasswordChar = true;
             }
-
         }
         private void backButton_Click(object sender, EventArgs e)
         {

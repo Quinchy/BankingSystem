@@ -83,6 +83,16 @@ namespace BankingSystem.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap credit_cards {
+            get {
+                object obj = ResourceManager.GetObject("credit-cards", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap down_arrow {
             get {
                 object obj = ResourceManager.GetObject("down-arrow", resourceCulture);
@@ -106,6 +116,16 @@ namespace BankingSystem.Properties {
         public static System.Drawing.Bitmap envelope {
             get {
                 object obj = ResourceManager.GetObject("envelope", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap forgetpasswordbackground {
+            get {
+                object obj = ResourceManager.GetObject("forgetpasswordbackground", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

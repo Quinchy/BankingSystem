@@ -51,6 +51,10 @@
             amountTransactionNumeric = new NumericUpDown();
             withdrawButton = new Utils.Components.RoundedButton();
             depositButton = new Utils.Components.RoundedButton();
+            yourIDTransactionLabel = new Label();
+            yourIDTransactionPanel = new Utils.Components.RoundedPanel();
+            yourIDTransactionTextBox = new TextBox();
+            panel1 = new Panel();
             homeScreenPanel.SuspendLayout();
             balanceCardPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)cardPicture).BeginInit();
@@ -62,6 +66,7 @@
             transactionCardPanel.SuspendLayout();
             amountTransactionPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)amountTransactionNumeric).BeginInit();
+            yourIDTransactionPanel.SuspendLayout();
             SuspendLayout();
             // 
             // line1
@@ -75,7 +80,7 @@
             // line2
             // 
             line2.BackColor = Color.Gainsboro;
-            line2.Location = new Point(35, 162);
+            line2.Location = new Point(35, 224);
             line2.Name = "line2";
             line2.Size = new Size(380, 2);
             line2.TabIndex = 38;
@@ -415,6 +420,8 @@
             // 
             transactionCardPanel.BackColor = Color.Transparent;
             transactionCardPanel.BorderColor = Color.WhiteSmoke;
+            transactionCardPanel.Controls.Add(yourIDTransactionLabel);
+            transactionCardPanel.Controls.Add(yourIDTransactionPanel);
             transactionCardPanel.Controls.Add(line2);
             transactionCardPanel.Controls.Add(transactionLabel);
             transactionCardPanel.Controls.Add(amountTransactionLabel);
@@ -433,7 +440,7 @@
             transactionLabel.AutoSize = true;
             transactionLabel.Font = new Font("Microsoft Sans Serif", 20.25F, FontStyle.Bold, GraphicsUnit.Point);
             transactionLabel.ForeColor = Color.FromArgb(48, 48, 51);
-            transactionLabel.Location = new Point(94, 33);
+            transactionLabel.Location = new Point(91, 15);
             transactionLabel.Name = "transactionLabel";
             transactionLabel.Size = new Size(168, 31);
             transactionLabel.TabIndex = 36;
@@ -445,7 +452,7 @@
             amountTransactionLabel.BackColor = Color.Transparent;
             amountTransactionLabel.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point);
             amountTransactionLabel.ForeColor = Color.FromArgb(48, 48, 51);
-            amountTransactionLabel.Location = new Point(100, 73);
+            amountTransactionLabel.Location = new Point(97, 136);
             amountTransactionLabel.Name = "amountTransactionLabel";
             amountTransactionLabel.Size = new Size(65, 20);
             amountTransactionLabel.TabIndex = 36;
@@ -457,9 +464,9 @@
             amountTransactionPanel.BorderColor = Color.FromArgb(48, 46, 65);
             amountTransactionPanel.Controls.Add(amountTransactionNumeric);
             amountTransactionPanel.Controls.Add(line1);
-            amountTransactionPanel.CornerRadius = 5;
+            amountTransactionPanel.CornerRadius = 10;
             amountTransactionPanel.ForeColor = Color.Transparent;
-            amountTransactionPanel.Location = new Point(100, 96);
+            amountTransactionPanel.Location = new Point(97, 159);
             amountTransactionPanel.Name = "amountTransactionPanel";
             amountTransactionPanel.Size = new Size(250, 45);
             amountTransactionPanel.TabIndex = 29;
@@ -491,12 +498,12 @@
             withdrawButton.FlatStyle = FlatStyle.Flat;
             withdrawButton.Font = new Font("Microsoft Sans Serif", 15.75F, FontStyle.Regular, GraphicsUnit.Point);
             withdrawButton.ForeColor = Color.WhiteSmoke;
-            withdrawButton.Location = new Point(100, 238);
+            withdrawButton.Location = new Point(235, 241);
             withdrawButton.Name = "withdrawButton";
             withdrawButton.OnHoverBorderColor = Color.Transparent;
             withdrawButton.OnHoverButtonColor = Color.FromArgb(124, 205, 124);
             withdrawButton.OnHoverTextColor = Color.WhiteSmoke;
-            withdrawButton.Size = new Size(250, 45);
+            withdrawButton.Size = new Size(166, 45);
             withdrawButton.TabIndex = 6;
             withdrawButton.Text = "Withdraw";
             withdrawButton.TextColor = Color.WhiteSmoke;
@@ -514,16 +521,60 @@
             depositButton.FlatStyle = FlatStyle.Flat;
             depositButton.Font = new Font("Microsoft Sans Serif", 15.75F, FontStyle.Regular, GraphicsUnit.Point);
             depositButton.ForeColor = Color.WhiteSmoke;
-            depositButton.Location = new Point(100, 180);
+            depositButton.Location = new Point(48, 241);
             depositButton.Name = "depositButton";
             depositButton.OnHoverBorderColor = Color.Transparent;
             depositButton.OnHoverButtonColor = Color.FromArgb(124, 205, 124);
             depositButton.OnHoverTextColor = Color.WhiteSmoke;
-            depositButton.Size = new Size(250, 45);
+            depositButton.Size = new Size(166, 45);
             depositButton.TabIndex = 5;
             depositButton.Text = "Deposit";
             depositButton.TextColor = Color.WhiteSmoke;
             depositButton.UseVisualStyleBackColor = false;
+            // 
+            // yourIDTransactionLabel
+            // 
+            yourIDTransactionLabel.AutoSize = true;
+            yourIDTransactionLabel.BackColor = Color.Transparent;
+            yourIDTransactionLabel.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            yourIDTransactionLabel.ForeColor = Color.FromArgb(48, 48, 51);
+            yourIDTransactionLabel.Location = new Point(97, 63);
+            yourIDTransactionLabel.Name = "yourIDTransactionLabel";
+            yourIDTransactionLabel.Size = new Size(127, 20);
+            yourIDTransactionLabel.TabIndex = 38;
+            yourIDTransactionLabel.Text = "Your Account ID";
+            // 
+            // yourIDTransactionPanel
+            // 
+            yourIDTransactionPanel.BackColor = Color.Transparent;
+            yourIDTransactionPanel.BorderColor = Color.FromArgb(48, 46, 65);
+            yourIDTransactionPanel.Controls.Add(yourIDTransactionTextBox);
+            yourIDTransactionPanel.Controls.Add(panel1);
+            yourIDTransactionPanel.CornerRadius = 10;
+            yourIDTransactionPanel.ForeColor = Color.Transparent;
+            yourIDTransactionPanel.Location = new Point(97, 86);
+            yourIDTransactionPanel.Name = "yourIDTransactionPanel";
+            yourIDTransactionPanel.Size = new Size(248, 45);
+            yourIDTransactionPanel.TabIndex = 39;
+            // 
+            // yourIDTransactionTextBox
+            // 
+            yourIDTransactionTextBox.BackColor = Color.FromArgb(48, 46, 65);
+            yourIDTransactionTextBox.BorderStyle = BorderStyle.None;
+            yourIDTransactionTextBox.Font = new Font("Arial Narrow", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            yourIDTransactionTextBox.ForeColor = Color.WhiteSmoke;
+            yourIDTransactionTextBox.Location = new Point(11, 13);
+            yourIDTransactionTextBox.Name = "yourIDTransactionTextBox";
+            yourIDTransactionTextBox.Size = new Size(226, 19);
+            yourIDTransactionTextBox.TabIndex = 32;
+            // 
+            // panel1
+            // 
+            panel1.BackColor = Color.FromArgb(65, 64, 89);
+            panel1.Location = new Point(11, 38);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(226, 2);
+            panel1.TabIndex = 1;
             // 
             // HomeScreenForm
             // 
@@ -553,6 +604,8 @@
             transactionCardPanel.PerformLayout();
             amountTransactionPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)amountTransactionNumeric).EndInit();
+            yourIDTransactionPanel.ResumeLayout(false);
+            yourIDTransactionPanel.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -594,5 +647,9 @@
         private ColumnHeader dateHeader;
         private ColumnHeader transactionTypeHeader;
         private PictureBox cardPicture;
+        private Label yourIDTransactionLabel;
+        private Utils.Components.RoundedPanel yourIDTransactionPanel;
+        private TextBox yourIDTransactionTextBox;
+        private Panel panel1;
     }
 }

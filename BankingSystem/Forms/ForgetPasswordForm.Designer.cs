@@ -108,11 +108,11 @@
             // forgetPasswordDescriptionLabel2
             // 
             forgetPasswordDescriptionLabel2.AutoSize = true;
-            forgetPasswordDescriptionLabel2.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
+            forgetPasswordDescriptionLabel2.Font = new Font("Century Gothic", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
             forgetPasswordDescriptionLabel2.ForeColor = Color.WhiteSmoke;
             forgetPasswordDescriptionLabel2.Location = new Point(44, 362);
             forgetPasswordDescriptionLabel2.Name = "forgetPasswordDescriptionLabel2";
-            forgetPasswordDescriptionLabel2.Size = new Size(289, 24);
+            forgetPasswordDescriptionLabel2.Size = new Size(310, 22);
             forgetPasswordDescriptionLabel2.TabIndex = 42;
             forgetPasswordDescriptionLabel2.Text = "Please enter your new password.";
             // 
@@ -155,11 +155,11 @@
             // 
             showPasswordCheckbox.AutoSize = true;
             showPasswordCheckbox.FlatAppearance.CheckedBackColor = Color.FromArgb(92, 184, 92);
-            showPasswordCheckbox.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            showPasswordCheckbox.Font = new Font("Century Gothic", 9F, FontStyle.Regular, GraphicsUnit.Point);
             showPasswordCheckbox.ForeColor = Color.WhiteSmoke;
             showPasswordCheckbox.Location = new Point(55, 504);
             showPasswordCheckbox.Name = "showPasswordCheckbox";
-            showPasswordCheckbox.Size = new Size(121, 19);
+            showPasswordCheckbox.Size = new Size(124, 21);
             showPasswordCheckbox.TabIndex = 32;
             showPasswordCheckbox.Text = "Show Password?";
             showPasswordCheckbox.UseVisualStyleBackColor = true;
@@ -176,22 +176,22 @@
             // registrationLabel
             // 
             registrationLabel.AutoSize = true;
-            registrationLabel.Font = new Font("Microsoft Sans Serif", 27.75F, FontStyle.Bold, GraphicsUnit.Point);
+            registrationLabel.Font = new Font("Century Gothic", 27.75F, FontStyle.Bold, GraphicsUnit.Point);
             registrationLabel.ForeColor = Color.FromArgb(92, 184, 92);
-            registrationLabel.Location = new Point(33, 94);
+            registrationLabel.Location = new Point(39, 94);
             registrationLabel.Name = "registrationLabel";
-            registrationLabel.Size = new Size(338, 42);
+            registrationLabel.Size = new Size(330, 44);
             registrationLabel.TabIndex = 3;
             registrationLabel.Text = "Forget Password?";
             // 
             // forgetPasswordDescriptionLabel
             // 
             forgetPasswordDescriptionLabel.AutoSize = true;
-            forgetPasswordDescriptionLabel.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
+            forgetPasswordDescriptionLabel.Font = new Font("Century Gothic", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
             forgetPasswordDescriptionLabel.ForeColor = Color.WhiteSmoke;
             forgetPasswordDescriptionLabel.Location = new Point(44, 170);
             forgetPasswordDescriptionLabel.Name = "forgetPasswordDescriptionLabel";
-            forgetPasswordDescriptionLabel.Size = new Size(465, 24);
+            forgetPasswordDescriptionLabel.Size = new Size(499, 22);
             forgetPasswordDescriptionLabel.TabIndex = 4;
             forgetPasswordDescriptionLabel.Text = "Please enter your email and we'll reset your password.";
             // 
@@ -213,7 +213,7 @@
             resetButton.FlatAppearance.MouseDownBackColor = Color.Transparent;
             resetButton.FlatAppearance.MouseOverBackColor = Color.Transparent;
             resetButton.FlatStyle = FlatStyle.Flat;
-            resetButton.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Bold, GraphicsUnit.Point);
+            resetButton.Font = new Font("Century Gothic", 14.25F, FontStyle.Bold, GraphicsUnit.Point);
             resetButton.Location = new Point(207, 564);
             resetButton.Name = "resetButton";
             resetButton.OnHoverBorderColor = Color.Transparent;
@@ -221,7 +221,7 @@
             resetButton.OnHoverTextColor = Color.WhiteSmoke;
             resetButton.Size = new Size(226, 55);
             resetButton.TabIndex = 2;
-            resetButton.Text = "Reset Password";
+            resetButton.Text = "RESET PASSWORD";
             resetButton.TextColor = Color.WhiteSmoke;
             resetButton.UseVisualStyleBackColor = true;
             resetButton.Click += resetButton_Click;
@@ -229,11 +229,11 @@
             // confirmPasswordLabel
             // 
             confirmPasswordLabel.AutoSize = true;
-            confirmPasswordLabel.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            confirmPasswordLabel.Font = new Font("Century Gothic", 12F, FontStyle.Bold, GraphicsUnit.Point);
             confirmPasswordLabel.ForeColor = Color.WhiteSmoke;
             confirmPasswordLabel.Location = new Point(374, 416);
             confirmPasswordLabel.Name = "confirmPasswordLabel";
-            confirmPasswordLabel.Size = new Size(137, 20);
+            confirmPasswordLabel.Size = new Size(145, 19);
             confirmPasswordLabel.TabIndex = 30;
             confirmPasswordLabel.Text = "Confirm Password";
             // 
@@ -242,7 +242,7 @@
             confirmPasswordTextBox.BackColor = Color.WhiteSmoke;
             confirmPasswordTextBox.BorderStyle = BorderStyle.None;
             confirmPasswordTextBox.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            confirmPasswordTextBox.ForeColor = Color.FromArgb(48, 48, 51);
+            confirmPasswordTextBox.ForeColor = Color.FromArgb(48, 46, 65);
             confirmPasswordTextBox.Location = new Point(359, 463);
             confirmPasswordTextBox.Name = "confirmPasswordTextBox";
             confirmPasswordTextBox.Size = new Size(245, 19);
@@ -252,11 +252,11 @@
             // newPasswordLabel
             // 
             newPasswordLabel.AutoSize = true;
-            newPasswordLabel.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            newPasswordLabel.Font = new Font("Century Gothic", 12F, FontStyle.Bold, GraphicsUnit.Point);
             newPasswordLabel.ForeColor = Color.WhiteSmoke;
             newPasswordLabel.Location = new Point(70, 416);
             newPasswordLabel.Name = "newPasswordLabel";
-            newPasswordLabel.Size = new Size(113, 20);
+            newPasswordLabel.Size = new Size(119, 19);
             newPasswordLabel.TabIndex = 29;
             newPasswordLabel.Text = "New Password";
             // 
@@ -273,7 +273,7 @@
             passwordTextBox.BackColor = Color.WhiteSmoke;
             passwordTextBox.BorderStyle = BorderStyle.None;
             passwordTextBox.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            passwordTextBox.ForeColor = Color.FromArgb(48, 48, 51);
+            passwordTextBox.ForeColor = Color.FromArgb(48, 46, 65);
             passwordTextBox.Location = new Point(55, 463);
             passwordTextBox.Name = "passwordTextBox";
             passwordTextBox.Size = new Size(245, 19);
@@ -283,11 +283,11 @@
             // emailLabel
             // 
             emailLabel.AutoSize = true;
-            emailLabel.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            emailLabel.Font = new Font("Century Gothic", 12F, FontStyle.Bold, GraphicsUnit.Point);
             emailLabel.ForeColor = Color.WhiteSmoke;
             emailLabel.Location = new Point(70, 221);
             emailLabel.Name = "emailLabel";
-            emailLabel.Size = new Size(48, 20);
+            emailLabel.Size = new Size(52, 19);
             emailLabel.TabIndex = 27;
             emailLabel.Text = "Email";
             // 
@@ -304,7 +304,7 @@
             emailTextBox.BackColor = Color.WhiteSmoke;
             emailTextBox.BorderStyle = BorderStyle.None;
             emailTextBox.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            emailTextBox.ForeColor = Color.FromArgb(48, 48, 51);
+            emailTextBox.ForeColor = Color.FromArgb(48, 46, 65);
             emailTextBox.Location = new Point(55, 271);
             emailTextBox.Name = "emailTextBox";
             emailTextBox.Size = new Size(245, 19);

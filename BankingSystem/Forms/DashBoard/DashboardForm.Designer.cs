@@ -42,7 +42,7 @@
             // 
             appLogoIcon.BackColor = Color.Transparent;
             appLogoIcon.BackgroundImage = Properties.Resources.OnlyFundsLogoDashboard;
-            appLogoIcon.Location = new Point(96, 12);
+            appLogoIcon.Location = new Point(92, 12);
             appLogoIcon.Name = "appLogoIcon";
             appLogoIcon.Size = new Size(61, 50);
             appLogoIcon.TabIndex = 7;
@@ -65,7 +65,7 @@
             homeScreenButton.FlatAppearance.MouseDownBackColor = Color.FromArgb(48, 46, 65);
             homeScreenButton.FlatAppearance.MouseOverBackColor = Color.FromArgb(48, 46, 65);
             homeScreenButton.FlatStyle = FlatStyle.Flat;
-            homeScreenButton.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
+            homeScreenButton.Font = new Font("Century Gothic", 14.25F, FontStyle.Bold, GraphicsUnit.Point);
             homeScreenButton.ForeColor = Color.WhiteSmoke;
             homeScreenButton.Location = new Point(12, 107);
             homeScreenButton.Name = "homeScreenButton";
@@ -74,7 +74,7 @@
             homeScreenButton.OnHoverTextColor = Color.WhiteSmoke;
             homeScreenButton.Size = new Size(215, 40);
             homeScreenButton.TabIndex = 1;
-            homeScreenButton.Text = "Home";
+            homeScreenButton.Text = "HOME";
             homeScreenButton.TextColor = Color.WhiteSmoke;
             homeScreenButton.UseVisualStyleBackColor = false;
             homeScreenButton.Click += homeScreenButton_Click;
@@ -89,7 +89,7 @@
             accountButton.FlatAppearance.MouseDownBackColor = Color.FromArgb(48, 46, 65);
             accountButton.FlatAppearance.MouseOverBackColor = Color.FromArgb(48, 46, 65);
             accountButton.FlatStyle = FlatStyle.Flat;
-            accountButton.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
+            accountButton.Font = new Font("Century Gothic", 14.25F, FontStyle.Bold, GraphicsUnit.Point);
             accountButton.ForeColor = Color.FromArgb(48, 48, 51);
             accountButton.Location = new Point(12, 163);
             accountButton.Name = "accountButton";
@@ -98,7 +98,7 @@
             accountButton.OnHoverTextColor = Color.WhiteSmoke;
             accountButton.Size = new Size(215, 40);
             accountButton.TabIndex = 3;
-            accountButton.Text = "Account";
+            accountButton.Text = "ACCOUNT";
             accountButton.TextColor = Color.WhiteSmoke;
             accountButton.UseVisualStyleBackColor = false;
             accountButton.Click += accountButton_Click;
@@ -113,7 +113,7 @@
             logoutButton.FlatAppearance.MouseDownBackColor = Color.FromArgb(48, 46, 65);
             logoutButton.FlatAppearance.MouseOverBackColor = Color.FromArgb(48, 46, 65);
             logoutButton.FlatStyle = FlatStyle.Flat;
-            logoutButton.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
+            logoutButton.Font = new Font("Century Gothic", 14.25F, FontStyle.Bold, GraphicsUnit.Point);
             logoutButton.ForeColor = Color.WhiteSmoke;
             logoutButton.Location = new Point(12, 643);
             logoutButton.Name = "logoutButton";
@@ -122,7 +122,7 @@
             logoutButton.OnHoverTextColor = Color.WhiteSmoke;
             logoutButton.Size = new Size(215, 40);
             logoutButton.TabIndex = 4;
-            logoutButton.Text = "Logout";
+            logoutButton.Text = "LOGOUT";
             logoutButton.TextColor = Color.WhiteSmoke;
             logoutButton.UseVisualStyleBackColor = false;
             logoutButton.Click += logoutButton_Click;

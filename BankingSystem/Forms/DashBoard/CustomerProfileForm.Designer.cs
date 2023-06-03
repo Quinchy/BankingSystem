@@ -116,11 +116,11 @@ namespace BankingSystem.Forms
             // profileTitleLabel
             // 
             profileTitleLabel.AutoSize = true;
-            profileTitleLabel.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Bold, GraphicsUnit.Point);
+            profileTitleLabel.Font = new Font("Century Gothic", 14.25F, FontStyle.Bold, GraphicsUnit.Point);
             profileTitleLabel.ForeColor = Color.FromArgb(48, 48, 51);
             profileTitleLabel.Location = new Point(13, 16);
             profileTitleLabel.Name = "profileTitleLabel";
-            profileTitleLabel.Size = new Size(152, 24);
+            profileTitleLabel.Size = new Size(149, 23);
             profileTitleLabel.TabIndex = 37;
             profileTitleLabel.Text = "Account Profile";
             // 
@@ -147,7 +147,7 @@ namespace BankingSystem.Forms
             changePhotoButton.FlatAppearance.MouseDownBackColor = Color.WhiteSmoke;
             changePhotoButton.FlatAppearance.MouseOverBackColor = Color.WhiteSmoke;
             changePhotoButton.FlatStyle = FlatStyle.Flat;
-            changePhotoButton.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
+            changePhotoButton.Font = new Font("Century Gothic", 14.25F, FontStyle.Bold, GraphicsUnit.Point);
             changePhotoButton.ForeColor = Color.FromArgb(48, 48, 51);
             changePhotoButton.Location = new Point(12, 232);
             changePhotoButton.Name = "changePhotoButton";
@@ -156,7 +156,7 @@ namespace BankingSystem.Forms
             changePhotoButton.OnHoverTextColor = Color.WhiteSmoke;
             changePhotoButton.Size = new Size(200, 40);
             changePhotoButton.TabIndex = 34;
-            changePhotoButton.Text = "Change Photo";
+            changePhotoButton.Text = "CHANGE PHOTO";
             changePhotoButton.TextColor = Color.WhiteSmoke;
             changePhotoButton.UseVisualStyleBackColor = false;
             // 
@@ -199,7 +199,7 @@ namespace BankingSystem.Forms
             roundedButton2.FlatAppearance.MouseDownBackColor = Color.WhiteSmoke;
             roundedButton2.FlatAppearance.MouseOverBackColor = Color.WhiteSmoke;
             roundedButton2.FlatStyle = FlatStyle.Flat;
-            roundedButton2.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
+            roundedButton2.Font = new Font("Century Gothic", 14.25F, FontStyle.Bold, GraphicsUnit.Point);
             roundedButton2.ForeColor = Color.FromArgb(48, 48, 51);
             roundedButton2.Location = new Point(360, 467);
             roundedButton2.Name = "roundedButton2";
@@ -208,7 +208,7 @@ namespace BankingSystem.Forms
             roundedButton2.OnHoverTextColor = Color.WhiteSmoke;
             roundedButton2.Size = new Size(128, 40);
             roundedButton2.TabIndex = 53;
-            roundedButton2.Text = "Cancel";
+            roundedButton2.Text = "CANCEL";
             roundedButton2.TextColor = Color.WhiteSmoke;
             roundedButton2.UseVisualStyleBackColor = false;
             roundedButton2.Visible = false;
@@ -223,7 +223,7 @@ namespace BankingSystem.Forms
             roundedButton1.FlatAppearance.MouseDownBackColor = Color.WhiteSmoke;
             roundedButton1.FlatAppearance.MouseOverBackColor = Color.WhiteSmoke;
             roundedButton1.FlatStyle = FlatStyle.Flat;
-            roundedButton1.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
+            roundedButton1.Font = new Font("Century Gothic", 14.25F, FontStyle.Bold, GraphicsUnit.Point);
             roundedButton1.ForeColor = Color.FromArgb(48, 48, 51);
             roundedButton1.Location = new Point(494, 467);
             roundedButton1.Name = "roundedButton1";
@@ -232,7 +232,7 @@ namespace BankingSystem.Forms
             roundedButton1.OnHoverTextColor = Color.WhiteSmoke;
             roundedButton1.Size = new Size(128, 40);
             roundedButton1.TabIndex = 35;
-            roundedButton1.Text = "Save";
+            roundedButton1.Text = "SAVE";
             roundedButton1.TextColor = Color.WhiteSmoke;
             roundedButton1.UseVisualStyleBackColor = false;
             roundedButton1.Visible = false;
@@ -250,20 +250,21 @@ namespace BankingSystem.Forms
             accountIDTextBox.BackColor = Color.WhiteSmoke;
             accountIDTextBox.BorderStyle = BorderStyle.None;
             accountIDTextBox.Enabled = false;
-            accountIDTextBox.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            accountIDTextBox.Font = new Font("Century Gothic", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            accountIDTextBox.ForeColor = Color.FromArgb(48, 46, 65);
             accountIDTextBox.Location = new Point(16, 11);
             accountIDTextBox.Name = "accountIDTextBox";
-            accountIDTextBox.Size = new Size(234, 19);
+            accountIDTextBox.Size = new Size(234, 20);
             accountIDTextBox.TabIndex = 0;
             // 
             // accountIDLabel
             // 
             accountIDLabel.AutoSize = true;
-            accountIDLabel.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            accountIDLabel.Font = new Font("Century Gothic", 12F, FontStyle.Bold, GraphicsUnit.Point);
             accountIDLabel.ForeColor = Color.FromArgb(48, 48, 51);
             accountIDLabel.Location = new Point(46, 65);
             accountIDLabel.Name = "accountIDLabel";
-            accountIDLabel.Size = new Size(89, 20);
+            accountIDLabel.Size = new Size(94, 19);
             accountIDLabel.TabIndex = 51;
             accountIDLabel.Text = "Account ID";
             // 
@@ -271,11 +272,11 @@ namespace BankingSystem.Forms
             // 
             showPasswordCheckbox.AutoSize = true;
             showPasswordCheckbox.FlatAppearance.CheckedBackColor = Color.FromArgb(92, 184, 92);
-            showPasswordCheckbox.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            showPasswordCheckbox.Font = new Font("Century Gothic", 9F, FontStyle.Regular, GraphicsUnit.Point);
             showPasswordCheckbox.ForeColor = Color.FromArgb(48, 48, 51);
             showPasswordCheckbox.Location = new Point(58, 516);
             showPasswordCheckbox.Name = "showPasswordCheckbox";
-            showPasswordCheckbox.Size = new Size(121, 19);
+            showPasswordCheckbox.Size = new Size(124, 21);
             showPasswordCheckbox.TabIndex = 37;
             showPasswordCheckbox.Text = "Show Password?";
             showPasswordCheckbox.UseVisualStyleBackColor = true;
@@ -294,21 +295,22 @@ namespace BankingSystem.Forms
             passwordTextBox.BackColor = Color.WhiteSmoke;
             passwordTextBox.BorderStyle = BorderStyle.None;
             passwordTextBox.Enabled = false;
-            passwordTextBox.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            passwordTextBox.Font = new Font("Century Gothic", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            passwordTextBox.ForeColor = Color.FromArgb(48, 46, 65);
             passwordTextBox.Location = new Point(16, 11);
             passwordTextBox.Name = "passwordTextBox";
-            passwordTextBox.Size = new Size(234, 19);
+            passwordTextBox.Size = new Size(234, 20);
             passwordTextBox.TabIndex = 0;
             passwordTextBox.UseSystemPasswordChar = true;
             // 
             // passwordLabel
             // 
             passwordLabel.AutoSize = true;
-            passwordLabel.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            passwordLabel.Font = new Font("Century Gothic", 12F, FontStyle.Bold, GraphicsUnit.Point);
             passwordLabel.ForeColor = Color.FromArgb(48, 48, 51);
             passwordLabel.Location = new Point(46, 432);
             passwordLabel.Name = "passwordLabel";
-            passwordLabel.Size = new Size(78, 20);
+            passwordLabel.Size = new Size(80, 19);
             passwordLabel.TabIndex = 49;
             passwordLabel.Text = "Password";
             // 
@@ -325,20 +327,21 @@ namespace BankingSystem.Forms
             phoneNumberTextBox.BackColor = Color.WhiteSmoke;
             phoneNumberTextBox.BorderStyle = BorderStyle.None;
             phoneNumberTextBox.Enabled = false;
-            phoneNumberTextBox.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            phoneNumberTextBox.Font = new Font("Century Gothic", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            phoneNumberTextBox.ForeColor = Color.FromArgb(48, 46, 65);
             phoneNumberTextBox.Location = new Point(16, 11);
             phoneNumberTextBox.Name = "phoneNumberTextBox";
-            phoneNumberTextBox.Size = new Size(234, 19);
+            phoneNumberTextBox.Size = new Size(234, 20);
             phoneNumberTextBox.TabIndex = 0;
             // 
             // phoneNumberLabel
             // 
             phoneNumberLabel.AutoSize = true;
-            phoneNumberLabel.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            phoneNumberLabel.Font = new Font("Century Gothic", 12F, FontStyle.Bold, GraphicsUnit.Point);
             phoneNumberLabel.ForeColor = Color.FromArgb(48, 48, 51);
             phoneNumberLabel.Location = new Point(46, 339);
             phoneNumberLabel.Name = "phoneNumberLabel";
-            phoneNumberLabel.Size = new Size(115, 20);
+            phoneNumberLabel.Size = new Size(126, 19);
             phoneNumberLabel.TabIndex = 47;
             phoneNumberLabel.Text = "Phone Number";
             // 
@@ -355,20 +358,21 @@ namespace BankingSystem.Forms
             emailTextBox.BackColor = Color.WhiteSmoke;
             emailTextBox.BorderStyle = BorderStyle.None;
             emailTextBox.Enabled = false;
-            emailTextBox.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            emailTextBox.Font = new Font("Century Gothic", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            emailTextBox.ForeColor = Color.FromArgb(48, 46, 65);
             emailTextBox.Location = new Point(16, 11);
             emailTextBox.Name = "emailTextBox";
-            emailTextBox.Size = new Size(234, 19);
+            emailTextBox.Size = new Size(234, 20);
             emailTextBox.TabIndex = 0;
             // 
             // emailLabel
             // 
             emailLabel.AutoSize = true;
-            emailLabel.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            emailLabel.Font = new Font("Century Gothic", 12F, FontStyle.Bold, GraphicsUnit.Point);
             emailLabel.ForeColor = Color.FromArgb(48, 48, 51);
             emailLabel.Location = new Point(46, 250);
             emailLabel.Name = "emailLabel";
-            emailLabel.Size = new Size(48, 20);
+            emailLabel.Size = new Size(52, 19);
             emailLabel.TabIndex = 45;
             emailLabel.Text = "Email";
             // 
@@ -385,20 +389,21 @@ namespace BankingSystem.Forms
             lastNameTextBox.BackColor = Color.WhiteSmoke;
             lastNameTextBox.BorderStyle = BorderStyle.None;
             lastNameTextBox.Enabled = false;
-            lastNameTextBox.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            lastNameTextBox.Font = new Font("Century Gothic", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            lastNameTextBox.ForeColor = Color.FromArgb(48, 46, 65);
             lastNameTextBox.Location = new Point(16, 11);
             lastNameTextBox.Name = "lastNameTextBox";
-            lastNameTextBox.Size = new Size(234, 19);
+            lastNameTextBox.Size = new Size(234, 20);
             lastNameTextBox.TabIndex = 0;
             // 
             // lastNameLabel
             // 
             lastNameLabel.AutoSize = true;
-            lastNameLabel.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            lastNameLabel.Font = new Font("Century Gothic", 12F, FontStyle.Bold, GraphicsUnit.Point);
             lastNameLabel.ForeColor = Color.FromArgb(48, 48, 51);
             lastNameLabel.Location = new Point(360, 160);
             lastNameLabel.Name = "lastNameLabel";
-            lastNameLabel.Size = new Size(86, 20);
+            lastNameLabel.Size = new Size(90, 19);
             lastNameLabel.TabIndex = 43;
             lastNameLabel.Text = "Last Name";
             // 
@@ -415,20 +420,21 @@ namespace BankingSystem.Forms
             firstNameTextBox.BackColor = Color.WhiteSmoke;
             firstNameTextBox.BorderStyle = BorderStyle.None;
             firstNameTextBox.Enabled = false;
-            firstNameTextBox.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            firstNameTextBox.Font = new Font("Century Gothic", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            firstNameTextBox.ForeColor = Color.FromArgb(48, 46, 65);
             firstNameTextBox.Location = new Point(16, 11);
             firstNameTextBox.Name = "firstNameTextBox";
-            firstNameTextBox.Size = new Size(234, 19);
+            firstNameTextBox.Size = new Size(234, 20);
             firstNameTextBox.TabIndex = 0;
             // 
             // firstNameLabel
             // 
             firstNameLabel.AutoSize = true;
-            firstNameLabel.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            firstNameLabel.Font = new Font("Century Gothic", 12F, FontStyle.Bold, GraphicsUnit.Point);
             firstNameLabel.ForeColor = Color.FromArgb(48, 48, 51);
             firstNameLabel.Location = new Point(46, 160);
             firstNameLabel.Name = "firstNameLabel";
-            firstNameLabel.Size = new Size(86, 20);
+            firstNameLabel.Size = new Size(89, 19);
             firstNameLabel.TabIndex = 41;
             firstNameLabel.Text = "First Name";
             // 

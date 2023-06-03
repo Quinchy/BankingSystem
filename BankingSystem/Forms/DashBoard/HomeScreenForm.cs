@@ -18,10 +18,23 @@ namespace BankingSystem.Forms.DashBoard
         public HomeScreenForm(string email)
         {
             InitializeComponent();
+
             // Load the customer's information.
-            Account account = BankingServices.loadAccountInformation(email);
+            Tuple<Account, List<Transaction>> accountAndTransactions = BankingServices.loadAccountInformation(email);
+            string customerFirstName = BankingServices.GetCustomerFirstName(email);
             // Set the customer information to the TextBox.
-            balanceLabel.Text = "₱ " + Convert.ToString(account.Balance);
+            balanceLabel.Text = "₱ " + Convert.ToString(accountAndTransactions.Item1.Balance);
+            // Greet the user with their first name
+            greetUserLabel.Text = "Welcome, " + customerFirstName;
+            // Load transaction history into ListView
+            foreach (Transaction transaction in accountAndTransactions.Item2)
+            {
+                ListViewItem item = new ListViewItem(transaction.TransactionId);
+                item.SubItems.Add(transaction.Amount.ToString());
+                item.SubItems.Add(transaction.Date.ToString());
+                item.SubItems.Add(transaction.TransactionType);
+                transactionHistoryView.Items.Add(item);
+            }
         }
     }
 }

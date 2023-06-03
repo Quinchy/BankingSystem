@@ -42,8 +42,8 @@ namespace BankingSystem.Forms.DashBoard
             ChangeDashboardForm(homeScreenForm);
             homeScreenButton.ButtonColor = Color.FromArgb(92, 184, 92);
             homeScreenButton.OnHoverButtonColor = Color.FromArgb(124, 205, 124);
-            accountButton.ButtonColor = Color.FromArgb(38, 38, 41);
-            accountButton.OnHoverButtonColor = Color.FromArgb(48, 48, 51);
+            accountButton.ButtonColor = Color.FromArgb(48, 46, 65);
+            accountButton.OnHoverButtonColor = Color.FromArgb(65, 64, 89);
         }
 
         private void accountButton_Click(object sender, EventArgs e)
@@ -52,8 +52,8 @@ namespace BankingSystem.Forms.DashBoard
             ChangeDashboardForm(customerProfileForm);
             accountButton.ButtonColor = Color.FromArgb(92, 184, 92);
             accountButton.OnHoverButtonColor = Color.FromArgb(124, 205, 124);
-            homeScreenButton.ButtonColor = Color.FromArgb(38, 38, 41);
-            homeScreenButton.OnHoverButtonColor = Color.FromArgb(48, 48, 51);
+            homeScreenButton.ButtonColor = Color.FromArgb(48, 46, 65);
+            homeScreenButton.OnHoverButtonColor = Color.FromArgb(65, 64, 89);
         }
 
         private void logoutButton_Click(object sender, EventArgs e)

@@ -28,6 +28,7 @@
             greetUserLabel = new Label();
             transactionHistoryLabel = new Label();
             balanceCardPanel = new Utils.Components.RoundedPanel();
+            cardPicture = new PictureBox();
             balanceLabel = new Label();
             availableBalanceLabel = new Label();
             transferCardPanel = new Utils.Components.RoundedPanel();
@@ -52,6 +53,7 @@
             depositButton = new Utils.Components.RoundedButton();
             homeScreenPanel.SuspendLayout();
             balanceCardPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)cardPicture).BeginInit();
             transferCardPanel.SuspendLayout();
             receiverIDPanel.SuspendLayout();
             yourIDPanel.SuspendLayout();
@@ -64,7 +66,7 @@
             // 
             // line1
             // 
-            line1.BackColor = Color.DimGray;
+            line1.BackColor = Color.FromArgb(65, 64, 89);
             line1.Location = new Point(13, 37);
             line1.Name = "line1";
             line1.Size = new Size(226, 2);
@@ -88,7 +90,7 @@
             // 
             // line4
             // 
-            line4.BackColor = Color.DimGray;
+            line4.BackColor = Color.FromArgb(65, 64, 89);
             line4.Location = new Point(11, 38);
             line4.Name = "line4";
             line4.Size = new Size(226, 2);
@@ -96,7 +98,7 @@
             // 
             // line5
             // 
-            line5.BackColor = Color.DimGray;
+            line5.BackColor = Color.FromArgb(65, 64, 89);
             line5.Location = new Point(13, 37);
             line5.Name = "line5";
             line5.Size = new Size(226, 2);
@@ -104,7 +106,7 @@
             // 
             // line6
             // 
-            line6.BackColor = Color.DimGray;
+            line6.BackColor = Color.FromArgb(65, 64, 89);
             line6.Location = new Point(11, 38);
             line6.Name = "line6";
             line6.Size = new Size(226, 2);
@@ -128,7 +130,7 @@
             // 
             // transactionHistoryView
             // 
-            transactionHistoryView.BackColor = Color.FromArgb(48, 48, 51);
+            transactionHistoryView.BackColor = Color.FromArgb(34, 33, 46);
             transactionHistoryView.BorderStyle = BorderStyle.None;
             transactionHistoryView.Columns.AddRange(new ColumnHeader[] { transactionIDHeader, amountHeader, dateHeader, transactionTypeHeader });
             transactionHistoryView.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point);
@@ -143,23 +145,26 @@
             // 
             // transactionIDHeader
             // 
-            transactionIDHeader.Tag = "";
             transactionIDHeader.Text = "Transaction ID";
+            transactionIDHeader.TextAlign = HorizontalAlignment.Center;
             transactionIDHeader.Width = 200;
             // 
             // amountHeader
             // 
             amountHeader.Text = "Amount";
+            amountHeader.TextAlign = HorizontalAlignment.Center;
             amountHeader.Width = 200;
             // 
             // dateHeader
             // 
             dateHeader.Text = "Date of Transaction";
+            dateHeader.TextAlign = HorizontalAlignment.Center;
             dateHeader.Width = 250;
             // 
             // transactionTypeHeader
             // 
             transactionTypeHeader.Text = "Transaction Type";
+            transactionTypeHeader.TextAlign = HorizontalAlignment.Center;
             transactionTypeHeader.Width = 251;
             // 
             // greetUserLabel
@@ -167,11 +172,11 @@
             greetUserLabel.AutoSize = true;
             greetUserLabel.Font = new Font("Arial Black", 27.75F, FontStyle.Bold, GraphicsUnit.Point);
             greetUserLabel.ForeColor = Color.WhiteSmoke;
-            greetUserLabel.Location = new Point(61, 33);
+            greetUserLabel.Location = new Point(61, 26);
             greetUserLabel.Name = "greetUserLabel";
-            greetUserLabel.Size = new Size(184, 52);
+            greetUserLabel.Size = new Size(326, 52);
             greetUserLabel.TabIndex = 26;
-            greetUserLabel.Text = "Hi, User";
+            greetUserLabel.Text = "Welcome, User";
             // 
             // transactionHistoryLabel
             // 
@@ -188,6 +193,7 @@
             // 
             balanceCardPanel.BackColor = Color.Transparent;
             balanceCardPanel.BorderColor = Color.FromArgb(92, 184, 92);
+            balanceCardPanel.Controls.Add(cardPicture);
             balanceCardPanel.Controls.Add(balanceLabel);
             balanceCardPanel.Controls.Add(availableBalanceLabel);
             balanceCardPanel.CornerRadius = 10;
@@ -196,6 +202,16 @@
             balanceCardPanel.Name = "balanceCardPanel";
             balanceCardPanel.Size = new Size(451, 206);
             balanceCardPanel.TabIndex = 25;
+            // 
+            // cardPicture
+            // 
+            cardPicture.BackgroundImage = Properties.Resources.credit_cards;
+            cardPicture.BackgroundImageLayout = ImageLayout.Stretch;
+            cardPicture.Location = new Point(35, 63);
+            cardPicture.Name = "cardPicture";
+            cardPicture.Size = new Size(80, 80);
+            cardPicture.TabIndex = 29;
+            cardPicture.TabStop = false;
             // 
             // balanceLabel
             // 
@@ -524,6 +540,7 @@
             homeScreenPanel.PerformLayout();
             balanceCardPanel.ResumeLayout(false);
             balanceCardPanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)cardPicture).EndInit();
             transferCardPanel.ResumeLayout(false);
             transferCardPanel.PerformLayout();
             receiverIDPanel.ResumeLayout(false);
@@ -576,5 +593,6 @@
         private ColumnHeader amountHeader;
         private ColumnHeader dateHeader;
         private ColumnHeader transactionTypeHeader;
+        private PictureBox cardPicture;
     }
 }

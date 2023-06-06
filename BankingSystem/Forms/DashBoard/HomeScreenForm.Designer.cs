@@ -308,6 +308,7 @@
             receiverIDTextBox.Name = "receiverIDTextBox";
             receiverIDTextBox.Size = new Size(226, 19);
             receiverIDTextBox.TabIndex = 32;
+            receiverIDTextBox.TextAlign = HorizontalAlignment.Center;
             // 
             // receiverIDLabel
             // 
@@ -368,6 +369,7 @@
             yourIDTextBox.Name = "yourIDTextBox";
             yourIDTextBox.Size = new Size(226, 19);
             yourIDTextBox.TabIndex = 32;
+            yourIDTextBox.TextAlign = HorizontalAlignment.Center;
             // 
             // confirmButton
             // 
@@ -391,6 +393,7 @@
             confirmButton.Text = "CONFIRM";
             confirmButton.TextColor = Color.WhiteSmoke;
             confirmButton.UseVisualStyleBackColor = false;
+            confirmButton.Click += confirmButton_Click;
             // 
             // amountTransferPanel
             // 
@@ -474,6 +477,7 @@
             yourIDTransactionTextBox.Name = "yourIDTransactionTextBox";
             yourIDTransactionTextBox.Size = new Size(226, 19);
             yourIDTransactionTextBox.TabIndex = 32;
+            yourIDTransactionTextBox.TextAlign = HorizontalAlignment.Center;
             // 
             // panel1
             // 
@@ -556,6 +560,7 @@
             withdrawButton.Text = "WITHDRAW";
             withdrawButton.TextColor = Color.WhiteSmoke;
             withdrawButton.UseVisualStyleBackColor = false;
+            withdrawButton.Click += withdrawButton_Click;
             // 
             // depositButton
             // 
@@ -579,6 +584,7 @@
             depositButton.Text = "DEPOSIT";
             depositButton.TextColor = Color.WhiteSmoke;
             depositButton.UseVisualStyleBackColor = false;
+            depositButton.Click += depositButton_Click;
             // 
             // roundedPanel1
             // 

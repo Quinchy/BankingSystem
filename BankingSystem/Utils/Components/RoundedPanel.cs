@@ -12,8 +12,6 @@ namespace BankingSystem.Utils.Components
     internal class RoundedPanel : Panel
     {
         private Color _borderColor = Color.Silver;
-        private int _borderThickness = 6;
-        private int _borderThicknessByTwo = 3;
         private int _cornerRadius = 10;
         public RoundedPanel()
         {

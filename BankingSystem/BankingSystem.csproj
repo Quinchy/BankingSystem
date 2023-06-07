@@ -16,6 +16,15 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Forms\TellerDashBoard\TransactionProcessingForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\TellerDashBoard\DashboardForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\TellerDashBoard\AccountManagementForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="Properties\Resources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>

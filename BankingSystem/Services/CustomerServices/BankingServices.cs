@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BankingSystem.Services
+namespace BankingSystem.Services.CustomerServices
 {
     internal class BankingServices
     {
@@ -23,7 +23,7 @@ namespace BankingSystem.Services
                     return null;
                 }
                 // Assuming email is unique
-                MySqlCommand command = new MySqlCommand("SELECT * FROM Account WHERE customer_id = (SELECT customer_id FROM Customer WHERE email = @Email)", conn);
+                MySqlCommand command = new MySqlCommand("SELECT * FROM Account WHERE customer_id = (SELECT customer_id FROM customer_information WHERE email = @Email)", conn);
                 command.Parameters.AddWithValue("@Email", email);
                 string accountId = "";
                 using (MySqlDataReader reader = command.ExecuteReader())
@@ -37,9 +37,9 @@ namespace BankingSystem.Services
                     }
                 }
                 // Retrieve last five transactions
-                if (!String.IsNullOrEmpty(accountId))
+                if (!string.IsNullOrEmpty(accountId))
                 {
-                    MySqlCommand transactionCommand = new MySqlCommand("SELECT * FROM (SELECT * FROM Transaction WHERE account_id = @AccountId ORDER BY date DESC) sub ORDER BY date DESC LIMIT 5", conn);
+                    MySqlCommand transactionCommand = new MySqlCommand("SELECT * FROM (SELECT * FROM transaction_history WHERE account_id = @AccountId ORDER BY date DESC) sub ORDER BY date DESC LIMIT 5", conn);
                     transactionCommand.Parameters.AddWithValue("@AccountId", accountId);
                     using (MySqlDataReader transactionReader = transactionCommand.ExecuteReader())
                     {
@@ -69,7 +69,7 @@ namespace BankingSystem.Services
                     return null;
                 }
                 // Assuming email is unique
-                MySqlCommand command = new MySqlCommand("SELECT first_name FROM Customer WHERE email = @Email", conn);
+                MySqlCommand command = new MySqlCommand("SELECT first_name FROM customer_information WHERE email = @Email", conn);
                 command.Parameters.AddWithValue("@Email", email);
                 using (MySqlDataReader reader = command.ExecuteReader())
                 {

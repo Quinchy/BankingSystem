@@ -6,9 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BankingSystem.Services
+namespace BankingSystem.Services.CustomerServices
 {
-    internal class CustomerServices
+    internal class CustomerProfileServices
     {
         public static Tuple<Customer, Account> loadCustomerInformation(string email)
         {
@@ -18,14 +18,14 @@ namespace BankingSystem.Services
             string firstName, lastName, emailAddress, phoneNumber, password, accountId = "";
             double balance = 0;
             // Open connection using MySQLDatabase.OpenConnection()
-            using (var connection = BankingSystem.Database.MySQLDatabase.OpenConnection())
+            using (var connection = Database.MySQLDatabase.OpenConnection())
             {
                 if (connection != null)
                 {
                     // Write an SQL statement to retrieve the customer and account information from the database
                     string query = @"
                         SELECT c.customer_id, c.first_name, c.last_name, c.email, c.phone_number, c.password, a.account_id, a.balance 
-                        FROM customer c
+                        FROM customer_information c
                         LEFT JOIN account a ON c.customer_id = a.customer_id 
                         WHERE c.email = @Email";
                     using (var command = new MySqlCommand(query, connection))

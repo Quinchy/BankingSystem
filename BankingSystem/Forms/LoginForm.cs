@@ -1,4 +1,4 @@
-﻿using BankingSystem.Services;
+﻿using BankingSystem.Services.CustomerServices;
 using BankingSystem.Utils;
 using System;
 using System.Collections.Generic;
@@ -19,7 +19,6 @@ namespace BankingSystem.Forms
         public LoginForm()
         {
             InitializeComponent();
-
         }
         private void loginButton_Click(object sender, EventArgs e)
         {
@@ -32,18 +31,43 @@ namespace BankingSystem.Forms
                 MessageBox.Show("Please fill out both the email and password fields.", "Input Required", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
+
+            // Check if the user is an admin (teller)
+            if (email == "admin" && password == "admin")
+            {
+                // Change the screen to Teller Dashboard
+                Form dashboardForm = new TellerDashBoard.DashboardForm(email);
+                Helpers.changeScreen(baseFormPanel, dashboardForm);
+                return;
+            }
+
             // Call the Authenticate user function to check if the user logging in is in database.
             int result = LoginServices.authenticateUser(email, password);
             if (result == 1)
             {
                 // If both email and password are correct then Change the screen to Dashboard.
-                Form dashboardForm = new DashBoard.DashboardForm(email);
+                Form dashboardForm = new CustomerDashBoard.DashboardForm(email);
                 Helpers.changeScreen(baseFormPanel, dashboardForm);
             }
-            else if (result == 0)
+            else if (result == -2)
             {
                 // Password is incorrect
                 MessageBox.Show("Incorrect password. Please try again.", "Login Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else if (result == -3)
+            {
+                // Account is closed
+                MessageBox.Show("Your account is closed. Please contact the bank for further assistance.", "Login Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else if (result == -4)
+            {
+                // Account request is pending
+                MessageBox.Show("Your request for opening an account is currently under review. Please wait for confirmation.", "Login Pending", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else if (result == -5)
+            {
+                // Account request is rejected
+                MessageBox.Show("Your request for opening an account has been rejected. Please contact the bank for further assistance.", "Login Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             else
             {

@@ -88,7 +88,7 @@ namespace BankingSystem.Services.CustomerServices
             {
                 string query = @"SELECT 1 
                                 FROM Account a
-                                JOIN Customer c ON a.customer_id = c.customer_id
+                                JOIN Customer_information c ON a.customer_id = c.customer_id
                                 WHERE c.email = @email AND a.account_id = @accountId";
                 MySqlCommand cmd = new MySqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@email", email);
@@ -97,28 +97,15 @@ namespace BankingSystem.Services.CustomerServices
                 return result != null;
             }
         }
-        public static void depositMoney(string accountId, double depositAmount)
+        public static void requestDeposit(string accountId, double depositAmount)
         {
             using (var conn = MySQLDatabase.OpenConnection())
             {
-                string query = "SELECT balance FROM Account WHERE account_id = @accountId";
+                string query = "INSERT INTO transaction_processing (account_id, transaction_type, amount, process_status) VALUES (@accountId, 'Deposit', @amount, 'Pending')";
                 MySqlCommand cmd = new MySqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@accountId", accountId);
-                object result = cmd.ExecuteScalar();
-                if (result != null)
-                {
-                    double currentBalance = Convert.ToDouble(result);
-                    double newBalance = currentBalance + depositAmount;
-                    query = "UPDATE Account SET balance = @balance WHERE account_id = @accountId";
-                    cmd = new MySqlCommand(query, conn);
-                    cmd.Parameters.AddWithValue("@accountId", accountId);
-                    cmd.Parameters.AddWithValue("@balance", newBalance);
-                    cmd.ExecuteNonQuery();
-                }
-                else
-                {
-                    MessageBox.Show("Account ID not found.");
-                }
+                cmd.Parameters.AddWithValue("@amount", depositAmount);
+                cmd.ExecuteNonQuery();
             }
         }
         public static void withdrawMoney(string accountId, double withdrawAmount)

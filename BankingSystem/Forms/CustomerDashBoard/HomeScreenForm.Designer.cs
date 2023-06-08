@@ -132,7 +132,7 @@
             homeScreenPanel.Controls.Add(roundedPanel1);
             homeScreenPanel.Location = new Point(0, -1);
             homeScreenPanel.Name = "homeScreenPanel";
-            homeScreenPanel.Size = new Size(1040, 723);
+            homeScreenPanel.Size = new Size(1040, 863);
             homeScreenPanel.TabIndex = 30;
             // 
             // transactionHistoryView
@@ -141,7 +141,7 @@
             transactionHistoryView.BorderStyle = BorderStyle.None;
             transactionHistoryView.Columns.AddRange(new ColumnHeader[] { transactionIDHeader, amountHeader, dateHeader, transactionTypeHeader });
             transactionHistoryView.Font = new Font("Century Gothic", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            transactionHistoryView.ForeColor = Color.WhiteSmoke;
+            transactionHistoryView.ForeColor = Color.Black;
             transactionHistoryView.HeaderStyle = ColumnHeaderStyle.Nonclickable;
             transactionHistoryView.Location = new Point(74, 758);
             transactionHistoryView.MultiSelect = false;

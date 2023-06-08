@@ -23,6 +23,7 @@ namespace BankingSystem.Forms.TellerDashBoard
             currentBalanceHeader = new ColumnHeader();
             transactionTypeHeader = new ColumnHeader();
             amountHeader = new ColumnHeader();
+            processDateHeader = new ColumnHeader();
             rejectButton = new RoundedButton();
             approveButton = new RoundedButton();
             transactionProcessingPanel.SuspendLayout();
@@ -55,9 +56,10 @@ namespace BankingSystem.Forms.TellerDashBoard
             // 
             transactionProcessingListView.BackColor = Color.White;
             transactionProcessingListView.BorderStyle = BorderStyle.None;
-            transactionProcessingListView.Columns.AddRange(new ColumnHeader[] { processIDHeader, accountIDHeader, currentBalanceHeader, transactionTypeHeader, amountHeader });
+            transactionProcessingListView.CheckBoxes = true;
+            transactionProcessingListView.Columns.AddRange(new ColumnHeader[] { processIDHeader, accountIDHeader, currentBalanceHeader, transactionTypeHeader, amountHeader, processDateHeader });
             transactionProcessingListView.Font = new Font("Century Gothic", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            transactionProcessingListView.ForeColor = Color.WhiteSmoke;
+            transactionProcessingListView.ForeColor = Color.Black;
             transactionProcessingListView.HeaderStyle = ColumnHeaderStyle.Nonclickable;
             transactionProcessingListView.Location = new Point(20, 14);
             transactionProcessingListView.MultiSelect = false;
@@ -70,33 +72,39 @@ namespace BankingSystem.Forms.TellerDashBoard
             // 
             // processIDHeader
             // 
-            processIDHeader.Text = "        Process ID";
+            processIDHeader.Text = "   Process ID";
             processIDHeader.TextAlign = HorizontalAlignment.Center;
-            processIDHeader.Width = 152;
+            processIDHeader.Width = 110;
             // 
             // accountIDHeader
             // 
             accountIDHeader.Text = "Account ID";
             accountIDHeader.TextAlign = HorizontalAlignment.Center;
-            accountIDHeader.Width = 180;
+            accountIDHeader.Width = 150;
             // 
             // currentBalanceHeader
             // 
             currentBalanceHeader.Text = "Current Balance";
             currentBalanceHeader.TextAlign = HorizontalAlignment.Center;
-            currentBalanceHeader.Width = 200;
+            currentBalanceHeader.Width = 170;
             // 
             // transactionTypeHeader
             // 
             transactionTypeHeader.Text = "Transaction Type";
             transactionTypeHeader.TextAlign = HorizontalAlignment.Center;
-            transactionTypeHeader.Width = 180;
+            transactionTypeHeader.Width = 150;
             // 
             // amountHeader
             // 
             amountHeader.Text = "Amount";
             amountHeader.TextAlign = HorizontalAlignment.Center;
-            amountHeader.Width = 150;
+            amountHeader.Width = 152;
+            // 
+            // processDateHeader
+            // 
+            processDateHeader.Text = "Process Status";
+            processDateHeader.TextAlign = HorizontalAlignment.Center;
+            processDateHeader.Width = 130;
             // 
             // rejectButton
             // 
@@ -174,5 +182,6 @@ namespace BankingSystem.Forms.TellerDashBoard
         private ColumnHeader amountHeader;
         private RoundedButton rejectButton;
         private RoundedButton approveButton;
+        private ColumnHeader processDateHeader;
     }
 }

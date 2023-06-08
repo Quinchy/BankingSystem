@@ -54,8 +54,8 @@ namespace BankingSystem.Forms.CustomerDashBoard
             var confirmResult = MessageBox.Show("Are you sure to deposit this amount?", "Confirm Deposit!", MessageBoxButtons.YesNo);
             if (confirmResult == DialogResult.Yes)
             {
-                BankingServices.depositMoney(accountId, depositAmount);
-                balanceLabel.Text = "₱ " + (double.Parse(balanceLabel.Text.Substring(2)) + depositAmount).ToString() + ".00";
+                BankingServices.requestDeposit(accountId, depositAmount);
+                MessageBox.Show("Your deposit request has been sent to the teller for review.");
             }
         }
         private void withdrawButton_Click(object sender, EventArgs e)

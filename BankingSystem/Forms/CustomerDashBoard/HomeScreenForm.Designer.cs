@@ -132,7 +132,7 @@
             homeScreenPanel.Controls.Add(roundedPanel1);
             homeScreenPanel.Location = new Point(0, -1);
             homeScreenPanel.Name = "homeScreenPanel";
-            homeScreenPanel.Size = new Size(1040, 863);
+            homeScreenPanel.Size = new Size(1040, 723);
             homeScreenPanel.TabIndex = 30;
             // 
             // transactionHistoryView

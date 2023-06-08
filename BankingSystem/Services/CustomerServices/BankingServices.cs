@@ -58,30 +58,6 @@ namespace BankingSystem.Services.CustomerServices
             }
             return Tuple.Create(currentAccount, transactions);
         }
-        public static string GetCustomerFirstName(string email)
-        {
-            string firstName = null;
-            using (MySqlConnection conn = MySQLDatabase.OpenConnection())
-            {
-                if (conn == null)
-                {
-                    Console.WriteLine("Unable to open MySQL connection.");
-                    return null;
-                }
-                // Assuming email is unique
-                MySqlCommand command = new MySqlCommand("SELECT first_name FROM customer_information WHERE email = @Email", conn);
-                command.Parameters.AddWithValue("@Email", email);
-                using (MySqlDataReader reader = command.ExecuteReader())
-                {
-                    if (reader.Read())
-                    {
-                        firstName = reader["first_name"].ToString();
-                    }
-                }
-                MySQLDatabase.CloseConnection(conn);
-            }
-            return firstName;
-        }
         public static bool isTheirAccount(string email, string accountId)
         {
             using (var conn = MySQLDatabase.OpenConnection())
@@ -108,30 +84,18 @@ namespace BankingSystem.Services.CustomerServices
                 cmd.ExecuteNonQuery();
             }
         }
-        public static void withdrawMoney(string accountId, double withdrawAmount)
+        public static void requestWithdraw(string accountId, double withdrawAmount)
         {
             using (var conn = MySQLDatabase.OpenConnection())
             {
-                string query = "SELECT balance FROM Account WHERE account_id = @accountId";
+                string query = "INSERT INTO transaction_processing (account_id, transaction_type, amount, process_status) VALUES (@accountId, 'Withdraw', @amount, 'Pending')";
                 MySqlCommand cmd = new MySqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@accountId", accountId);
-                object result = cmd.ExecuteScalar();
-                if (result != null)
-                {
-                    double currentBalance = Convert.ToDouble(result);
-                    double newBalance = currentBalance - withdrawAmount;
-                    query = "UPDATE Account SET balance = @balance WHERE account_id = @accountId";
-                    cmd = new MySqlCommand(query, conn);
-                    cmd.Parameters.AddWithValue("@accountId", accountId);
-                    cmd.Parameters.AddWithValue("@balance", newBalance);
-                    cmd.ExecuteNonQuery();
-                }
-                else
-                {
-                    MessageBox.Show("Account ID not found.");
-                }
+                cmd.Parameters.AddWithValue("@amount", withdrawAmount);
+                cmd.ExecuteNonQuery();
             }
         }
+
         public static void transferMoney(string senderAccountId, string receiverAccountId, double transferAmount)
         {
             using (var conn = MySQLDatabase.OpenConnection())
@@ -177,6 +141,30 @@ namespace BankingSystem.Services.CustomerServices
                     return;
                 }
             }
+        }
+        public static string GetCustomerFirstName(string email)
+        {
+            string firstName = null;
+            using (MySqlConnection conn = MySQLDatabase.OpenConnection())
+            {
+                if (conn == null)
+                {
+                    Console.WriteLine("Unable to open MySQL connection.");
+                    return null;
+                }
+                // Assuming email is unique
+                MySqlCommand command = new MySqlCommand("SELECT first_name FROM customer_information WHERE email = @Email", conn);
+                command.Parameters.AddWithValue("@Email", email);
+                using (MySqlDataReader reader = command.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        firstName = reader["first_name"].ToString();
+                    }
+                }
+                MySQLDatabase.CloseConnection(conn);
+            }
+            return firstName;
         }
     }
 }

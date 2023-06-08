@@ -154,7 +154,7 @@
             // 
             // transactionIDHeader
             // 
-            transactionIDHeader.Text = "          Transaction ID";
+            transactionIDHeader.Text = "Transaction ID";
             transactionIDHeader.TextAlign = HorizontalAlignment.Center;
             transactionIDHeader.Width = 200;
             // 

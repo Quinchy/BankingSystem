@@ -67,22 +67,23 @@ namespace BankingSystem.Forms.CustomerDashBoard
                 MessageBox.Show("Please fill up both the Account ID and Amount fields.");
                 return;
             }
-
             if (!BankingServices.isTheirAccount(email, accountId))
             {
                 MessageBox.Show("This is not your account ID.");
                 return;
             }
-            if (double.Parse(balanceLabel.Text.Substring(2)) < withdrawAmount)
-            {
-                MessageBox.Show("Insufficient balance.");
-                return;
-            }
-            var confirmResult = MessageBox.Show("Are you sure to withdraw this amount?", "Confirm Withdrawal!", MessageBoxButtons.YesNo);
+            var confirmResult = MessageBox.Show("Are you sure to withdraw this amount?", "Confirm Withdraw!", MessageBoxButtons.YesNo);
             if (confirmResult == DialogResult.Yes)
             {
-                BankingServices.withdrawMoney(accountId, withdrawAmount);
-                balanceLabel.Text = "₱ " + (double.Parse(balanceLabel.Text.Substring(2)) - withdrawAmount).ToString() + ".00";
+                try
+                {
+                    BankingServices.requestWithdraw(accountId, withdrawAmount);
+                    MessageBox.Show("Your withdraw request has been sent to the teller for review.");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
             }
         }
         private void confirmButton_Click(object sender, EventArgs e)

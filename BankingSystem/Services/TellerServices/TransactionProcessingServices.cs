@@ -95,5 +95,70 @@ namespace BankingSystem.Services.TellerServices
                 }
             }
         }
+        public static void approveWithdraw(string processId)
+        {
+            using (var conn = MySQLDatabase.OpenConnection())
+            {
+                string accountId;
+                double withdrawAmount;
+
+                using (var selectCommand = new MySqlCommand("SELECT * FROM transaction_processing WHERE process_id = @processId", conn))
+                {
+                    selectCommand.Parameters.AddWithValue("@processId", processId);
+
+                    using (var reader = selectCommand.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            accountId = reader["account_id"].ToString();
+                            withdrawAmount = Convert.ToDouble(reader["amount"]);
+                        }
+                        else
+                        {
+                            throw new Exception("Process ID not found.");
+                        }
+                    }
+                }
+
+                using (var selectBalanceCommand = new MySqlCommand("SELECT balance FROM Account WHERE account_id = @accountId", conn))
+                {
+                    selectBalanceCommand.Parameters.AddWithValue("@accountId", accountId);
+                    object result = selectBalanceCommand.ExecuteScalar();
+                    if (result != null)
+                    {
+                        double currentBalance = Convert.ToDouble(result);
+                        if (currentBalance < withdrawAmount)
+                        {
+                            throw new Exception("Insufficient balance.");
+                        }
+                        double newBalance = currentBalance - withdrawAmount;
+
+                        using (var updateBalanceCommand = new MySqlCommand("UPDATE Account SET balance = @balance WHERE account_id = @accountId", conn))
+                        {
+                            updateBalanceCommand.Parameters.AddWithValue("@accountId", accountId);
+                            updateBalanceCommand.Parameters.AddWithValue("@balance", newBalance);
+                            updateBalanceCommand.ExecuteNonQuery();
+                        }
+                    }
+                    else
+                    {
+                        throw new Exception("Account ID not found.");
+                    }
+                }
+
+                using (var updateCommand = new MySqlCommand("UPDATE transaction_processing SET process_status = 'Approved' WHERE process_id = @processId", conn))
+                {
+                    updateCommand.Parameters.AddWithValue("@processId", processId);
+                    updateCommand.ExecuteNonQuery();
+                }
+
+                using (var insertCommand = new MySqlCommand("INSERT INTO transaction_history (account_id, amount, date, transaction_type) VALUES (@accountId, @amount, NOW(), 'Withdraw')", conn))
+                {
+                    insertCommand.Parameters.AddWithValue("@accountId", accountId);
+                    insertCommand.Parameters.AddWithValue("@amount", withdrawAmount);
+                    insertCommand.ExecuteNonQuery();
+                }
+            }
+        }
     }
 }

@@ -28,19 +28,26 @@ namespace BankingSystem.Forms.TellerDashBoard
                 ListViewItem selectedItem = transactionProcessingListView.CheckedItems[0];
                 string processId = selectedItem.SubItems[0].Text;
                 string transactionType = selectedItem.SubItems[3].Text;
-                switch (transactionType)
+                try
                 {
-                    case "Deposit":
-                        TransactionProcessingServices.approveDeposit(processId);
-                        break;
-                    case "Withdraw":
-                        // Call the appropriate method for approving a withdrawal
-                        break;
-                    case "Transfer":
-                        // Call the appropriate method for approving a transfer
-                        break;
+                    switch (transactionType)
+                    {
+                        case "Deposit":
+                            TransactionProcessingServices.approveDeposit(processId);
+                            break;
+                        case "Withdraw":
+                            TransactionProcessingServices.approveWithdraw(processId);
+                            break;
+                        case "Transfer":
+                            // Call the appropriate method for approving a transfer
+                            break;
+                    }
+                    transactionProcessingListView.Items.Remove(selectedItem);
                 }
-                transactionProcessingListView.Items.Remove(selectedItem);
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
             }
             else
             {

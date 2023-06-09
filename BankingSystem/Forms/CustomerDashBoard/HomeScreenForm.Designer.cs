@@ -83,15 +83,15 @@
             line2.BackColor = Color.Gainsboro;
             line2.Location = new Point(35, 224);
             line2.Name = "line2";
-            line2.Size = new Size(380, 2);
+            line2.Size = new Size(380, 1);
             line2.TabIndex = 38;
             // 
             // line3
             // 
             line3.BackColor = Color.Gainsboro;
-            line3.Location = new Point(39, 425);
+            line3.Location = new Point(39, 460);
             line3.Name = "line3";
-            line3.Size = new Size(353, 2);
+            line3.Size = new Size(353, 1);
             line3.TabIndex = 37;
             // 
             // line4
@@ -205,7 +205,7 @@
             balanceCardPanel.Controls.Add(cardPicture);
             balanceCardPanel.Controls.Add(balanceLabel);
             balanceCardPanel.Controls.Add(availableBalanceLabel);
-            balanceCardPanel.CornerRadius = 10;
+            balanceCardPanel.CornerRadius = 15;
             balanceCardPanel.ForeColor = Color.Transparent;
             balanceCardPanel.Location = new Point(61, 96);
             balanceCardPanel.Name = "balanceCardPanel";
@@ -225,22 +225,22 @@
             // balanceLabel
             // 
             balanceLabel.AutoSize = true;
-            balanceLabel.Font = new Font("Century Gothic", 36F, FontStyle.Regular, GraphicsUnit.Point);
+            balanceLabel.Font = new Font("Century Gothic", 32.25F, FontStyle.Regular, GraphicsUnit.Point);
             balanceLabel.ForeColor = Color.White;
             balanceLabel.Location = new Point(139, 90);
             balanceLabel.Name = "balanceLabel";
-            balanceLabel.Size = new Size(164, 58);
+            balanceLabel.Size = new Size(142, 52);
             balanceLabel.TabIndex = 0;
             balanceLabel.Text = "₱ 0.00";
             // 
             // availableBalanceLabel
             // 
             availableBalanceLabel.AutoSize = true;
-            availableBalanceLabel.Font = new Font("Century Gothic", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            availableBalanceLabel.Font = new Font("Century Gothic", 14.25F, FontStyle.Bold, GraphicsUnit.Point);
             availableBalanceLabel.ForeColor = Color.White;
-            availableBalanceLabel.Location = new Point(148, 70);
+            availableBalanceLabel.Location = new Point(147, 70);
             availableBalanceLabel.Name = "availableBalanceLabel";
-            availableBalanceLabel.Size = new Size(154, 19);
+            availableBalanceLabel.Size = new Size(183, 23);
             availableBalanceLabel.TabIndex = 28;
             availableBalanceLabel.Text = "Available Balance";
             // 
@@ -269,7 +269,7 @@
             // 
             arrowDownIcon.BackgroundImage = Properties.Resources.down_arrow;
             arrowDownIcon.BackgroundImageLayout = ImageLayout.Stretch;
-            arrowDownIcon.Location = new Point(191, 259);
+            arrowDownIcon.Location = new Point(191, 285);
             arrowDownIcon.Name = "arrowDownIcon";
             arrowDownIcon.Size = new Size(50, 50);
             arrowDownIcon.TabIndex = 36;
@@ -277,11 +277,11 @@
             // transferLabel
             // 
             transferLabel.AutoSize = true;
-            transferLabel.Font = new Font("Century Gothic", 20.25F, FontStyle.Bold, GraphicsUnit.Point);
+            transferLabel.Font = new Font("Century Gothic", 21.75F, FontStyle.Bold, GraphicsUnit.Point);
             transferLabel.ForeColor = Color.FromArgb(48, 48, 51);
-            transferLabel.Location = new Point(89, 21);
+            transferLabel.Location = new Point(91, 23);
             transferLabel.Name = "transferLabel";
-            transferLabel.Size = new Size(212, 32);
+            transferLabel.Size = new Size(227, 36);
             transferLabel.TabIndex = 30;
             transferLabel.Text = "Transfer Money";
             // 
@@ -293,7 +293,7 @@
             receiverIDPanel.Controls.Add(line6);
             receiverIDPanel.CornerRadius = 10;
             receiverIDPanel.ForeColor = Color.Transparent;
-            receiverIDPanel.Location = new Point(91, 355);
+            receiverIDPanel.Location = new Point(91, 395);
             receiverIDPanel.Name = "receiverIDPanel";
             receiverIDPanel.Size = new Size(248, 45);
             receiverIDPanel.TabIndex = 33;
@@ -314,11 +314,11 @@
             // 
             receiverIDLabel.AutoSize = true;
             receiverIDLabel.BackColor = Color.Transparent;
-            receiverIDLabel.Font = new Font("Century Gothic", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            receiverIDLabel.Font = new Font("Century Gothic", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
             receiverIDLabel.ForeColor = Color.FromArgb(48, 48, 51);
-            receiverIDLabel.Location = new Point(91, 332);
+            receiverIDLabel.Location = new Point(91, 374);
             receiverIDLabel.Name = "receiverIDLabel";
-            receiverIDLabel.Size = new Size(105, 19);
+            receiverIDLabel.Size = new Size(102, 18);
             receiverIDLabel.TabIndex = 35;
             receiverIDLabel.Text = "Receiver's ID";
             // 
@@ -326,11 +326,11 @@
             // 
             amountTransferLabel.AutoSize = true;
             amountTransferLabel.BackColor = Color.Transparent;
-            amountTransferLabel.Font = new Font("Century Gothic", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            amountTransferLabel.Font = new Font("Century Gothic", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
             amountTransferLabel.ForeColor = Color.FromArgb(48, 48, 51);
-            amountTransferLabel.Location = new Point(91, 165);
+            amountTransferLabel.Location = new Point(91, 181);
             amountTransferLabel.Name = "amountTransferLabel";
-            amountTransferLabel.Size = new Size(71, 19);
+            amountTransferLabel.Size = new Size(65, 18);
             amountTransferLabel.TabIndex = 34;
             amountTransferLabel.Text = "Amount";
             // 
@@ -338,11 +338,11 @@
             // 
             yourIDLabel.AutoSize = true;
             yourIDLabel.BackColor = Color.Transparent;
-            yourIDLabel.Font = new Font("Century Gothic", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            yourIDLabel.Font = new Font("Century Gothic", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
             yourIDLabel.ForeColor = Color.FromArgb(48, 48, 51);
-            yourIDLabel.Location = new Point(91, 80);
+            yourIDLabel.Location = new Point(91, 90);
             yourIDLabel.Name = "yourIDLabel";
-            yourIDLabel.Size = new Size(133, 19);
+            yourIDLabel.Size = new Size(127, 18);
             yourIDLabel.TabIndex = 29;
             yourIDLabel.Text = "Your Account ID";
             // 
@@ -354,7 +354,7 @@
             yourIDPanel.Controls.Add(line4);
             yourIDPanel.CornerRadius = 10;
             yourIDPanel.ForeColor = Color.Transparent;
-            yourIDPanel.Location = new Point(91, 103);
+            yourIDPanel.Location = new Point(91, 111);
             yourIDPanel.Name = "yourIDPanel";
             yourIDPanel.Size = new Size(248, 45);
             yourIDPanel.TabIndex = 31;
@@ -383,12 +383,12 @@
             confirmButton.FlatStyle = FlatStyle.Flat;
             confirmButton.Font = new Font("Century Gothic", 15.75F, FontStyle.Bold, GraphicsUnit.Point);
             confirmButton.ForeColor = Color.White;
-            confirmButton.Location = new Point(91, 446);
+            confirmButton.Location = new Point(136, 477);
             confirmButton.Name = "confirmButton";
             confirmButton.OnHoverBorderColor = Color.Transparent;
             confirmButton.OnHoverButtonColor = Color.FromArgb(124, 205, 124);
             confirmButton.OnHoverTextColor = Color.WhiteSmoke;
-            confirmButton.Size = new Size(248, 56);
+            confirmButton.Size = new Size(166, 45);
             confirmButton.TabIndex = 7;
             confirmButton.Text = "CONFIRM";
             confirmButton.TextColor = Color.WhiteSmoke;
@@ -403,7 +403,7 @@
             amountTransferPanel.Controls.Add(line5);
             amountTransferPanel.CornerRadius = 10;
             amountTransferPanel.ForeColor = Color.Transparent;
-            amountTransferPanel.Location = new Point(91, 188);
+            amountTransferPanel.Location = new Point(91, 202);
             amountTransferPanel.Name = "amountTransferPanel";
             amountTransferPanel.Size = new Size(250, 45);
             amountTransferPanel.TabIndex = 33;
@@ -446,11 +446,11 @@
             // 
             yourIDTransactionLabel.AutoSize = true;
             yourIDTransactionLabel.BackColor = Color.Transparent;
-            yourIDTransactionLabel.Font = new Font("Century Gothic", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            yourIDTransactionLabel.Font = new Font("Century Gothic", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
             yourIDTransactionLabel.ForeColor = Color.FromArgb(48, 48, 51);
-            yourIDTransactionLabel.Location = new Point(97, 63);
+            yourIDTransactionLabel.Location = new Point(97, 65);
             yourIDTransactionLabel.Name = "yourIDTransactionLabel";
-            yourIDTransactionLabel.Size = new Size(133, 19);
+            yourIDTransactionLabel.Size = new Size(127, 18);
             yourIDTransactionLabel.TabIndex = 38;
             yourIDTransactionLabel.Text = "Your Account ID";
             // 
@@ -490,11 +490,11 @@
             // transactionLabel
             // 
             transactionLabel.AutoSize = true;
-            transactionLabel.Font = new Font("Century Gothic", 20.25F, FontStyle.Bold, GraphicsUnit.Point);
+            transactionLabel.Font = new Font("Century Gothic", 21.75F, FontStyle.Bold, GraphicsUnit.Point);
             transactionLabel.ForeColor = Color.FromArgb(48, 48, 51);
-            transactionLabel.Location = new Point(94, 15);
+            transactionLabel.Location = new Point(93, 15);
             transactionLabel.Name = "transactionLabel";
-            transactionLabel.Size = new Size(162, 32);
+            transactionLabel.Size = new Size(175, 36);
             transactionLabel.TabIndex = 36;
             transactionLabel.Text = "Transaction";
             // 
@@ -502,11 +502,11 @@
             // 
             amountTransactionLabel.AutoSize = true;
             amountTransactionLabel.BackColor = Color.Transparent;
-            amountTransactionLabel.Font = new Font("Century Gothic", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            amountTransactionLabel.Font = new Font("Century Gothic", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
             amountTransactionLabel.ForeColor = Color.FromArgb(48, 48, 51);
-            amountTransactionLabel.Location = new Point(97, 136);
+            amountTransactionLabel.Location = new Point(97, 140);
             amountTransactionLabel.Name = "amountTransactionLabel";
-            amountTransactionLabel.Size = new Size(71, 19);
+            amountTransactionLabel.Size = new Size(65, 18);
             amountTransactionLabel.TabIndex = 36;
             amountTransactionLabel.Text = "Amount";
             // 
@@ -542,7 +542,7 @@
             // 
             withdrawButton.BorderColor = Color.Transparent;
             withdrawButton.ButtonColor = Color.FromArgb(92, 184, 92);
-            withdrawButton.CornerRadius = 5;
+            withdrawButton.CornerRadius = 10;
             withdrawButton.Cursor = Cursors.Hand;
             withdrawButton.FlatAppearance.BorderSize = 0;
             withdrawButton.FlatAppearance.MouseDownBackColor = Color.White;
@@ -566,7 +566,7 @@
             // 
             depositButton.BorderColor = Color.Transparent;
             depositButton.ButtonColor = Color.FromArgb(92, 184, 92);
-            depositButton.CornerRadius = 5;
+            depositButton.CornerRadius = 10;
             depositButton.Cursor = Cursors.Hand;
             depositButton.FlatAppearance.BorderSize = 0;
             depositButton.FlatAppearance.MouseDownBackColor = Color.White;

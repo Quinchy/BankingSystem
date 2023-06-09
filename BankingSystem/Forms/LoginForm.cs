@@ -92,7 +92,6 @@ namespace BankingSystem.Forms
                 passwordTextBox.UseSystemPasswordChar = true;
             }
         }
-
         private void forgetPasswordLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             // Change the screen to Forget Password Form.

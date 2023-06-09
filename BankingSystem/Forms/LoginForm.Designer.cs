@@ -19,6 +19,7 @@ namespace BankingSystem.Forms
         {
             loginButton = new RoundedButton();
             loginFormLeftPanel = new Panel();
+            line3 = new Panel();
             passwordIconLabel = new Panel();
             emailIconLabel = new Panel();
             createAccountLinkLabel = new LinkLabel();
@@ -68,6 +69,7 @@ namespace BankingSystem.Forms
             // loginFormLeftPanel
             // 
             loginFormLeftPanel.BackColor = Color.FromArgb(48, 46, 65);
+            loginFormLeftPanel.Controls.Add(line3);
             loginFormLeftPanel.Controls.Add(passwordIconLabel);
             loginFormLeftPanel.Controls.Add(emailIconLabel);
             loginFormLeftPanel.Controls.Add(createAccountLinkLabel);
@@ -88,11 +90,19 @@ namespace BankingSystem.Forms
             loginFormLeftPanel.Size = new Size(640, 720);
             loginFormLeftPanel.TabIndex = 3;
             // 
+            // line3
+            // 
+            line3.BackColor = Color.FromArgb(65, 64, 89);
+            line3.Location = new Point(121, 575);
+            line3.Name = "line3";
+            line3.Size = new Size(376, 1);
+            line3.TabIndex = 19;
+            // 
             // passwordIconLabel
             // 
             passwordIconLabel.BackgroundImage = Properties.Resources.locked_computer;
             passwordIconLabel.BackgroundImageLayout = ImageLayout.Stretch;
-            passwordIconLabel.Location = new Point(121, 337);
+            passwordIconLabel.Location = new Point(121, 327);
             passwordIconLabel.Name = "passwordIconLabel";
             passwordIconLabel.Size = new Size(20, 20);
             passwordIconLabel.TabIndex = 18;
@@ -101,7 +111,7 @@ namespace BankingSystem.Forms
             // 
             emailIconLabel.BackgroundImage = Properties.Resources.envelope;
             emailIconLabel.BackgroundImageLayout = ImageLayout.Stretch;
-            emailIconLabel.Location = new Point(121, 239);
+            emailIconLabel.Location = new Point(121, 229);
             emailIconLabel.Name = "emailIconLabel";
             emailIconLabel.Size = new Size(20, 20);
             emailIconLabel.TabIndex = 17;
@@ -137,7 +147,7 @@ namespace BankingSystem.Forms
             forgetPasswordLinkLabel.AutoSize = true;
             forgetPasswordLinkLabel.Font = new Font("Century Gothic", 9F, FontStyle.Bold, GraphicsUnit.Point);
             forgetPasswordLinkLabel.LinkColor = Color.FromArgb(92, 184, 92);
-            forgetPasswordLinkLabel.Location = new Point(374, 427);
+            forgetPasswordLinkLabel.Location = new Point(374, 417);
             forgetPasswordLinkLabel.Name = "forgetPasswordLinkLabel";
             forgetPasswordLinkLabel.Size = new Size(109, 16);
             forgetPasswordLinkLabel.TabIndex = 13;
@@ -151,7 +161,7 @@ namespace BankingSystem.Forms
             showPasswordCheckbox.FlatAppearance.CheckedBackColor = Color.FromArgb(92, 184, 92);
             showPasswordCheckbox.Font = new Font("Century Gothic", 9F, FontStyle.Regular, GraphicsUnit.Point);
             showPasswordCheckbox.ForeColor = Color.WhiteSmoke;
-            showPasswordCheckbox.Location = new Point(132, 427);
+            showPasswordCheckbox.Location = new Point(132, 417);
             showPasswordCheckbox.Name = "showPasswordCheckbox";
             showPasswordCheckbox.Size = new Size(124, 21);
             showPasswordCheckbox.TabIndex = 12;
@@ -189,7 +199,7 @@ namespace BankingSystem.Forms
             passwordLabel.BackColor = Color.Transparent;
             passwordLabel.Font = new Font("Century Gothic", 12F, FontStyle.Bold, GraphicsUnit.Point);
             passwordLabel.ForeColor = Color.WhiteSmoke;
-            passwordLabel.Location = new Point(147, 337);
+            passwordLabel.Location = new Point(147, 327);
             passwordLabel.Name = "passwordLabel";
             passwordLabel.Size = new Size(80, 19);
             passwordLabel.TabIndex = 8;
@@ -201,7 +211,7 @@ namespace BankingSystem.Forms
             passwordTextBox.BorderStyle = BorderStyle.None;
             passwordTextBox.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
             passwordTextBox.ForeColor = Color.FromArgb(48, 46, 65);
-            passwordTextBox.Location = new Point(132, 382);
+            passwordTextBox.Location = new Point(132, 372);
             passwordTextBox.Name = "passwordTextBox";
             passwordTextBox.Size = new Size(355, 19);
             passwordTextBox.TabIndex = 7;
@@ -213,7 +223,7 @@ namespace BankingSystem.Forms
             emailLabel.BackColor = Color.Transparent;
             emailLabel.Font = new Font("Century Gothic", 12F, FontStyle.Bold, GraphicsUnit.Point);
             emailLabel.ForeColor = Color.WhiteSmoke;
-            emailLabel.Location = new Point(147, 239);
+            emailLabel.Location = new Point(147, 229);
             emailLabel.Name = "emailLabel";
             emailLabel.Size = new Size(52, 19);
             emailLabel.TabIndex = 5;
@@ -225,7 +235,7 @@ namespace BankingSystem.Forms
             passwordPanel.BorderColor = Color.WhiteSmoke;
             passwordPanel.Controls.Add(line2);
             passwordPanel.CornerRadius = 5;
-            passwordPanel.Location = new Point(121, 369);
+            passwordPanel.Location = new Point(121, 359);
             passwordPanel.Name = "passwordPanel";
             passwordPanel.Size = new Size(376, 45);
             passwordPanel.TabIndex = 6;
@@ -244,7 +254,7 @@ namespace BankingSystem.Forms
             emailTextBox.BorderStyle = BorderStyle.None;
             emailTextBox.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
             emailTextBox.ForeColor = Color.FromArgb(48, 46, 65);
-            emailTextBox.Location = new Point(132, 284);
+            emailTextBox.Location = new Point(132, 274);
             emailTextBox.Name = "emailTextBox";
             emailTextBox.Size = new Size(355, 19);
             emailTextBox.TabIndex = 4;
@@ -256,7 +266,7 @@ namespace BankingSystem.Forms
             emailPanel.Controls.Add(line1);
             emailPanel.CornerRadius = 5;
             emailPanel.ForeColor = Color.Transparent;
-            emailPanel.Location = new Point(121, 271);
+            emailPanel.Location = new Point(121, 261);
             emailPanel.Name = "emailPanel";
             emailPanel.Size = new Size(376, 45);
             emailPanel.TabIndex = 0;
@@ -315,5 +325,6 @@ namespace BankingSystem.Forms
         private LinkLabel createAccountLinkLabel;
         private RoundedButton loginButton;
         private Panel registrationBackgroundPanel;
+        private Panel line3;
     }
 }

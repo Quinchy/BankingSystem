@@ -25,17 +25,17 @@
             // line1
             // 
             line1.BackColor = Color.FromArgb(65, 64, 89);
-            line1.Location = new Point(12, 80);
+            line1.Location = new Point(12, 85);
             line1.Name = "line1";
-            line1.Size = new Size(215, 2);
+            line1.Size = new Size(215, 1);
             line1.TabIndex = 5;
             // 
             // line2
             // 
             line2.BackColor = Color.FromArgb(65, 64, 89);
-            line2.Location = new Point(12, 610);
+            line2.Location = new Point(12, 625);
             line2.Name = "line2";
-            line2.Size = new Size(215, 2);
+            line2.Size = new Size(215, 1);
             line2.TabIndex = 6;
             // 
             // appLogoIcon
@@ -115,7 +115,7 @@
             logoutButton.FlatStyle = FlatStyle.Flat;
             logoutButton.Font = new Font("Century Gothic", 14.25F, FontStyle.Bold, GraphicsUnit.Point);
             logoutButton.ForeColor = Color.WhiteSmoke;
-            logoutButton.Location = new Point(12, 643);
+            logoutButton.Location = new Point(12, 655);
             logoutButton.Name = "logoutButton";
             logoutButton.OnHoverBorderColor = Color.Transparent;
             logoutButton.OnHoverButtonColor = Color.FromArgb(124, 205, 124);

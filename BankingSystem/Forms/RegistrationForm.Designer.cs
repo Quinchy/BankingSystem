@@ -119,7 +119,7 @@
             line7.BackColor = Color.WhiteSmoke;
             line7.Location = new Point(25, 130);
             line7.Name = "line7";
-            line7.Size = new Size(571, 2);
+            line7.Size = new Size(571, 1);
             line7.TabIndex = 31;
             // 
             // registrationPanel

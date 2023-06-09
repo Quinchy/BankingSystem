@@ -121,7 +121,7 @@
             line8.BackColor = Color.WhiteSmoke;
             line8.Location = new Point(33, 336);
             line8.Name = "line8";
-            line8.Size = new Size(571, 2);
+            line8.Size = new Size(571, 1);
             line8.TabIndex = 32;
             // 
             // confirmPasswordIcon
@@ -170,7 +170,7 @@
             line7.BackColor = Color.WhiteSmoke;
             line7.Location = new Point(33, 151);
             line7.Name = "line7";
-            line7.Size = new Size(571, 2);
+            line7.Size = new Size(571, 1);
             line7.TabIndex = 31;
             // 
             // registrationLabel

@@ -17,16 +17,10 @@ namespace BankingSystem.Forms.CustomerDashBoard
         {
             line1 = new Panel();
             line2 = new Panel();
-            profilePictureBox = new PictureBox();
             profilePanel = new RoundedPanel();
-            editButton = new Button();
             profileTitleLabel = new Label();
-            profileCardPanel = new RoundedPanel();
-            changePhotoButton = new RoundedButton();
             accountInfoCardPanel = new RoundedPanel();
             copyButton = new Button();
-            roundedButton2 = new RoundedButton();
-            roundedButton1 = new RoundedButton();
             accountIDPanel = new RoundedBorderPanel();
             accountIDTextBox = new TextBox();
             accountIDLabel = new Label();
@@ -47,9 +41,7 @@ namespace BankingSystem.Forms.CustomerDashBoard
             firstNameTextBox = new TextBox();
             firstNameLabel = new Label();
             accountInfoLabel = new Label();
-            ((System.ComponentModel.ISupportInitialize)profilePictureBox).BeginInit();
             profilePanel.SuspendLayout();
-            profileCardPanel.SuspendLayout();
             accountInfoCardPanel.SuspendLayout();
             accountIDPanel.SuspendLayout();
             passwordPanel.SuspendLayout();
@@ -64,33 +56,21 @@ namespace BankingSystem.Forms.CustomerDashBoard
             line1.BackColor = Color.Gainsboro;
             line1.Location = new Point(21, 25);
             line1.Name = "line1";
-            line1.Size = new Size(70, 2);
+            line1.Size = new Size(25, 1);
             line1.TabIndex = 40;
             // 
             // line2
             // 
             line2.BackColor = Color.Gainsboro;
-            line2.Location = new Point(299, 25);
+            line2.Location = new Point(190, 25);
             line2.Name = "line2";
-            line2.Size = new Size(355, 2);
+            line2.Size = new Size(465, 1);
             line2.TabIndex = 39;
-            // 
-            // profilePictureBox
-            // 
-            profilePictureBox.BackgroundImageLayout = ImageLayout.None;
-            profilePictureBox.Image = Properties.Resources.blank;
-            profilePictureBox.Location = new Point(12, 15);
-            profilePictureBox.Name = "profilePictureBox";
-            profilePictureBox.Size = new Size(200, 200);
-            profilePictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
-            profilePictureBox.TabIndex = 33;
-            profilePictureBox.TabStop = false;
             // 
             // profilePanel
             // 
             profilePanel.BackColor = Color.Transparent;
             profilePanel.BorderColor = Color.WhiteSmoke;
-            profilePanel.Controls.Add(editButton);
             profilePanel.Controls.Add(profileTitleLabel);
             profilePanel.CornerRadius = 5;
             profilePanel.ForeColor = Color.Transparent;
@@ -99,75 +79,22 @@ namespace BankingSystem.Forms.CustomerDashBoard
             profilePanel.Size = new Size(969, 55);
             profilePanel.TabIndex = 32;
             // 
-            // editButton
-            // 
-            editButton.BackgroundImage = Properties.Resources.edit;
-            editButton.BackgroundImageLayout = ImageLayout.Stretch;
-            editButton.Cursor = Cursors.Hand;
-            editButton.FlatAppearance.BorderSize = 0;
-            editButton.FlatAppearance.MouseDownBackColor = Color.Transparent;
-            editButton.FlatAppearance.MouseOverBackColor = Color.Transparent;
-            editButton.FlatStyle = FlatStyle.Flat;
-            editButton.Location = new Point(918, 11);
-            editButton.Name = "editButton";
-            editButton.Size = new Size(30, 30);
-            editButton.TabIndex = 33;
-            editButton.UseVisualStyleBackColor = true;
-            // 
             // profileTitleLabel
             // 
             profileTitleLabel.AutoSize = true;
-            profileTitleLabel.Font = new Font("Century Gothic", 14.25F, FontStyle.Bold, GraphicsUnit.Point);
+            profileTitleLabel.Font = new Font("Century Gothic", 15.75F, FontStyle.Bold, GraphicsUnit.Point);
             profileTitleLabel.ForeColor = Color.FromArgb(48, 48, 51);
-            profileTitleLabel.Location = new Point(13, 16);
+            profileTitleLabel.Location = new Point(42, 16);
             profileTitleLabel.Name = "profileTitleLabel";
-            profileTitleLabel.Size = new Size(149, 23);
+            profileTitleLabel.Size = new Size(166, 25);
             profileTitleLabel.TabIndex = 37;
             profileTitleLabel.Text = "Account Profile";
-            // 
-            // profileCardPanel
-            // 
-            profileCardPanel.BackColor = Color.Transparent;
-            profileCardPanel.BorderColor = Color.WhiteSmoke;
-            profileCardPanel.Controls.Add(changePhotoButton);
-            profileCardPanel.Controls.Add(profilePictureBox);
-            profileCardPanel.CornerRadius = 10;
-            profileCardPanel.ForeColor = Color.Transparent;
-            profileCardPanel.Location = new Point(40, 106);
-            profileCardPanel.Name = "profileCardPanel";
-            profileCardPanel.Size = new Size(226, 291);
-            profileCardPanel.TabIndex = 35;
-            // 
-            // changePhotoButton
-            // 
-            changePhotoButton.BorderColor = Color.Transparent;
-            changePhotoButton.ButtonColor = Color.FromArgb(48, 46, 65);
-            changePhotoButton.CornerRadius = 5;
-            changePhotoButton.Cursor = Cursors.Hand;
-            changePhotoButton.FlatAppearance.BorderSize = 0;
-            changePhotoButton.FlatAppearance.MouseDownBackColor = Color.WhiteSmoke;
-            changePhotoButton.FlatAppearance.MouseOverBackColor = Color.WhiteSmoke;
-            changePhotoButton.FlatStyle = FlatStyle.Flat;
-            changePhotoButton.Font = new Font("Century Gothic", 14.25F, FontStyle.Bold, GraphicsUnit.Point);
-            changePhotoButton.ForeColor = Color.FromArgb(48, 48, 51);
-            changePhotoButton.Location = new Point(12, 232);
-            changePhotoButton.Name = "changePhotoButton";
-            changePhotoButton.OnHoverBorderColor = Color.Transparent;
-            changePhotoButton.OnHoverButtonColor = Color.FromArgb(65, 64, 89);
-            changePhotoButton.OnHoverTextColor = Color.WhiteSmoke;
-            changePhotoButton.Size = new Size(200, 40);
-            changePhotoButton.TabIndex = 34;
-            changePhotoButton.Text = "CHANGE PHOTO";
-            changePhotoButton.TextColor = Color.WhiteSmoke;
-            changePhotoButton.UseVisualStyleBackColor = false;
             // 
             // accountInfoCardPanel
             // 
             accountInfoCardPanel.BackColor = Color.Transparent;
             accountInfoCardPanel.BorderColor = Color.WhiteSmoke;
             accountInfoCardPanel.Controls.Add(copyButton);
-            accountInfoCardPanel.Controls.Add(roundedButton2);
-            accountInfoCardPanel.Controls.Add(roundedButton1);
             accountInfoCardPanel.Controls.Add(accountIDPanel);
             accountInfoCardPanel.Controls.Add(accountIDLabel);
             accountInfoCardPanel.Controls.Add(showPasswordCheckbox);
@@ -186,7 +113,7 @@ namespace BankingSystem.Forms.CustomerDashBoard
             accountInfoCardPanel.Controls.Add(accountInfoLabel);
             accountInfoCardPanel.CornerRadius = 10;
             accountInfoCardPanel.ForeColor = Color.Transparent;
-            accountInfoCardPanel.Location = new Point(302, 106);
+            accountInfoCardPanel.Location = new Point(27, 109);
             accountInfoCardPanel.Name = "accountInfoCardPanel";
             accountInfoCardPanel.Size = new Size(673, 586);
             accountInfoCardPanel.TabIndex = 36;
@@ -200,60 +127,12 @@ namespace BankingSystem.Forms.CustomerDashBoard
             copyButton.FlatAppearance.MouseDownBackColor = Color.Transparent;
             copyButton.FlatAppearance.MouseOverBackColor = Color.Transparent;
             copyButton.FlatStyle = FlatStyle.Flat;
-            copyButton.Location = new Point(316, 107);
+            copyButton.Location = new Point(320, 107);
             copyButton.Name = "copyButton";
             copyButton.Size = new Size(30, 30);
             copyButton.TabIndex = 38;
             copyButton.UseVisualStyleBackColor = true;
             copyButton.Click += copyButton_Click;
-            // 
-            // roundedButton2
-            // 
-            roundedButton2.BorderColor = Color.Transparent;
-            roundedButton2.ButtonColor = Color.FromArgb(48, 46, 65);
-            roundedButton2.CornerRadius = 5;
-            roundedButton2.Cursor = Cursors.Hand;
-            roundedButton2.FlatAppearance.BorderSize = 0;
-            roundedButton2.FlatAppearance.MouseDownBackColor = Color.WhiteSmoke;
-            roundedButton2.FlatAppearance.MouseOverBackColor = Color.WhiteSmoke;
-            roundedButton2.FlatStyle = FlatStyle.Flat;
-            roundedButton2.Font = new Font("Century Gothic", 14.25F, FontStyle.Bold, GraphicsUnit.Point);
-            roundedButton2.ForeColor = Color.FromArgb(48, 48, 51);
-            roundedButton2.Location = new Point(360, 467);
-            roundedButton2.Name = "roundedButton2";
-            roundedButton2.OnHoverBorderColor = Color.Transparent;
-            roundedButton2.OnHoverButtonColor = Color.FromArgb(65, 64, 89);
-            roundedButton2.OnHoverTextColor = Color.WhiteSmoke;
-            roundedButton2.Size = new Size(128, 40);
-            roundedButton2.TabIndex = 53;
-            roundedButton2.Text = "CANCEL";
-            roundedButton2.TextColor = Color.WhiteSmoke;
-            roundedButton2.UseVisualStyleBackColor = false;
-            roundedButton2.Visible = false;
-            // 
-            // roundedButton1
-            // 
-            roundedButton1.BorderColor = Color.Transparent;
-            roundedButton1.ButtonColor = Color.FromArgb(92, 184, 92);
-            roundedButton1.CornerRadius = 5;
-            roundedButton1.Cursor = Cursors.Hand;
-            roundedButton1.FlatAppearance.BorderSize = 0;
-            roundedButton1.FlatAppearance.MouseDownBackColor = Color.WhiteSmoke;
-            roundedButton1.FlatAppearance.MouseOverBackColor = Color.WhiteSmoke;
-            roundedButton1.FlatStyle = FlatStyle.Flat;
-            roundedButton1.Font = new Font("Century Gothic", 14.25F, FontStyle.Bold, GraphicsUnit.Point);
-            roundedButton1.ForeColor = Color.FromArgb(48, 48, 51);
-            roundedButton1.Location = new Point(494, 467);
-            roundedButton1.Name = "roundedButton1";
-            roundedButton1.OnHoverBorderColor = Color.Transparent;
-            roundedButton1.OnHoverButtonColor = Color.FromArgb(124, 205, 124);
-            roundedButton1.OnHoverTextColor = Color.WhiteSmoke;
-            roundedButton1.Size = new Size(128, 40);
-            roundedButton1.TabIndex = 35;
-            roundedButton1.Text = "SAVE";
-            roundedButton1.TextColor = Color.WhiteSmoke;
-            roundedButton1.UseVisualStyleBackColor = false;
-            roundedButton1.Visible = false;
             // 
             // accountIDPanel
             // 
@@ -280,7 +159,7 @@ namespace BankingSystem.Forms.CustomerDashBoard
             accountIDLabel.AutoSize = true;
             accountIDLabel.Font = new Font("Century Gothic", 12F, FontStyle.Bold, GraphicsUnit.Point);
             accountIDLabel.ForeColor = Color.FromArgb(48, 48, 51);
-            accountIDLabel.Location = new Point(46, 65);
+            accountIDLabel.Location = new Point(47, 79);
             accountIDLabel.Name = "accountIDLabel";
             accountIDLabel.Size = new Size(94, 19);
             accountIDLabel.TabIndex = 51;
@@ -326,7 +205,7 @@ namespace BankingSystem.Forms.CustomerDashBoard
             passwordLabel.AutoSize = true;
             passwordLabel.Font = new Font("Century Gothic", 12F, FontStyle.Bold, GraphicsUnit.Point);
             passwordLabel.ForeColor = Color.FromArgb(48, 48, 51);
-            passwordLabel.Location = new Point(46, 432);
+            passwordLabel.Location = new Point(46, 446);
             passwordLabel.Name = "passwordLabel";
             passwordLabel.Size = new Size(80, 19);
             passwordLabel.TabIndex = 49;
@@ -357,7 +236,7 @@ namespace BankingSystem.Forms.CustomerDashBoard
             phoneNumberLabel.AutoSize = true;
             phoneNumberLabel.Font = new Font("Century Gothic", 12F, FontStyle.Bold, GraphicsUnit.Point);
             phoneNumberLabel.ForeColor = Color.FromArgb(48, 48, 51);
-            phoneNumberLabel.Location = new Point(46, 339);
+            phoneNumberLabel.Location = new Point(46, 353);
             phoneNumberLabel.Name = "phoneNumberLabel";
             phoneNumberLabel.Size = new Size(126, 19);
             phoneNumberLabel.TabIndex = 47;
@@ -388,7 +267,7 @@ namespace BankingSystem.Forms.CustomerDashBoard
             emailLabel.AutoSize = true;
             emailLabel.Font = new Font("Century Gothic", 12F, FontStyle.Bold, GraphicsUnit.Point);
             emailLabel.ForeColor = Color.FromArgb(48, 48, 51);
-            emailLabel.Location = new Point(46, 250);
+            emailLabel.Location = new Point(47, 264);
             emailLabel.Name = "emailLabel";
             emailLabel.Size = new Size(52, 19);
             emailLabel.TabIndex = 45;
@@ -419,7 +298,7 @@ namespace BankingSystem.Forms.CustomerDashBoard
             lastNameLabel.AutoSize = true;
             lastNameLabel.Font = new Font("Century Gothic", 12F, FontStyle.Bold, GraphicsUnit.Point);
             lastNameLabel.ForeColor = Color.FromArgb(48, 48, 51);
-            lastNameLabel.Location = new Point(360, 160);
+            lastNameLabel.Location = new Point(360, 174);
             lastNameLabel.Name = "lastNameLabel";
             lastNameLabel.Size = new Size(90, 19);
             lastNameLabel.TabIndex = 43;
@@ -450,7 +329,7 @@ namespace BankingSystem.Forms.CustomerDashBoard
             firstNameLabel.AutoSize = true;
             firstNameLabel.Font = new Font("Century Gothic", 12F, FontStyle.Bold, GraphicsUnit.Point);
             firstNameLabel.ForeColor = Color.FromArgb(48, 48, 51);
-            firstNameLabel.Location = new Point(46, 160);
+            firstNameLabel.Location = new Point(46, 174);
             firstNameLabel.Name = "firstNameLabel";
             firstNameLabel.Size = new Size(89, 19);
             firstNameLabel.TabIndex = 41;
@@ -459,11 +338,11 @@ namespace BankingSystem.Forms.CustomerDashBoard
             // accountInfoLabel
             // 
             accountInfoLabel.AutoSize = true;
-            accountInfoLabel.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Bold, GraphicsUnit.Point);
+            accountInfoLabel.Font = new Font("Century Gothic", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             accountInfoLabel.ForeColor = Color.FromArgb(48, 48, 51);
-            accountInfoLabel.Location = new Point(97, 15);
+            accountInfoLabel.Location = new Point(47, 17);
             accountInfoLabel.Name = "accountInfoLabel";
-            accountInfoLabel.Size = new Size(196, 24);
+            accountInfoLabel.Size = new Size(142, 17);
             accountInfoLabel.TabIndex = 38;
             accountInfoLabel.Text = "Account Information";
             // 
@@ -475,14 +354,11 @@ namespace BankingSystem.Forms.CustomerDashBoard
             ClientSize = new Size(1039, 723);
             Controls.Add(accountInfoCardPanel);
             Controls.Add(profilePanel);
-            Controls.Add(profileCardPanel);
             FormBorderStyle = FormBorderStyle.None;
             Name = "CustomerProfileForm";
             Text = "UserProfileForm";
-            ((System.ComponentModel.ISupportInitialize)profilePictureBox).EndInit();
             profilePanel.ResumeLayout(false);
             profilePanel.PerformLayout();
-            profileCardPanel.ResumeLayout(false);
             accountInfoCardPanel.ResumeLayout(false);
             accountInfoCardPanel.PerformLayout();
             accountIDPanel.ResumeLayout(false);
@@ -502,9 +378,7 @@ namespace BankingSystem.Forms.CustomerDashBoard
 
         private Panel line1;
         private Panel line2;
-        private PictureBox profilePictureBox;
         private RoundedPanel profilePanel;
-        private RoundedPanel profileCardPanel;
         private RoundedPanel accountInfoCardPanel;
         private RoundedBorderPanel firstNamePanel;
         private RoundedBorderPanel lastNamePanel;
@@ -524,13 +398,9 @@ namespace BankingSystem.Forms.CustomerDashBoard
         private TextBox phoneNumberTextBox;
         private TextBox passwordTextBox;
         private CheckBox showPasswordCheckbox;
-        private RoundedButton changePhotoButton;
-        private Button editButton;
         private RoundedBorderPanel accountIDPanel;
         private TextBox accountIDTextBox;
         private Label accountIDLabel;
-        private RoundedButton roundedButton1;
-        private RoundedButton roundedButton2;
         private Button copyButton;
     }
 }

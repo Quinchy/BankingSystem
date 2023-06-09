@@ -13,11 +13,11 @@ namespace BankingSystem.Models
         public DateTime Date { get; set; }
         public string TransactionType { get; set; }
 
-        public Transaction(string transactionId, double amount, string type)
+        public Transaction(string transactionId, double amount, DateTime date,string type)
         {
             TransactionId = transactionId;
             Amount = amount;
-            Date = DateTime.Now;
+            Date = date;
             TransactionType = type;
         }
     }

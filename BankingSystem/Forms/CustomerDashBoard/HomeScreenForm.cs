@@ -21,18 +21,18 @@ namespace BankingSystem.Forms.CustomerDashBoard
             InitializeComponent();
             this.email = email;
             // Load the customer's information.
-            Tuple<Account, List<Transaction>> accountAndTransactions = BankingServices.loadAccountInformation(email);
+            Tuple<Account, List<Transaction>> accountAndTransactions = BankingServices.LoadAccountInformation(email);
             string customerFirstName = BankingServices.GetCustomerFirstName(email);
             // Set the customer information to the TextBox.
-            balanceLabel.Text = "₱ " + Convert.ToString(accountAndTransactions.Item1.Balance) + ".00";
+            balanceLabel.Text = "₱ " + accountAndTransactions.Item1.Balance.ToString("F2");
             // Greet the user with their first name
             greetUserLabel.Text = "Welcome, " + customerFirstName;
             // Load transaction history into ListView
             foreach (Transaction transaction in accountAndTransactions.Item2)
             {
                 ListViewItem item = new ListViewItem(transaction.TransactionId);
-                item.SubItems.Add(transaction.Amount.ToString());
-                item.SubItems.Add(transaction.Date.ToString());
+                item.SubItems.Add(transaction.Amount.ToString("F2"));
+                item.SubItems.Add(transaction.Date.ToString("yyyy-MM-dd"));
                 item.SubItems.Add(transaction.TransactionType);
                 transactionHistoryView.Items.Add(item);
             }

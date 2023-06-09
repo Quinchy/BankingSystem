@@ -11,7 +11,7 @@ namespace BankingSystem.Services.CustomerServices
 {
     internal class BankingServices
     {
-        public static Tuple<Account, List<Transaction>> loadAccountInformation(string email)
+        public static Tuple<Account, List<Transaction>> LoadAccountInformation(string email)
         {
             Account currentAccount = null;
             List<Transaction> transactions = new List<Transaction>();
@@ -36,10 +36,10 @@ namespace BankingSystem.Services.CustomerServices
                         currentAccount = new Account(accountId, balance);
                     }
                 }
-                // Retrieve last five transactions
+                // Retrieve last ten transactions
                 if (!string.IsNullOrEmpty(accountId))
                 {
-                    MySqlCommand transactionCommand = new MySqlCommand("SELECT * FROM (SELECT * FROM transaction_history WHERE account_id = @AccountId ORDER BY date DESC) sub ORDER BY date DESC LIMIT 5", conn);
+                    MySqlCommand transactionCommand = new MySqlCommand("SELECT transaction_id, amount, DATE_FORMAT(date, '%Y-%m-%d') AS date, transaction_type FROM (SELECT * FROM transaction_history WHERE account_id = @AccountId ORDER BY date DESC LIMIT 10) sub ORDER BY date DESC", conn);
                     transactionCommand.Parameters.AddWithValue("@AccountId", accountId);
                     using (MySqlDataReader transactionReader = transactionCommand.ExecuteReader())
                     {
@@ -47,9 +47,9 @@ namespace BankingSystem.Services.CustomerServices
                         {
                             string transactionId = transactionReader["transaction_id"].ToString();
                             double amount = Convert.ToDouble(transactionReader["amount"]);
-                            DateTime date = Convert.ToDateTime(transactionReader["date"]);
+                            DateTime date = DateTime.Parse(transactionReader["date"].ToString());
                             string transactionType = transactionReader["transaction_type"].ToString();
-                            Transaction transaction = new Transaction(transactionId, amount, transactionType);
+                            Transaction transaction = new Transaction(transactionId, amount, date,transactionType);
                             transactions.Add(transaction);
                         }
                     }

@@ -645,9 +645,9 @@
         private Utils.Components.RoundedPanel amountTransferPanel;
         private Utils.Components.RoundedPanel yourIDPanel;
         private Utils.Components.RoundedPanel receiverIDPanel;
-        private Label greetUserLabel;
+        private static Label greetUserLabel;
         private Label availableBalanceLabel;
-        private Label balanceLabel;
+        private static Label balanceLabel;
         private Label yourIDLabel;
         private Label receiverIDLabel;
         private Label amountTransactionLabel;
@@ -662,7 +662,7 @@
         private Utils.Components.RoundedButton depositButton;
         private Utils.Components.RoundedButton withdrawButton;
         private Utils.Components.RoundedButton confirmButton;
-        private ListView transactionHistoryView;
+        private static ListView transactionHistoryView;
         private ColumnHeader transactionIDHeader;
         private ColumnHeader amountHeader;
         private ColumnHeader dateHeader;

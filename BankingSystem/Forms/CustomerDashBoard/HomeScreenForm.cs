@@ -18,25 +18,9 @@ namespace BankingSystem.Forms.CustomerDashBoard
         private string email;
         public HomeScreenForm(string email)
         {
-            InitializeComponent();
             this.email = email;
-            // Load the customer's information.
-            string customerFirstName = BankingServices.retrieveCustomerFirstName(email);
-            double accountBalance = BankingServices.retrieveAccountBalance(email);
-            List<Transaction> transactionHistory = BankingServices.retrieveAccountTransactionHistory(email);
-            // Set the customer information to the TextBox.
-            balanceLabel.Text = "₱ " + accountBalance;
-            // Greet the user with their first name
-            greetUserLabel.Text = "Welcome, " + customerFirstName;
-            // Load transaction history into ListView
-            foreach (Transaction transaction in transactionHistory)
-            {
-                ListViewItem item = new ListViewItem(transaction.TransactionId);
-                item.SubItems.Add(transaction.Amount.ToString("F2"));
-                item.SubItems.Add(transaction.Date.ToString("yyyy-MM-dd"));
-                item.SubItems.Add(transaction.TransactionType);
-                transactionHistoryView.Items.Add(item);
-            }
+            InitializeComponent();
+            InitializeAccountInformation(email);
         }
         private void depositButton_Click(object sender, EventArgs e)
         {
@@ -137,6 +121,27 @@ namespace BankingSystem.Forms.CustomerDashBoard
                 {
                     MessageBox.Show(ex.Message);
                 }
+            }
+        }
+        public static void InitializeAccountInformation(string email) 
+        {
+            string accountId = BankingServices.retrieveAccountId(email);
+            // Load the customer's information.
+            string customerFirstName = BankingServices.retrieveCustomerFirstName(email);
+            double accountBalance = BankingServices.retrieveAccountBalance(email);
+            List<Transaction> transactionHistory = BankingServices.retrieveAccountTransactionHistory(accountId);
+            // Set the customer information to the TextBox.
+            balanceLabel.Text = "₱ " + accountBalance;
+            // Greet the user with their first name
+            greetUserLabel.Text = "Welcome, " + customerFirstName;
+            // Load transaction history into ListView
+            foreach (Transaction transaction in transactionHistory)
+            {
+                ListViewItem item = new ListViewItem(transaction.TransactionId);
+                item.SubItems.Add(transaction.Amount.ToString("F2"));
+                item.SubItems.Add(transaction.Date.ToString("yyyy-MM-dd"));
+                item.SubItems.Add(transaction.TransactionType);
+                transactionHistoryView.Items.Add(item);
             }
         }
     }

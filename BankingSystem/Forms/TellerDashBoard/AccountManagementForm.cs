@@ -1,6 +1,8 @@
 ﻿using BankingSystem.Models;
+using BankingSystem.Models.TellerModels;
 using BankingSystem.Services;
 using BankingSystem.Services.TellerServices;
+using Org.BouncyCastle.Asn1.Ocsp;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -16,11 +18,11 @@ namespace BankingSystem.Forms.TellerDashBoard
 {
     public partial class AccountManagementForm : Form
     {
-        public AccountManagementForm(string email)
+        public AccountManagementForm()
         {
             InitializeComponent();
-            AccountManagementServices.loadAccountRequest(accountManagementListView);
-            AccountManagementServices.loadAccountList(accountListView);
+            InitializeAccountRequest();
+            InitializeAccountList();
         }
         private void approveButton_Click(object sender, EventArgs e)
         {
@@ -31,10 +33,8 @@ namespace BankingSystem.Forms.TellerDashBoard
                 int requestId = int.Parse(item.SubItems[0].Text);
                 AccountManagementServices.approveAccount(requestId);
             }
-
-            // Refresh both ListViews
-            AccountManagementServices.loadAccountRequest(accountManagementListView);
-            AccountManagementServices.loadAccountList(accountListView);
+            InitializeAccountRequest();
+            InitializeAccountList();
         }
         private void rejectButton_Click(object sender, EventArgs e)
         {
@@ -45,10 +45,8 @@ namespace BankingSystem.Forms.TellerDashBoard
                 int requestId = int.Parse(item.SubItems[0].Text);
                 AccountManagementServices.rejectAccount(requestId);
             }
-
-            // Refresh both ListViews
-            AccountManagementServices.loadAccountRequest(accountManagementListView);
-            AccountManagementServices.loadAccountList(accountListView);
+            InitializeAccountRequest();
+            InitializeAccountList();
         }
         private void openAccountButton_Click(object sender, EventArgs e)
         {
@@ -56,12 +54,10 @@ namespace BankingSystem.Forms.TellerDashBoard
             foreach (ListViewItem item in accountListView.CheckedItems)
             {
                 // Parse the ID and open the account
-                int accountId = int.Parse(item.SubItems[0].Text);
+                string accountId = item.SubItems[0].Text;
                 AccountManagementServices.openAnAccount(accountId);
             }
-
-            // Refresh the ListView
-            AccountManagementServices.loadAccountList(accountListView);
+            InitializeAccountList();
         }
         private void closeAccountButton_Click(object sender, EventArgs e)
         {
@@ -69,13 +65,30 @@ namespace BankingSystem.Forms.TellerDashBoard
             foreach (ListViewItem item in accountListView.CheckedItems)
             {
                 // Parse the ID and close the account
-                int accountId = int.Parse(item.SubItems[0].Text);
+                string accountId = item.SubItems[0].Text;
                 AccountManagementServices.closeAnAccount(accountId);
             }
-
-            // Refresh the ListView
-            AccountManagementServices.loadAccountList(accountListView);
+            InitializeAccountList();
         }
-
+        private void InitializeAccountRequest()
+        {
+            var accountRequests = AccountManagementServices.loadAccountRequest();
+            accountManagementListView.Items.Clear();
+            foreach (var request in accountRequests)
+            {
+                ListViewItem item = new ListViewItem(new[] { request.RequestId, request.CustomerId, request.Email, request.RequestDate.ToString("yyyy-MM-dd"), request.RequestStatus });
+                accountManagementListView.Items.Add(item);
+            }
+        }
+        private void InitializeAccountList()
+        {
+            var accounts = AccountManagementServices.loadAccountList();
+            accountListView.Items.Clear();
+            foreach (var account in accounts)
+            {
+                ListViewItem item = new ListViewItem(new[] { account.AccountId, account.CustomerId, account.Balance.ToString(), account.AccountStatus });
+                accountListView.Items.Add(item);
+            }
+        }
     }
 }

@@ -15,17 +15,13 @@ namespace BankingSystem.Forms.CustomerDashBoard
     {
         private string email;
         Control baseFormPanel = BaseForm.GetContentPanel();
+        static HomeScreenForm homeScreenForm;
+        static CustomerProfileForm customerProfileForm;
         public DashboardForm(string email)
         {
-            InitializeComponent();
             this.email = email;
-            HomeScreenForm homeScreenForm = new HomeScreenForm(email);
-            dashboardPanel.Controls.Clear();
-            homeScreenForm.TopLevel = false;
-            homeScreenForm.FormBorderStyle = FormBorderStyle.None;
-            homeScreenForm.Dock = DockStyle.Fill;
-            dashboardPanel.Controls.Add(homeScreenForm);
-            homeScreenForm.Show();
+            InitializeComponent();
+            InitializeHomeScreen(email);
         }
         private static void ChangeDashboardForm(Form newForm)
         {
@@ -38,28 +34,40 @@ namespace BankingSystem.Forms.CustomerDashBoard
         }
         private void homeScreenButton_Click(object sender, EventArgs e)
         {
-            HomeScreenForm homeScreenForm = new HomeScreenForm(email);
+            if (homeScreenForm == null)
+            {
+                homeScreenForm = new HomeScreenForm(email);
+            }
             ChangeDashboardForm(homeScreenForm);
             homeScreenButton.ButtonColor = Color.FromArgb(92, 184, 92);
             homeScreenButton.OnHoverButtonColor = Color.FromArgb(124, 205, 124);
             accountButton.ButtonColor = Color.FromArgb(48, 46, 65);
             accountButton.OnHoverButtonColor = Color.FromArgb(65, 64, 89);
         }
-
         private void accountButton_Click(object sender, EventArgs e)
         {
-            CustomerProfileForm customerProfileForm = new CustomerProfileForm(email);
+            if (customerProfileForm == null)
+            {
+                customerProfileForm = new CustomerProfileForm(email);
+            }
             ChangeDashboardForm(customerProfileForm);
             accountButton.ButtonColor = Color.FromArgb(92, 184, 92);
             accountButton.OnHoverButtonColor = Color.FromArgb(124, 205, 124);
             homeScreenButton.ButtonColor = Color.FromArgb(48, 46, 65);
             homeScreenButton.OnHoverButtonColor = Color.FromArgb(65, 64, 89);
         }
-
         private void logoutButton_Click(object sender, EventArgs e)
         {
             Form loginForm = new LoginForm();
             Helpers.changeScreen(baseFormPanel, loginForm);
+        }
+        public static void InitializeHomeScreen(string email)
+        {
+            if (homeScreenForm == null)
+            {
+                homeScreenForm = new HomeScreenForm(email);
+            }
+            ChangeDashboardForm(homeScreenForm);
         }
     }
 }

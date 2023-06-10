@@ -1,4 +1,5 @@
 ﻿using BankingSystem.Database;
+using BankingSystem.Models.TellerModels;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
@@ -10,29 +11,32 @@ namespace BankingSystem.Services.TellerServices
 {
     internal class TransactionProcessingServices
     {
-        public static void loadTransactionRequest(ListView transactionProcessingListView)
+        public static List<TransactionRequest> loadTransactionRequest()
         {
+            var transactionRequests = new List<TransactionRequest>();
             using (var conn = MySQLDatabase.OpenConnection())
             {
                 string query = @"SELECT tp.process_id, tp.account_id, a.balance, tp.transaction_type, tp.amount, tp.process_status 
-                         FROM transaction_processing tp
-                         JOIN account a ON tp.account_id = a.account_id
-                         WHERE tp.process_status = 'Pending'";
+                 FROM transaction_processing tp
+                 JOIN account a ON tp.account_id = a.account_id
+                 WHERE tp.process_status = 'Pending'";
                 MySqlCommand cmd = new MySqlCommand(query, conn);
                 using (MySqlDataReader reader = cmd.ExecuteReader())
                 {
                     while (reader.Read())
                     {
-                        ListViewItem item = new ListViewItem(reader["process_id"].ToString());
-                        item.SubItems.Add(reader["account_id"].ToString());
-                        item.SubItems.Add(reader["balance"].ToString());
-                        item.SubItems.Add(reader["transaction_type"].ToString());
-                        item.SubItems.Add(reader["amount"].ToString());
-                        item.SubItems.Add(reader["process_status"].ToString());
-                        transactionProcessingListView.Items.Add(item);
+                        var processId = reader["process_id"].ToString();
+                        var accountId = reader["account_id"].ToString();
+                        var balance = Convert.ToDouble(reader["balance"]);
+                        var transactionType = reader["transaction_type"].ToString();
+                        var amount = Convert.ToDouble(reader["amount"]);
+                        var processStatus = reader["process_status"].ToString();
+
+                        transactionRequests.Add(new TransactionRequest(processId, accountId, balance, transactionType, amount, processStatus));
                     }
                 }
             }
+            return transactionRequests;
         }
         public static void approveDeposit(string processId)
         {
@@ -40,11 +44,9 @@ namespace BankingSystem.Services.TellerServices
             {
                 string accountId;
                 double depositAmount;
-
                 using (var selectCommand = new MySqlCommand("SELECT * FROM transaction_processing WHERE process_id = @processId", conn))
                 {
                     selectCommand.Parameters.AddWithValue("@processId", processId);
-
                     using (var reader = selectCommand.ExecuteReader())
                     {
                         if (reader.Read())
@@ -58,7 +60,6 @@ namespace BankingSystem.Services.TellerServices
                         }
                     }
                 }
-
                 using (var selectBalanceCommand = new MySqlCommand("SELECT balance FROM Account WHERE account_id = @accountId", conn))
                 {
                     selectBalanceCommand.Parameters.AddWithValue("@accountId", accountId);
@@ -80,13 +81,11 @@ namespace BankingSystem.Services.TellerServices
                         throw new Exception("Account ID not found.");
                     }
                 }
-
                 using (var updateCommand = new MySqlCommand("UPDATE transaction_processing SET process_status = 'Approved' WHERE process_id = @processId", conn))
                 {
                     updateCommand.Parameters.AddWithValue("@processId", processId);
                     updateCommand.ExecuteNonQuery();
                 }
-
                 using (var insertCommand = new MySqlCommand("INSERT INTO transaction_history (account_id, amount, date, transaction_type) VALUES (@accountId, @amount, NOW(), 'Deposit')", conn))
                 {
                     insertCommand.Parameters.AddWithValue("@accountId", accountId);
@@ -119,7 +118,6 @@ namespace BankingSystem.Services.TellerServices
                         }
                     }
                 }
-
                 using (var selectBalanceCommand = new MySqlCommand("SELECT balance FROM Account WHERE account_id = @accountId", conn))
                 {
                     selectBalanceCommand.Parameters.AddWithValue("@accountId", accountId);
@@ -145,13 +143,11 @@ namespace BankingSystem.Services.TellerServices
                         throw new Exception("Account ID not found.");
                     }
                 }
-
                 using (var updateCommand = new MySqlCommand("UPDATE transaction_processing SET process_status = 'Approved' WHERE process_id = @processId", conn))
                 {
                     updateCommand.Parameters.AddWithValue("@processId", processId);
                     updateCommand.ExecuteNonQuery();
                 }
-
                 using (var insertCommand = new MySqlCommand("INSERT INTO transaction_history (account_id, amount, date, transaction_type) VALUES (@accountId, @amount, NOW(), 'Withdraw')", conn))
                 {
                     insertCommand.Parameters.AddWithValue("@accountId", accountId);
@@ -167,11 +163,9 @@ namespace BankingSystem.Services.TellerServices
                 string senderAccountId;
                 string receiverAccountId;
                 double transferAmount;
-
                 using (var selectCommand = new MySqlCommand("SELECT * FROM transaction_processing WHERE process_id = @processId", conn))
                 {
                     selectCommand.Parameters.AddWithValue("@processId", processId);
-
                     using (var reader = selectCommand.ExecuteReader())
                     {
                         if (reader.Read())
@@ -186,7 +180,6 @@ namespace BankingSystem.Services.TellerServices
                         }
                     }
                 }
-
                 using (var selectBalanceCommand = new MySqlCommand("SELECT balance FROM Account WHERE account_id = @accountId", conn))
                 {
                     selectBalanceCommand.Parameters.AddWithValue("@accountId", senderAccountId);
@@ -212,7 +205,6 @@ namespace BankingSystem.Services.TellerServices
                         throw new Exception("Sender's Account ID not found.");
                     }
                 }
-
                 using (var selectBalanceCommand = new MySqlCommand("SELECT balance FROM Account WHERE account_id = @accountId", conn))
                 {
                     selectBalanceCommand.Parameters.AddWithValue("@accountId", receiverAccountId);
@@ -234,19 +226,27 @@ namespace BankingSystem.Services.TellerServices
                         throw new Exception("Receiver's Account ID not found.");
                     }
                 }
-
                 using (var updateCommand = new MySqlCommand("UPDATE transaction_processing SET process_status = 'Approved' WHERE process_id = @processId", conn))
                 {
                     updateCommand.Parameters.AddWithValue("@processId", processId);
                     updateCommand.ExecuteNonQuery();
                 }
-
                 using (var insertCommand = new MySqlCommand("INSERT INTO transaction_history (account_id, amount, date, transaction_type) VALUES (@accountId, @amount, NOW(), 'Transfer')", conn))
                 {
                     insertCommand.Parameters.AddWithValue("@accountId", senderAccountId);
                     insertCommand.Parameters.AddWithValue("@amount", transferAmount);
                     insertCommand.ExecuteNonQuery();
                 }
+            }
+        }
+        public static void rejectTransaction(string processId)
+        {
+            using (var conn = MySQLDatabase.OpenConnection())
+            {
+                string query = "UPDATE transaction_processing SET process_status = 'Rejected' WHERE process_id = @ProcessId";
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@ProcessId", processId);
+                cmd.ExecuteNonQuery();
             }
         }
     }

@@ -6,100 +6,75 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BankingSystem.Models.TellerModels;
 
 namespace BankingSystem.Services.TellerServices
 {
     internal class AccountManagementServices
     {
-        public static void loadAccountRequest(ListView accountManagementListView)
+        public static List<AccountRequest> loadAccountRequest()
         {
-            // Open connection using MySQLDatabase.OpenConnection()
+            var accountRequests = new List<AccountRequest>();
             using (var connection = MySQLDatabase.OpenConnection())
             {
                 if (connection != null)
                 {
-                    // Write an SQL statement to join account_request and customer_information tables
                     string query = @"SELECT account_request.request_id, 
-                    account_request.customer_id, 
-                    customer_information.email,
-                    account_request.request_date,
-                    account_request.request_status
-                    FROM account_request
-                    INNER JOIN customer_information 
-                    ON account_request.customer_id = customer_information.customer_id
-                    WHERE account_request.request_status = 'Pending'";
-
+                        account_request.customer_id, 
+                        customer_information.email,
+                        account_request.request_date,
+                        account_request.request_status
+                        FROM account_request
+                        INNER JOIN customer_information 
+                        ON account_request.customer_id = customer_information.customer_id
+                        WHERE account_request.request_status = 'Pending'";
                     using (var command = new MySqlCommand(query, connection))
                     {
-                        // Execute the query and get the result set
                         using (var reader = command.ExecuteReader())
                         {
-                            // Clear existing items
-                            accountManagementListView.Items.Clear();
-
-                            // Loop through the result set
                             while (reader.Read())
                             {
-                                // Get the request ID, customer ID, email, date of request and request status
                                 var requestId = reader["request_id"].ToString();
                                 var customerId = reader["customer_id"].ToString();
                                 var email = reader["email"].ToString();
-                                // Format the date to exclude the time part
-                                var dateOfRequest = Convert.ToDateTime(reader["request_date"]).ToString("yyyy-MM-dd");
+                                var dateOfRequest = Convert.ToDateTime(reader["request_date"]);
                                 var requestStatus = reader["request_status"].ToString();
 
-                                // Create a new list view item
-                                var item = new ListViewItem(new[] { requestId, customerId, email, dateOfRequest, requestStatus });
-
-                                // Add the item to the list view
-                                accountManagementListView.Items.Add(item);
+                                accountRequests.Add(new AccountRequest(requestId, customerId, email, dateOfRequest, requestStatus));
                             }
                         }
                     }
-                    // Close connection using MySQLDatabase.CloseConnection()
-                    MySQLDatabase.CloseConnection(connection);
                 }
             }
+            return accountRequests;
         }
-        public static void loadAccountList(ListView accountListView)
+        public static List<Account> loadAccountList()
         {
-            // Open connection using MySQLDatabase.OpenConnection()
+            var accounts = new List<Account>();
             using (var connection = MySQLDatabase.OpenConnection())
             {
                 if (connection != null)
                 {
-                    // Write an SQL statement to get all accounts
                     string query = "SELECT account_id, customer_id, balance, account_status FROM account";
 
                     using (var command = new MySqlCommand(query, connection))
                     {
-                        // Execute the query and get the result set
                         using (var reader = command.ExecuteReader())
                         {
-                            // Clear existing items
-                            accountListView.Items.Clear();
-
-                            // Loop through the result set
                             while (reader.Read())
                             {
-                                // Get the account ID, customer ID, balance and account status
                                 var accountId = reader["account_id"].ToString();
                                 var customerId = reader["customer_id"].ToString();
-                                var balance = reader["balance"].ToString();
+                                var balance = Convert.ToDouble(reader["balance"]);
                                 var accountStatus = reader["account_status"].ToString();
 
-                                // Create a new list view item
-                                var item = new ListViewItem(new[] { accountId, customerId, balance, accountStatus });
-
-                                // Add the item to the list view
-                                accountListView.Items.Add(item);
+                                accounts.Add(new Account(accountId, customerId, balance, accountStatus));
                             }
                         }
                     }
-                    // Close connection using MySQLDatabase.CloseConnection()
-                    MySQLDatabase.CloseConnection(connection);
                 }
             }
+            return accounts;
         }
         public static void approveAccount(int requestId)
         {
@@ -189,7 +164,7 @@ namespace BankingSystem.Services.TellerServices
                 }
             }
         }
-        public static void openAnAccount(int accountId)
+        public static void openAnAccount(string accountId)
         {
             // Open connection using MySQLDatabase.OpenConnection()
             using (var connection = MySQLDatabase.OpenConnection())
@@ -210,7 +185,7 @@ namespace BankingSystem.Services.TellerServices
                 }
             }
         }
-        public static void closeAnAccount(int accountId)
+        public static void closeAnAccount(string accountId)
         {
             // Open connection using MySQLDatabase.OpenConnection()
             using (var connection = MySQLDatabase.OpenConnection())

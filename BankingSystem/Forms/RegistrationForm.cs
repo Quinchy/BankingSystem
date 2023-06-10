@@ -16,6 +16,7 @@ namespace BankingSystem.Forms
     public partial class RegistrationForm : Form
     {
         Control baseFormPanel = BaseForm.GetContentPanel();
+        LoginForm loginForm;
         public RegistrationForm()
         {
             InitializeComponent();
@@ -46,7 +47,10 @@ namespace BankingSystem.Forms
             // Call the RegisterUser function to put the Customer into the database.
             RegistrationServices.registerUser(newCustomer);
             // Change the screen to Login.
-            Form loginForm = new LoginForm();
+            if (loginForm == null)
+            {
+                loginForm = new LoginForm();
+            }
             Helpers.changeScreen(baseFormPanel, loginForm);
         }
         private void showPasswordCheckbox_CheckedChanged(object sender, EventArgs e)
@@ -65,7 +69,10 @@ namespace BankingSystem.Forms
         private void backButton_Click(object sender, EventArgs e)
         {
             // Change the screen to Login.
-            Form loginForm = new LoginForm();
+            if (loginForm == null)
+            {
+                loginForm = new LoginForm();
+            }
             Helpers.changeScreen(baseFormPanel, loginForm);
         }
     }

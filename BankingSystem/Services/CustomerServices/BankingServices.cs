@@ -58,6 +58,28 @@ namespace BankingSystem.Services.CustomerServices
             }
             return balance;
         }
+        public static string retrieveAccountId(string email)
+        {
+            string accountId = null;
+            using (MySqlConnection conn = MySQLDatabase.OpenConnection())
+            {
+                if (conn == null)
+                {
+                    Console.WriteLine("Unable to open MySQL connection.");
+                    return null;
+                }
+                MySqlCommand command = new MySqlCommand("SELECT account_id FROM account WHERE customer_id = (SELECT customer_id FROM customer_information WHERE email = @Email)", conn);
+                command.Parameters.AddWithValue("@Email", email);
+                using (MySqlDataReader reader = command.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        accountId = reader["account_id"].ToString();
+                    }
+                }
+            }
+            return accountId;
+        }
         public static List<Transaction> retrieveAccountTransactionHistory(string accountId)
         {
             List<Transaction> transactions = new List<Transaction>();

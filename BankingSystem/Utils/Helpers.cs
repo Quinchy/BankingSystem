@@ -20,7 +20,6 @@ namespace BankingSystem.Utils
 
             if (newForm == null)
                 throw new ArgumentNullException(nameof(newForm));
-
             baseFormPanel.Controls.Clear();
             newForm.TopLevel = false;
             newForm.FormBorderStyle = FormBorderStyle.None;

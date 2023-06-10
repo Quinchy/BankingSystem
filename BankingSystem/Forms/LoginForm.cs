@@ -16,6 +16,10 @@ namespace BankingSystem.Forms
     public partial class LoginForm : Form
     {
         Control baseFormPanel = BaseForm.GetContentPanel();
+        static CustomerDashBoard.DashboardForm customerDashboardForm;
+        static TellerDashBoard.DashboardForm tellerDashboardForm;
+        static RegistrationForm registrationForm;
+        static ForgetPasswordForm forgetPasswordForm;
         public LoginForm()
         {
             InitializeComponent();
@@ -31,23 +35,27 @@ namespace BankingSystem.Forms
                 MessageBox.Show("Please fill out both the email and password fields.", "Input Required", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-
             // Check if the user is an admin (teller)
             if (email == "admin" && password == "admin")
             {
                 // Change the screen to Teller Dashboard
-                Form dashboardForm = new TellerDashBoard.DashboardForm(email);
-                Helpers.changeScreen(baseFormPanel, dashboardForm);
+                if (tellerDashboardForm == null)
+                {
+                    tellerDashboardForm = new TellerDashBoard.DashboardForm();
+                }
+                Helpers.changeScreen(baseFormPanel, tellerDashboardForm);
                 return;
             }
-
             // Call the Authenticate user function to check if the user logging in is in database.
             int result = LoginServices.authenticateUser(email, password);
             if (result == 1)
             {
                 // If both email and password are correct then Change the screen to Dashboard.
-                Form dashboardForm = new CustomerDashBoard.DashboardForm(email);
-                Helpers.changeScreen(baseFormPanel, dashboardForm);
+                if (customerDashboardForm == null)
+                {
+                    customerDashboardForm = new CustomerDashBoard.DashboardForm(email);
+                }
+                Helpers.changeScreen(baseFormPanel, customerDashboardForm);
             }
             else if (result == -2)
             {
@@ -78,7 +86,10 @@ namespace BankingSystem.Forms
         private void createAccountLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             // Change the screen to Registration.
-            Form registrationForm = new RegistrationForm();
+            if (registrationForm == null)
+            {
+                registrationForm = new RegistrationForm();
+            }
             Helpers.changeScreen(baseFormPanel, registrationForm);
         }
         private void showPasswordCheckbox_CheckedChanged(object sender, EventArgs e)
@@ -95,7 +106,10 @@ namespace BankingSystem.Forms
         private void forgetPasswordLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             // Change the screen to Forget Password Form.
-            Form forgetPasswordForm = new ForgetPasswordForm();
+            if (forgetPasswordForm == null)
+            {
+                forgetPasswordForm = new ForgetPasswordForm();
+            }
             Helpers.changeScreen(baseFormPanel, forgetPasswordForm);
         }
     }

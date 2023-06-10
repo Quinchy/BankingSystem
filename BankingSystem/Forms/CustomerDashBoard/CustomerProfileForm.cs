@@ -17,19 +17,16 @@ namespace BankingSystem.Forms.CustomerDashBoard
         public CustomerProfileForm(string email)
         {
             InitializeComponent();
-            // Load the customer's and account's information.
-            var result = CustomerProfileServices.loadCustomerInformation(email);
-            Customer customer = result.Item1;
-            Account account = result.Item2;
+            // Load the customer's information.
+            Customer currentCustomer = CustomerProfileServices.retrieveCustomerInformation(email);
             // Set the customer information to the TextBox.
-            accountIDTextBox.Text = account.AccountId;
-            firstNameTextBox.Text = customer.FirstName;
-            lastNameTextBox.Text = customer.LastName;
-            emailTextBox.Text = customer.Email;
-            phoneNumberTextBox.Text = customer.PhoneNumber;
-            passwordTextBox.Text = customer.Password;
+            accountIDTextBox.Text = currentCustomer.AccountId;
+            firstNameTextBox.Text = currentCustomer.FirstName;
+            lastNameTextBox.Text = currentCustomer.LastName;
+            emailTextBox.Text = currentCustomer.Email;
+            phoneNumberTextBox.Text = currentCustomer.PhoneNumber;
+            passwordTextBox.Text = currentCustomer.Password;
         }
-
         private void showPasswordCheckbox_CheckedChanged(object sender, EventArgs e)
         {
             if (showPasswordCheckbox.Checked == true)
@@ -45,7 +42,6 @@ namespace BankingSystem.Forms.CustomerDashBoard
         {
             // Get the text from the accountIDTextBox
             string accountID = accountIDTextBox.Text;
-
             // Set the text to the clipboard
             Clipboard.SetText(accountID);
         }

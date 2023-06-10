@@ -30,6 +30,7 @@ namespace BankingSystem.Forms
             }
             // Create a new Customer Object
             Customer newCustomer = new Customer(
+                null,
                 firstNameTextBox.Text,
                 lastNameTextBox.Text,
                 emailTextBox.Text,

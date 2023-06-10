@@ -8,14 +8,16 @@ namespace BankingSystem.Models
 {
     internal class Customer
     {
+        public string AccountId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }
         public string PhoneNumber { get; set; }
         public string Password { get; set; }
 
-        public Customer(string firstName, string lastName, string email, string phoneNumber, string password)
+        public Customer(string accountId, string firstName, string lastName, string email, string phoneNumber, string password)
         {
+            AccountId = accountId;
             FirstName = firstName;
             LastName = lastName;
             Email = email;

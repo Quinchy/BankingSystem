@@ -11,10 +11,9 @@ namespace BankingSystem.Services.CustomerServices
 {
     internal class BankingServices
     {
-        public static Tuple<Account, List<Transaction>> LoadAccountInformation(string email)
+        public static string retrieveCustomerFirstName(string email)
         {
-            Account currentAccount = null;
-            List<Transaction> transactions = new List<Transaction>();
+            string firstName = null;
             using (MySqlConnection conn = MySQLDatabase.OpenConnection())
             {
                 if (conn == null)
@@ -23,20 +22,52 @@ namespace BankingSystem.Services.CustomerServices
                     return null;
                 }
                 // Assuming email is unique
-                MySqlCommand command = new MySqlCommand("SELECT * FROM Account WHERE customer_id = (SELECT customer_id FROM customer_information WHERE email = @Email)", conn);
+                MySqlCommand command = new MySqlCommand("SELECT first_name FROM customer_information WHERE email = @Email", conn);
                 command.Parameters.AddWithValue("@Email", email);
-                string accountId = "";
                 using (MySqlDataReader reader = command.ExecuteReader())
                 {
                     if (reader.Read())
                     {
-                        accountId = reader["account_id"].ToString();
-                        double balance = Convert.ToDouble(reader["balance"]);
-
-                        currentAccount = new Account(accountId, balance);
+                        firstName = reader["first_name"].ToString();
                     }
                 }
-                // Retrieve last ten transactions
+                MySQLDatabase.CloseConnection(conn);
+            }
+            return firstName;
+        }
+        public static double retrieveAccountBalance(string email)
+        {
+            double balance = 0;
+            using (MySqlConnection conn = MySQLDatabase.OpenConnection())
+            {
+                if (conn == null)
+                {
+                    Console.WriteLine("Unable to open MySQL connection.");
+                    return balance;
+                }
+
+                MySqlCommand command = new MySqlCommand("SELECT balance FROM Account WHERE customer_id = (SELECT customer_id FROM customer_information WHERE email = @Email)", conn);
+                command.Parameters.AddWithValue("@Email", email);
+                using (MySqlDataReader reader = command.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        balance = Convert.ToDouble(reader["balance"]);
+                    }
+                }
+            }
+            return balance;
+        }
+        public static List<Transaction> retrieveAccountTransactionHistory(string accountId)
+        {
+            List<Transaction> transactions = new List<Transaction>();
+            using (MySqlConnection conn = MySQLDatabase.OpenConnection())
+            {
+                if (conn == null)
+                {
+                    Console.WriteLine("Unable to open MySQL connection.");
+                    return null;
+                }
                 if (!string.IsNullOrEmpty(accountId))
                 {
                     MySqlCommand transactionCommand = new MySqlCommand("SELECT transaction_id, amount, DATE_FORMAT(date, '%Y-%m-%d') AS date, transaction_type FROM (SELECT * FROM transaction_history WHERE account_id = @AccountId ORDER BY date DESC LIMIT 10) sub ORDER BY date DESC", conn);
@@ -49,14 +80,13 @@ namespace BankingSystem.Services.CustomerServices
                             double amount = Convert.ToDouble(transactionReader["amount"]);
                             DateTime date = DateTime.Parse(transactionReader["date"].ToString());
                             string transactionType = transactionReader["transaction_type"].ToString();
-                            Transaction transaction = new Transaction(transactionId, amount, date,transactionType);
+                            Transaction transaction = new Transaction(transactionId, amount, date, transactionType);
                             transactions.Add(transaction);
                         }
                     }
                 }
-                MySQLDatabase.CloseConnection(conn);
             }
-            return Tuple.Create(currentAccount, transactions);
+            return transactions;
         }
         public static bool isTheirAccount(string email, string accountId)
         {
@@ -71,6 +101,18 @@ namespace BankingSystem.Services.CustomerServices
                 cmd.Parameters.AddWithValue("@accountId", accountId);
                 object result = cmd.ExecuteScalar();
                 return result != null;
+            }
+        }
+        public static bool isReceiverIDExist(string receiverID)
+        {
+            using (var conn = MySQLDatabase.OpenConnection())
+            {
+                using (MySqlCommand command = new MySqlCommand("SELECT EXISTS(SELECT 1 FROM account WHERE account_id = @ReceiverID)", conn))
+                {
+                    command.Parameters.AddWithValue("@ReceiverID", receiverID);
+
+                    return Convert.ToBoolean(command.ExecuteScalar());
+                }
             }
         }
         public static void requestDeposit(string accountId, double depositAmount)
@@ -95,76 +137,17 @@ namespace BankingSystem.Services.CustomerServices
                 cmd.ExecuteNonQuery();
             }
         }
-
-        public static void transferMoney(string senderAccountId, string receiverAccountId, double transferAmount)
+        public static void requestTransfer(string senderAccountId, string receiverAccountId, double transferAmount)
         {
             using (var conn = MySQLDatabase.OpenConnection())
             {
-                // First, try to withdraw from the sender's account
-                string query = "SELECT balance FROM Account WHERE account_id = @accountId";
+                string query = "INSERT INTO transaction_processing (account_id, transaction_type, amount, process_status, receiver_account_id) VALUES (@accountId, 'Transfer', @amount, 'Pending', @receiverAccountId)";
                 MySqlCommand cmd = new MySqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@accountId", senderAccountId);
-                object result = cmd.ExecuteScalar();
-                if (result != null)
-                {
-                    double currentBalance = Convert.ToDouble(result);
-                    double newBalance = currentBalance - transferAmount;
-                    query = "UPDATE Account SET balance = @balance WHERE account_id = @accountId";
-                    cmd = new MySqlCommand(query, conn);
-                    cmd.Parameters.AddWithValue("@accountId", senderAccountId);
-                    cmd.Parameters.AddWithValue("@balance", newBalance);
-                    cmd.ExecuteNonQuery();
-                }
-                else
-                {
-                    MessageBox.Show("Sender's Account ID not found.");
-                    return;
-                }
-                // Then, try to deposit to the receiver's account
-                query = "SELECT balance FROM Account WHERE account_id = @accountId";
-                cmd = new MySqlCommand(query, conn);
-                cmd.Parameters.AddWithValue("@accountId", receiverAccountId);
-                result = cmd.ExecuteScalar();
-                if (result != null)
-                {
-                    double currentBalance = Convert.ToDouble(result);
-                    double newBalance = currentBalance + transferAmount;
-                    query = "UPDATE Account SET balance = @balance WHERE account_id = @accountId";
-                    cmd = new MySqlCommand(query, conn);
-                    cmd.Parameters.AddWithValue("@accountId", receiverAccountId);
-                    cmd.Parameters.AddWithValue("@balance", newBalance);
-                    cmd.ExecuteNonQuery();
-                }
-                else
-                {
-                    MessageBox.Show("Receiver's Account ID not found.");
-                    return;
-                }
+                cmd.Parameters.AddWithValue("@amount", transferAmount);
+                cmd.Parameters.AddWithValue("@receiverAccountId", receiverAccountId);
+                cmd.ExecuteNonQuery();
             }
-        }
-        public static string GetCustomerFirstName(string email)
-        {
-            string firstName = null;
-            using (MySqlConnection conn = MySQLDatabase.OpenConnection())
-            {
-                if (conn == null)
-                {
-                    Console.WriteLine("Unable to open MySQL connection.");
-                    return null;
-                }
-                // Assuming email is unique
-                MySqlCommand command = new MySqlCommand("SELECT first_name FROM customer_information WHERE email = @Email", conn);
-                command.Parameters.AddWithValue("@Email", email);
-                using (MySqlDataReader reader = command.ExecuteReader())
-                {
-                    if (reader.Read())
-                    {
-                        firstName = reader["first_name"].ToString();
-                    }
-                }
-                MySQLDatabase.CloseConnection(conn);
-            }
-            return firstName;
         }
     }
 }

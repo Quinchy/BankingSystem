@@ -21,14 +21,15 @@ namespace BankingSystem.Forms.CustomerDashBoard
             InitializeComponent();
             this.email = email;
             // Load the customer's information.
-            Tuple<Account, List<Transaction>> accountAndTransactions = BankingServices.LoadAccountInformation(email);
-            string customerFirstName = BankingServices.GetCustomerFirstName(email);
+            string customerFirstName = BankingServices.retrieveCustomerFirstName(email);
+            double accountBalance = BankingServices.retrieveAccountBalance(email);
+            List<Transaction> transactionHistory = BankingServices.retrieveAccountTransactionHistory(email);
             // Set the customer information to the TextBox.
-            balanceLabel.Text = "₱ " + accountAndTransactions.Item1.Balance.ToString("F2");
+            balanceLabel.Text = "₱ " + accountBalance;
             // Greet the user with their first name
             greetUserLabel.Text = "Welcome, " + customerFirstName;
             // Load transaction history into ListView
-            foreach (Transaction transaction in accountAndTransactions.Item2)
+            foreach (Transaction transaction in transactionHistory)
             {
                 ListViewItem item = new ListViewItem(transaction.TransactionId);
                 item.SubItems.Add(transaction.Amount.ToString("F2"));
@@ -54,8 +55,15 @@ namespace BankingSystem.Forms.CustomerDashBoard
             var confirmResult = MessageBox.Show("Are you sure to deposit this amount?", "Confirm Deposit!", MessageBoxButtons.YesNo);
             if (confirmResult == DialogResult.Yes)
             {
-                BankingServices.requestDeposit(accountId, depositAmount);
-                MessageBox.Show("Your deposit request has been sent to the teller for review.");
+                try
+                {
+                    BankingServices.requestDeposit(accountId, depositAmount);
+                    MessageBox.Show("Your deposit request has been sent to the teller for review.");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
             }
         }
         private void withdrawButton_Click(object sender, EventArgs e)
@@ -92,7 +100,7 @@ namespace BankingSystem.Forms.CustomerDashBoard
             string receiverAccountId = receiverIDTextBox.Text;
             double transferAmount = double.Parse(amountTransferNumeric.Text);
             if (string.IsNullOrEmpty(senderAccountId) || string.IsNullOrEmpty(receiverAccountId) ||
-                !double.TryParse(amountTransferNumeric.Text, out transferAmount))
+                amountTransferNumeric.Text == "0.00")
             {
                 MessageBox.Show("Please fill up the Sender Account ID, Receiver Account ID and Amount fields.");
                 return;
@@ -100,6 +108,16 @@ namespace BankingSystem.Forms.CustomerDashBoard
             if (!BankingServices.isTheirAccount(email, senderAccountId))
             {
                 MessageBox.Show("This is not your account ID.");
+                return;
+            }
+            if (senderAccountId == receiverAccountId)
+            {
+                MessageBox.Show("You cannot send money to your own account.");
+                return;
+            }
+            if (!BankingServices.isReceiverIDExist(receiverAccountId))
+            {
+                MessageBox.Show("The receiver account ID does not exist.");
                 return;
             }
             if (double.Parse(balanceLabel.Text.Substring(2)) < transferAmount)
@@ -110,8 +128,15 @@ namespace BankingSystem.Forms.CustomerDashBoard
             var confirmResult = MessageBox.Show("Are you sure to transfer this amount?", "Confirm Transfer!", MessageBoxButtons.YesNo);
             if (confirmResult == DialogResult.Yes)
             {
-                BankingServices.transferMoney(senderAccountId, receiverAccountId, transferAmount);
-                balanceLabel.Text = "₱ " + (double.Parse(balanceLabel.Text.Substring(2)) - transferAmount).ToString() + ".00";
+                try
+                {
+                    BankingServices.requestTransfer(senderAccountId, receiverAccountId, transferAmount);
+                    MessageBox.Show("Your transfer request has been sent to the teller for review.");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
             }
         }
     }

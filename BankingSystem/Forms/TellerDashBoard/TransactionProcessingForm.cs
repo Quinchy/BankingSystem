@@ -39,7 +39,7 @@ namespace BankingSystem.Forms.TellerDashBoard
                             TransactionProcessingServices.approveWithdraw(processId);
                             break;
                         case "Transfer":
-                            // Call the appropriate method for approving a transfer
+                            TransactionProcessingServices.approveTransfer(processId);
                             break;
                     }
                     transactionProcessingListView.Items.Remove(selectedItem);

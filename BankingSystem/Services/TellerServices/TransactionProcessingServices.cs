@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace BankingSystem.Services.TellerServices
 {
+    // A service class for managing customer' transaction request. Also performs the withdrawal, deposit and transfer of money.
     internal class TransactionProcessingServices
     {
         // Loads a list of transaction requests with pending status from the database

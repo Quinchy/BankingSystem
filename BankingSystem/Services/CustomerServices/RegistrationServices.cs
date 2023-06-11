@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace BankingSystem.Services.CustomerServices
 {
+    // A service class for sending request for an account.
     internal class RegistrationServices
     {
         // Registers a new user in the system

@@ -10,6 +10,7 @@ using BankingSystem.Models.TellerModels;
 
 namespace BankingSystem.Services.TellerServices
 {
+    // A service class for managing account request and also managing the closing and opening of an account.
     internal class AccountManagementServices
     {
         // Loads a list of account requests with pending status from the database

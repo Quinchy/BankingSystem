@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace BankingSystem.Services.CustomerServices
 {
+    // A service class for retrieving information of customer and requesting for update in their information.
     internal class CustomerProfileServices
     {
         // This method retrieves customer information from the database using the customer's email.

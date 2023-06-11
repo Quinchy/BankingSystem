@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace BankingSystem.Utils
 {
+    // A class for methods to be use globally in the app.
     internal class Helpers
     {
         // This method changes the currently displayed Form in the panel of BaseForm.

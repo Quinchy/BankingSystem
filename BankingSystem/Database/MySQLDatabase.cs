@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace BankingSystem.Database
 {
+    // A class for managing MySQL database connections
     internal class MySQLDatabase
     {
         private static string server;
@@ -17,43 +18,29 @@ namespace BankingSystem.Database
         {
             Initialize();
         }
+        // Initialize the database connection settings
         private static void Initialize()
         {
             server = "localhost";
             database = "banking_system";
-            uid = "root"; //default XAMPP MySQL username
-            password = ""; //default XAMPP MySQL password
+            uid = "root"; // Default XAMPP MySQL username
+            password = ""; // Default XAMPP MySQL password
         }
+        // Open a connection to the MySQL database
         public static MySqlConnection OpenConnection()
         {
             try
             {
-                string connectionString = "SERVER=" + server + ";" + "DATABASE=" +
-                database + ";" + "UID=" + uid + ";" + "PASSWORD=" + password + ";";
-
+                string connectionString = $"SERVER={server};DATABASE={database};UID={uid};PASSWORD={password}";
                 MySqlConnection connection = new MySqlConnection(connectionString);
                 connection.Open();
                 return connection;
             }
             catch (MySqlException ex)
             {
-                //Output the exception details for debugging
+                // Output the exception details for debugging
                 Console.WriteLine(ex.Message);
                 return null;
-            }
-        }
-        public static bool CloseConnection(MySqlConnection connection)
-        {
-            try
-            {
-                connection.Close();
-                return true;
-            }
-            catch (MySqlException ex)
-            {
-                //Output the exception details for debugging
-                Console.WriteLine(ex.Message);
-                return false;
             }
         }
     }

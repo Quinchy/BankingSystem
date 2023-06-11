@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace BankingSystem.Services.CustomerServices
 {
+    // A service class for sending transaction request like withdraw, deposit and transfer. Also retrieves information for Home Screen Form.
     internal class BankingServices
     {
         // This method retrieves the first name of a customer using their email.

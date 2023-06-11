@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace BankingSystem.Services.CustomerServices
 {
+    // A service class for authenticating user before logging in.
     internal class LoginServices
     {
         // This method is used to authenticate a user based on their email and password.

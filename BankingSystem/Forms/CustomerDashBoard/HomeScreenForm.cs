@@ -1,4 +1,4 @@
-﻿using BankingSystem.Models;
+﻿using BankingSystem.Models.CustomerModels;
 using BankingSystem.Services.CustomerServices;
 using System;
 using System.Collections.Generic;

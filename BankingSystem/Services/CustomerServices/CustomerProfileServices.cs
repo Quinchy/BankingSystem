@@ -1,4 +1,4 @@
-﻿using BankingSystem.Models;
+﻿using BankingSystem.Models.CustomerModels;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;

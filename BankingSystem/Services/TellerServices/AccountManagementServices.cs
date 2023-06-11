@@ -12,13 +12,16 @@ namespace BankingSystem.Services.TellerServices
 {
     internal class AccountManagementServices
     {
+        // Loads a list of account requests with pending status from the database
         public static List<AccountRequest> loadAccountRequest()
         {
             var accountRequests = new List<AccountRequest>();
+            // Open a connection to the MySQL database using a connection pool
             using (var connection = MySQLDatabase.OpenConnection())
             {
                 if (connection != null)
                 {
+                    // Construct the SQL query to retrieve account request information
                     string query = @"SELECT account_request.request_id, 
                         account_request.customer_id, 
                         customer_information.email,
@@ -28,18 +31,23 @@ namespace BankingSystem.Services.TellerServices
                         INNER JOIN customer_information 
                         ON account_request.customer_id = customer_information.customer_id
                         WHERE account_request.request_status = 'Pending'";
+                    // Create a MySqlCommand object with the query and connection
                     using (var command = new MySqlCommand(query, connection))
                     {
+                        // Execute the query and retrieve the data reader
                         using (var reader = command.ExecuteReader())
                         {
+                            // Iterate through each row in the result set
                             while (reader.Read())
                             {
+                                // Extract the account request details from the reader
                                 var requestId = reader["request_id"].ToString();
                                 var customerId = reader["customer_id"].ToString();
                                 var email = reader["email"].ToString();
                                 var dateOfRequest = Convert.ToDateTime(reader["request_date"]);
                                 var requestStatus = reader["request_status"].ToString();
 
+                                // Create an AccountRequest object and add it to the list
                                 accountRequests.Add(new AccountRequest(requestId, customerId, email, dateOfRequest, requestStatus));
                             }
                         }
@@ -48,26 +56,32 @@ namespace BankingSystem.Services.TellerServices
             }
             return accountRequests;
         }
+        // Loads a list of accounts from the database
         public static List<Account> loadAccountList()
         {
             var accounts = new List<Account>();
+            // Open a connection to the MySQL database using a connection pool
             using (var connection = MySQLDatabase.OpenConnection())
             {
                 if (connection != null)
                 {
+                    // Construct the SQL query to retrieve account information
                     string query = "SELECT account_id, customer_id, balance, account_status FROM account";
-
+                    // Create a MySqlCommand object with the query and connection
                     using (var command = new MySqlCommand(query, connection))
                     {
+                        // Execute the query and retrieve the data reader
                         using (var reader = command.ExecuteReader())
                         {
+                            // Iterate through each row in the result set
                             while (reader.Read())
                             {
+                                // Extract the account details from the reader
                                 var accountId = reader["account_id"].ToString();
                                 var customerId = reader["customer_id"].ToString();
                                 var balance = Convert.ToDouble(reader["balance"]);
                                 var accountStatus = reader["account_status"].ToString();
-
+                                // Create an Account object and add it to the list
                                 accounts.Add(new Account(accountId, customerId, balance, accountStatus));
                             }
                         }
@@ -76,6 +90,7 @@ namespace BankingSystem.Services.TellerServices
             }
             return accounts;
         }
+        // Approve a request for an account.
         public static void approveAccount(int requestId)
         {
             // Open connection using MySQLDatabase.OpenConnection()
@@ -88,21 +103,17 @@ namespace BankingSystem.Services.TellerServices
                     using (var command = new MySqlCommand(query, connection))
                     {
                         command.Parameters.AddWithValue("@RequestId", requestId);
-
                         // Execute the query and get the customer ID
                         var customerId = command.ExecuteScalar();
-
                         // Fetch the customer's details using customerId
                         query = "SELECT first_name, last_name, phone_number FROM customer_information WHERE customer_id = @CustomerId";
                         using (var customerCommand = new MySqlCommand(query, connection))
                         {
                             customerCommand.Parameters.AddWithValue("@CustomerId", customerId);
-
                             // Variables for storing the customer's details
                             string firstName = null;
                             string lastName = null;
                             string phoneNumber = null;
-
                             // Execute the query and get the customer's details
                             using (var reader = customerCommand.ExecuteReader())
                             {
@@ -138,11 +149,10 @@ namespace BankingSystem.Services.TellerServices
                             }
                         }
                     }
-                    // Close connection using MySQLDatabase.CloseConnection()
-                    MySQLDatabase.CloseConnection(connection);
                 }
             }
         }
+        // Reject the request for an account.
         public static void rejectAccount(int requestId)
         {
             // Open connection using MySQLDatabase.OpenConnection()
@@ -155,15 +165,13 @@ namespace BankingSystem.Services.TellerServices
                     using (var command = new MySqlCommand(query, connection))
                     {
                         command.Parameters.AddWithValue("@RequestId", requestId);
-
                         // Execute the query
                         command.ExecuteNonQuery();
                     }
-                    // Close connection using MySQLDatabase.CloseConnection()
-                    MySQLDatabase.CloseConnection(connection);
                 }
             }
         }
+        // Open the account for the customer.
         public static void openAnAccount(string accountId)
         {
             // Open connection using MySQLDatabase.OpenConnection()
@@ -176,15 +184,13 @@ namespace BankingSystem.Services.TellerServices
                     using (var command = new MySqlCommand(query, connection))
                     {
                         command.Parameters.AddWithValue("@AccountId", accountId);
-
                         // Execute the query
                         command.ExecuteNonQuery();
                     }
-                    // Close connection using MySQLDatabase.CloseConnection()
-                    MySQLDatabase.CloseConnection(connection);
                 }
             }
         }
+        // Close the account of a customer
         public static void closeAnAccount(string accountId)
         {
             // Open connection using MySQLDatabase.OpenConnection()
@@ -197,15 +203,13 @@ namespace BankingSystem.Services.TellerServices
                     using (var command = new MySqlCommand(query, connection))
                     {
                         command.Parameters.AddWithValue("@AccountId", accountId);
-
                         // Execute the query
                         command.ExecuteNonQuery();
                     }
-                    // Close connection using MySQLDatabase.CloseConnection()
-                    MySQLDatabase.CloseConnection(connection);
                 }
             }
         }
+        // Generate an account id for new customer
         public static string generateAccountId(string firstName, string lastName, string phoneNumber)
         {
             // Get the first two characters of the first name

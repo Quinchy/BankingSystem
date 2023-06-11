@@ -145,7 +145,10 @@
             Text = "DashboardForm";
             ResumeLayout(false);
         }
-
+        public static Panel GetContentPanel()
+        {
+            return dashboardPanel;
+        }
         private Panel line1;
         private Panel line2;
         private Panel appLogoIcon;

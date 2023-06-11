@@ -17,8 +17,8 @@ namespace BankingSystem.Forms.TellerDashBoard
     {
         Control baseFormPanel = BaseForm.GetContentPanel();
         Form loginForm = new LoginForm();
-        static AccountManagementForm accountManagementForm;
-        static TransactionProcessingForm transactionProcessingForm;
+        static AccountManagementForm accountManagementForm = new AccountManagementForm();
+        static TransactionProcessingForm transactionProcessingForm = new TransactionProcessingForm();
         public DashboardForm()
         {
             InitializeComponent();

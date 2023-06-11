@@ -15,14 +15,19 @@ namespace BankingSystem.Forms.CustomerDashBoard
     {
         private string email;
         Control baseFormPanel = BaseForm.GetContentPanel();
-        Form loginForm = new LoginForm();
-        static HomeScreenForm homeScreenForm;
-        static CustomerProfileForm customerProfileForm;
+        LoginForm loginForm = new LoginForm();
+        HomeScreenForm homeScreenForm;
+        CustomerProfileForm customerProfileForm;
         public DashboardForm(string email)
         {
             this.email = email;
             InitializeComponent();
             InitializeHomeScreen(email);
+            if (homeScreenForm == null || customerProfileForm == null)
+            {
+                homeScreenForm = new HomeScreenForm(email);
+                customerProfileForm = new CustomerProfileForm(email);
+            }
         }
         // Changes the current form displayed in the dashboard panel.
         private static void ChangeDashboardForm(Form newForm)
@@ -77,7 +82,7 @@ namespace BankingSystem.Forms.CustomerDashBoard
             Helpers.changeScreen(baseFormPanel, loginForm);
         }
         // Initializes the home screen with the given email.
-        public static void InitializeHomeScreen(string email)
+        public void InitializeHomeScreen(string email)
         {
             // If the home screen form has not been created yet, create it
             if (homeScreenForm == null)

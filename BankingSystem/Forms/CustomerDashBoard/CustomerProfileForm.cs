@@ -1,5 +1,6 @@
 ﻿using BankingSystem.Models.CustomerModels;
 using BankingSystem.Services.CustomerServices;
+using BankingSystem.Utils;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,8 +15,12 @@ namespace BankingSystem.Forms.CustomerDashBoard
 {
     public partial class CustomerProfileForm : Form
     {
+        private string email;
+        Control dashboardPanel = DashboardForm.GetContentPanel();
+        CustomerUpdateForm customerUpdateForm;
         public CustomerProfileForm(string email)
         {
+            this.email = email;
             InitializeComponent();
             // Load the customer's information.
             Customer currentCustomer = CustomerProfileServices.retrieveCustomerInformation(email);
@@ -41,6 +46,14 @@ namespace BankingSystem.Forms.CustomerDashBoard
             string accountID = accountIDTextBox.Text;
             // Set the text to the clipboard
             Clipboard.SetText(accountID);
+        }
+        private void requestButton_Click(object sender, EventArgs e)
+        {
+            if (customerUpdateForm == null)
+            {
+                customerUpdateForm = new CustomerUpdateForm(email);
+            }
+            Helpers.changeScreen(dashboardPanel, customerUpdateForm);
         }
     }
 }

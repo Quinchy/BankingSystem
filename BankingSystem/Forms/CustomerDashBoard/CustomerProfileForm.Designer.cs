@@ -41,6 +41,8 @@ namespace BankingSystem.Forms.CustomerDashBoard
             firstNameTextBox = new TextBox();
             firstNameLabel = new Label();
             accountInfoLabel = new Label();
+            requestButton = new RoundedButton();
+            panel1 = new Panel();
             profilePanel.SuspendLayout();
             accountInfoCardPanel.SuspendLayout();
             accountIDPanel.SuspendLayout();
@@ -49,6 +51,7 @@ namespace BankingSystem.Forms.CustomerDashBoard
             emailPanel.SuspendLayout();
             lastNamePanel.SuspendLayout();
             firstNamePanel.SuspendLayout();
+            panel1.SuspendLayout();
             SuspendLayout();
             // 
             // line1
@@ -346,12 +349,47 @@ namespace BankingSystem.Forms.CustomerDashBoard
             accountInfoLabel.TabIndex = 38;
             accountInfoLabel.Text = "Account Information";
             // 
+            // requestButton
+            // 
+            requestButton.BorderColor = Color.Transparent;
+            requestButton.ButtonColor = Color.FromArgb(92, 184, 92);
+            requestButton.CornerRadius = 10;
+            requestButton.Cursor = Cursors.Hand;
+            requestButton.FlatAppearance.BorderSize = 0;
+            requestButton.FlatAppearance.MouseDownBackColor = Color.Transparent;
+            requestButton.FlatAppearance.MouseOverBackColor = Color.Transparent;
+            requestButton.FlatStyle = FlatStyle.Flat;
+            requestButton.Font = new Font("Century Gothic", 14.25F, FontStyle.Bold, GraphicsUnit.Point);
+            requestButton.Location = new Point(21, 490);
+            requestButton.Name = "requestButton";
+            requestButton.OnHoverBorderColor = Color.Transparent;
+            requestButton.OnHoverButtonColor = Color.FromArgb(124, 205, 124);
+            requestButton.OnHoverTextColor = Color.WhiteSmoke;
+            requestButton.Size = new Size(226, 55);
+            requestButton.TabIndex = 54;
+            requestButton.Text = "REQUEST";
+            requestButton.TextColor = Color.WhiteSmoke;
+            requestButton.UseVisualStyleBackColor = true;
+            requestButton.Click += requestButton_Click;
+            // 
+            // panel1
+            // 
+            panel1.BackColor = Color.White;
+            panel1.BackgroundImage = Properties.Resources.updateinformationbackground;
+            panel1.BackgroundImageLayout = ImageLayout.Stretch;
+            panel1.Controls.Add(requestButton);
+            panel1.Location = new Point(728, 109);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(268, 586);
+            panel1.TabIndex = 37;
+            // 
             // CustomerProfileForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(34, 33, 46);
             ClientSize = new Size(1039, 723);
+            Controls.Add(panel1);
             Controls.Add(accountInfoCardPanel);
             Controls.Add(profilePanel);
             FormBorderStyle = FormBorderStyle.None;
@@ -373,6 +411,7 @@ namespace BankingSystem.Forms.CustomerDashBoard
             lastNamePanel.PerformLayout();
             firstNamePanel.ResumeLayout(false);
             firstNamePanel.PerformLayout();
+            panel1.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -402,5 +441,7 @@ namespace BankingSystem.Forms.CustomerDashBoard
         private TextBox accountIDTextBox;
         private Label accountIDLabel;
         private Button copyButton;
+        private RoundedButton requestButton;
+        private Panel panel1;
     }
 }

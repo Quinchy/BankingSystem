@@ -56,10 +56,7 @@ namespace BankingSystem.Forms
             {
                 case 1:
                     // If both email and password are correct then Change the screen to Dashboard.
-                    if (customerDashboardForm == null) 
-                    {
-                        customerDashboardForm = new CustomerDashBoard.DashboardForm(email);
-                    }
+                    customerDashboardForm = new CustomerDashBoard.DashboardForm(email);                  
                     Helpers.changeScreen(baseFormPanel, customerDashboardForm);
                     break;
                 case -2:

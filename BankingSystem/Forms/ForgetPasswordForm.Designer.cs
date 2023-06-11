@@ -221,7 +221,7 @@
             resetButton.OnHoverTextColor = Color.WhiteSmoke;
             resetButton.Size = new Size(226, 55);
             resetButton.TabIndex = 2;
-            resetButton.Text = "RESET PASSWORD";
+            resetButton.Text = "UPDATE";
             resetButton.TextColor = Color.WhiteSmoke;
             resetButton.UseVisualStyleBackColor = true;
             resetButton.Click += resetButton_Click;

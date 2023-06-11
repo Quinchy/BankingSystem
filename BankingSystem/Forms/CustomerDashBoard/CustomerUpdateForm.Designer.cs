@@ -15,10 +15,10 @@
         {
             backButton = new Button();
             accountInfoCardPanel = new Utils.Components.RoundedPanel();
-            requestButton = new Utils.Components.RoundedButton();
+            line2 = new Panel();
             profilePanel = new Utils.Components.RoundedPanel();
             profileTitleLabel = new Label();
-            line2 = new Panel();
+            requestButton = new Utils.Components.RoundedButton();
             accountInfoCardPanel.SuspendLayout();
             profilePanel.SuspendLayout();
             SuspendLayout();
@@ -54,6 +54,37 @@
             accountInfoCardPanel.Size = new Size(916, 625);
             accountInfoCardPanel.TabIndex = 37;
             // 
+            // line2
+            // 
+            line2.BackColor = Color.Gainsboro;
+            line2.Location = new Point(91, 85);
+            line2.Name = "line2";
+            line2.Size = new Size(792, 1);
+            line2.TabIndex = 56;
+            // 
+            // profilePanel
+            // 
+            profilePanel.BackColor = Color.Transparent;
+            profilePanel.BorderColor = Color.FromArgb(92, 184, 92);
+            profilePanel.Controls.Add(profileTitleLabel);
+            profilePanel.CornerRadius = 20;
+            profilePanel.ForeColor = Color.Transparent;
+            profilePanel.Location = new Point(91, 21);
+            profilePanel.Name = "profilePanel";
+            profilePanel.Size = new Size(792, 50);
+            profilePanel.TabIndex = 38;
+            // 
+            // profileTitleLabel
+            // 
+            profileTitleLabel.AutoSize = true;
+            profileTitleLabel.Font = new Font("Century Gothic", 15.75F, FontStyle.Bold, GraphicsUnit.Point);
+            profileTitleLabel.ForeColor = Color.White;
+            profileTitleLabel.Location = new Point(24, 13);
+            profileTitleLabel.Name = "profileTitleLabel";
+            profileTitleLabel.Size = new Size(154, 25);
+            profileTitleLabel.TabIndex = 37;
+            profileTitleLabel.Text = "Profile Update";
+            // 
             // requestButton
             // 
             requestButton.BorderColor = Color.Transparent;
@@ -75,37 +106,6 @@
             requestButton.Text = "UPDATE";
             requestButton.TextColor = Color.WhiteSmoke;
             requestButton.UseVisualStyleBackColor = true;
-            // 
-            // profilePanel
-            // 
-            profilePanel.BackColor = Color.Transparent;
-            profilePanel.BorderColor = Color.FromArgb(34, 33, 46);
-            profilePanel.Controls.Add(profileTitleLabel);
-            profilePanel.CornerRadius = 20;
-            profilePanel.ForeColor = Color.Transparent;
-            profilePanel.Location = new Point(91, 21);
-            profilePanel.Name = "profilePanel";
-            profilePanel.Size = new Size(792, 50);
-            profilePanel.TabIndex = 38;
-            // 
-            // profileTitleLabel
-            // 
-            profileTitleLabel.AutoSize = true;
-            profileTitleLabel.Font = new Font("Century Gothic", 15.75F, FontStyle.Bold, GraphicsUnit.Point);
-            profileTitleLabel.ForeColor = Color.White;
-            profileTitleLabel.Location = new Point(42, 13);
-            profileTitleLabel.Name = "profileTitleLabel";
-            profileTitleLabel.Size = new Size(154, 25);
-            profileTitleLabel.TabIndex = 37;
-            profileTitleLabel.Text = "Profile Update";
-            // 
-            // line2
-            // 
-            line2.BackColor = Color.Gainsboro;
-            line2.Location = new Point(91, 85);
-            line2.Name = "line2";
-            line2.Size = new Size(792, 1);
-            line2.TabIndex = 56;
             // 
             // CustomerUpdateForm
             // 

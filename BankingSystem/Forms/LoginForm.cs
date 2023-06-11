@@ -43,10 +43,6 @@ namespace BankingSystem.Forms
             if (email == "admin" && password == "admin")
             {
                 // Change the screen to Teller Dashboard
-                if (tellerDashboardForm == null) 
-                {
-                    tellerDashboardForm = new TellerDashBoard.DashboardForm();
-                }
                 Helpers.changeScreen(baseFormPanel, tellerDashboardForm);
                 return;
             }

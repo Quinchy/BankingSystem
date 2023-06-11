@@ -13,20 +13,15 @@ namespace BankingSystem.Forms.CustomerDashBoard
 {
     public partial class CustomerUpdateForm : Form
     {
-        private string email;
         Control dashboardPanel = DashboardForm.GetContentPanel();
         CustomerProfileForm customerProfileForm;
         public CustomerUpdateForm(string email)
         {
-            this.email = email;
-            InitializeComponent();                 
+            InitializeComponent();
+            customerProfileForm = new CustomerProfileForm(email);
         }
         private void backButton_Click(object sender, EventArgs e)
         {
-            if (customerProfileForm == null) 
-            {
-                customerProfileForm = new CustomerProfileForm(email);
-            }
             Helpers.changeScreen(dashboardPanel, customerProfileForm);
         }
     }

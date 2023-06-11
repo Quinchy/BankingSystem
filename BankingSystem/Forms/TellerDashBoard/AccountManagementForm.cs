@@ -24,6 +24,8 @@ namespace BankingSystem.Forms.TellerDashBoard
             InitializeAccountRequest();
             InitializeAccountList();
         }
+        // Handles the Click event of the approve button.
+        // Approves all checked account requests in the ListView.
         private void approveButton_Click(object sender, EventArgs e)
         {
             // Iterate over all checked items in the ListView
@@ -33,9 +35,12 @@ namespace BankingSystem.Forms.TellerDashBoard
                 int requestId = int.Parse(item.SubItems[0].Text);
                 AccountManagementServices.approveAccount(requestId);
             }
+            // Refresh the account request and account list views
             InitializeAccountRequest();
             InitializeAccountList();
         }
+        // Handles the Click event of the reject button.
+        // Rejects all checked account requests in the ListView.
         private void rejectButton_Click(object sender, EventArgs e)
         {
             // Iterate over all checked items in the ListView
@@ -45,9 +50,12 @@ namespace BankingSystem.Forms.TellerDashBoard
                 int requestId = int.Parse(item.SubItems[0].Text);
                 AccountManagementServices.rejectAccount(requestId);
             }
+            // Refresh the account request and account list views
             InitializeAccountRequest();
             InitializeAccountList();
         }
+        // Handles the Click event of the open account button.
+        // Opens all checked accounts in the ListView.
         private void openAccountButton_Click(object sender, EventArgs e)
         {
             // Iterate over all checked items in the ListView
@@ -57,8 +65,11 @@ namespace BankingSystem.Forms.TellerDashBoard
                 string accountId = item.SubItems[0].Text;
                 AccountManagementServices.openAnAccount(accountId);
             }
+            // Refresh the account list view
             InitializeAccountList();
         }
+        // Handles the Click event of the close account button.
+        // Closes all checked accounts in the ListView.
         private void closeAccountButton_Click(object sender, EventArgs e)
         {
             // Iterate over all checked items in the ListView
@@ -68,8 +79,10 @@ namespace BankingSystem.Forms.TellerDashBoard
                 string accountId = item.SubItems[0].Text;
                 AccountManagementServices.closeAnAccount(accountId);
             }
+            // Refresh the account list view
             InitializeAccountList();
         }
+        // Initializes the account request ListView with data from the AccountManagementServices.
         private void InitializeAccountRequest()
         {
             var accountRequests = AccountManagementServices.loadAccountRequest();
@@ -80,6 +93,7 @@ namespace BankingSystem.Forms.TellerDashBoard
                 accountManagementListView.Items.Add(item);
             }
         }
+        // Initializes the account list ListView with data from the AccountManagementServices.
         private void InitializeAccountList()
         {
             var accounts = AccountManagementServices.loadAccountList();

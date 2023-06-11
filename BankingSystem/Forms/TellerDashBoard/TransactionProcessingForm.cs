@@ -20,16 +20,21 @@ namespace BankingSystem.Forms.TellerDashBoard
             InitializeComponent();
             InitializeTransactionProcessingListView();
         }
+        // Handles the Click event of the approve button.
+        // Approves all checked transactions in the ListView.
         private void approveButton_Click(object sender, EventArgs e)
         {
+            // Check if any transactions are selected
             if (transactionProcessingListView.CheckedItems.Count > 0)
             {
+                // Iterate over all checked items in the ListView
                 foreach (ListViewItem selectedItem in transactionProcessingListView.CheckedItems)
                 {
                     string processId = selectedItem.SubItems[0].Text;
-                    string transactionType = selectedItem.SubItems[3].Text;
+                    string transactionType = selectedItem.SubItems[3].Text;                   
                     try
                     {
+                        // Approve the transaction.
                         switch (transactionType)
                         {
                             case "Deposit":
@@ -48,6 +53,8 @@ namespace BankingSystem.Forms.TellerDashBoard
                         MessageBox.Show(ex.Message);
                     }
                 }
+
+                // Refresh the transaction processing list view
                 InitializeTransactionProcessingListView();
             }
             else
@@ -55,15 +62,20 @@ namespace BankingSystem.Forms.TellerDashBoard
                 MessageBox.Show("Please check a transaction to approve.");
             }
         }
+        // Handles the Click event of the reject button.
+        // Rejects all checked transactions in the ListView.
         private void rejectButton_Click(object sender, EventArgs e)
         {
+            // Check if any transactions are selected
             if (transactionProcessingListView.CheckedItems.Count > 0)
             {
+                // Iterate over all checked items in the ListView
                 foreach (ListViewItem selectedItem in transactionProcessingListView.CheckedItems)
                 {
-                    string processId = selectedItem.SubItems[0].Text;
+                    string processId = selectedItem.SubItems[0].Text;                 
                     try
                     {
+                        // Reject the transaction.
                         TransactionProcessingServices.rejectTransaction(processId);
                     }
                     catch (Exception ex)
@@ -71,6 +83,7 @@ namespace BankingSystem.Forms.TellerDashBoard
                         MessageBox.Show(ex.Message);
                     }
                 }
+                // Refresh the transaction processing list view
                 InitializeTransactionProcessingListView();
             }
             else
@@ -78,10 +91,12 @@ namespace BankingSystem.Forms.TellerDashBoard
                 MessageBox.Show("Please check a transaction to reject.");
             }
         }
+        // Initializes the transaction processing ListView with data from the TransactionProcessingServices.
         private void InitializeTransactionProcessingListView()
         {
             var transactions = TransactionProcessingServices.loadTransactionRequest();
             transactionProcessingListView.Items.Clear();
+            // Add each transaction to the ListView
             foreach (var transaction in transactions)
             {
                 ListViewItem item = new ListViewItem(new[] { transaction.ProcessId, transaction.AccountId, transaction.Balance.ToString(), transaction.TransactionType, transaction.Amount.ToString(), transaction.ProcessStatus });

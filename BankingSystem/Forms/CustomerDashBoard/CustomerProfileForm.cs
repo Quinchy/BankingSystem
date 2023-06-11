@@ -27,17 +27,14 @@ namespace BankingSystem.Forms.CustomerDashBoard
             phoneNumberTextBox.Text = currentCustomer.PhoneNumber;
             passwordTextBox.Text = currentCustomer.Password;
         }
+        // Handles the CheckedChanged event of the showPasswordCheckbox.
+        // Toggles the visibility of the password in the password text box.
         private void showPasswordCheckbox_CheckedChanged(object sender, EventArgs e)
         {
-            if (showPasswordCheckbox.Checked == true)
-            {
-                passwordTextBox.UseSystemPasswordChar = false;
-            }
-            else
-            {
-                passwordTextBox.UseSystemPasswordChar = true;
-            }
+            passwordTextBox.UseSystemPasswordChar = !showPasswordCheckbox.Checked;
         }
+        // Handles the Click event of the copyButton.
+        // Copies the text from the accountIDTextBox to the clipboard.
         private void copyButton_Click(object sender, EventArgs e)
         {
             // Get the text from the accountIDTextBox

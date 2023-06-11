@@ -22,127 +22,158 @@ namespace BankingSystem.Forms.CustomerDashBoard
             InitializeComponent();
             InitializeAccountInformation(email);
         }
+        // Handles the Click event of the deposit button.
+        // Validates the input, checks if the account belongs to the user, and sends a deposit request.
         private void depositButton_Click(object sender, EventArgs e)
         {
             string accountId = yourIDTransactionTextBox.Text;
             double depositAmount = double.Parse(amountTransactionNumeric.Text);
+            // If the account ID is empty or the deposit amount is 0.00
             if (string.IsNullOrEmpty(accountId) || amountTransactionNumeric.Text == "0.00")
             {
-                MessageBox.Show("Please fill up both the Account ID and Amount fields.");
-                return;
+                ShowMessageBox("Please fill up both the Account ID and Amount fields.");
+                return; // Exit the method
             }
+            // If the account ID does not belong to the user
             if (!BankingServices.isTheirAccount(email, accountId))
             {
-                MessageBox.Show("This is not your account ID.");
-                return;
+                ShowMessageBox("This is not your account ID.");
+                return; // Exit the method
             }
+            // Ask the user to confirm the deposit
             var confirmResult = MessageBox.Show("Are you sure to deposit this amount?", "Confirm Deposit!", MessageBoxButtons.YesNo);
+            // If the user confirms the deposit
             if (confirmResult == DialogResult.Yes)
             {
                 try
                 {
+                    // Send a deposit request
                     BankingServices.requestDeposit(accountId, depositAmount);
-                    MessageBox.Show("Your deposit request has been sent to the teller for review.");
+                    ShowMessageBox("Your deposit request has been sent to the teller for review.");
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message);
+                    ShowMessageBox(ex.Message);
                 }
             }
         }
+        // Handles the Click event of the withdraw button.
+        // Validates the input, checks if the account belongs to the user, and sends a withdraw request.
         private void withdrawButton_Click(object sender, EventArgs e)
         {
             string accountId = yourIDTransactionTextBox.Text;
             double withdrawAmount = double.Parse(amountTransactionNumeric.Text);
+            // If the account ID is empty or the withdraw amount is 0.00
             if (string.IsNullOrEmpty(accountId) || amountTransactionNumeric.Text == "0.00")
             {
-                MessageBox.Show("Please fill up both the Account ID and Amount fields.");
-                return;
+                ShowMessageBox("Please fill up both the Account ID and Amount fields.");
+                return; // Exit the method
             }
+            // If the account ID does not belong to the user
             if (!BankingServices.isTheirAccount(email, accountId))
             {
-                MessageBox.Show("This is not your account ID.");
-                return;
+                ShowMessageBox("This is not your account ID.");
+                return; // Exit the method
             }
+            // Ask the user to confirm the withdraw
             var confirmResult = MessageBox.Show("Are you sure to withdraw this amount?", "Confirm Withdraw!", MessageBoxButtons.YesNo);
+            // If the user confirms the withdraw
             if (confirmResult == DialogResult.Yes)
             {
                 try
                 {
+                    // Send a withdraw request
                     BankingServices.requestWithdraw(accountId, withdrawAmount);
-                    MessageBox.Show("Your withdraw request has been sent to the teller for review.");
+                    ShowMessageBox("Your withdraw request has been sent to the teller for review.");
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message);
+                    ShowMessageBox(ex.Message);
                 }
             }
         }
+        // Handles the Click event of the confirm button.
+        // Validates the input, checks if the account belongs to the user, checks if the receiver account exists, checks if the balance is sufficient, and sends a transfer request.
         private void confirmButton_Click(object sender, EventArgs e)
         {
             string senderAccountId = yourIDTextBox.Text;
             string receiverAccountId = receiverIDTextBox.Text;
             double transferAmount = double.Parse(amountTransferNumeric.Text);
+            // If the sender account ID, receiver account ID, or transfer amount is empty
             if (string.IsNullOrEmpty(senderAccountId) || string.IsNullOrEmpty(receiverAccountId) ||
                 amountTransferNumeric.Text == "0.00")
             {
-                MessageBox.Show("Please fill up the Sender Account ID, Receiver Account ID and Amount fields.");
-                return;
+                ShowMessageBox("Please fill up the Sender Account ID, Receiver Account ID and Amount fields.");
+                return; // Exit the method
             }
+            // If the sender account ID does not belong to the user
             if (!BankingServices.isTheirAccount(email, senderAccountId))
             {
-                MessageBox.Show("This is not your account ID.");
-                return;
+                ShowMessageBox("This is not your account ID.");
+                return; // Exit the method
             }
+            // If the sender account ID is the same as the receiver account ID
             if (senderAccountId == receiverAccountId)
             {
-                MessageBox.Show("You cannot send money to your own account.");
-                return;
+                ShowMessageBox("You cannot send money to your own account.");
+                return; // Exit the method
             }
+            // If the receiver account ID does not exist
             if (!BankingServices.isReceiverIDExist(receiverAccountId))
             {
-                MessageBox.Show("The receiver account ID does not exist.");
-                return;
+                ShowMessageBox("The receiver account ID does not exist.");
+                return; // Exit the method
             }
+            // If the balance is less than the transfer amount
             if (double.Parse(balanceLabel.Text.Substring(2)) < transferAmount)
             {
-                MessageBox.Show("Insufficient balance.");
-                return;
+                ShowMessageBox("Insufficient balance.");
+                return; // Exit the method
             }
+            // Ask the user to confirm the transfer
             var confirmResult = MessageBox.Show("Are you sure to transfer this amount?", "Confirm Transfer!", MessageBoxButtons.YesNo);
+            // If the user confirms the transfer
             if (confirmResult == DialogResult.Yes)
             {
                 try
                 {
+                    // Send a transfer request
                     BankingServices.requestTransfer(senderAccountId, receiverAccountId, transferAmount);
-                    MessageBox.Show("Your transfer request has been sent to the teller for review.");
+                    ShowMessageBox("Your transfer request has been sent to the teller for review.");
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message);
+                    ShowMessageBox(ex.Message);
                 }
             }
         }
-        public static void InitializeAccountInformation(string email) 
+        // Retrieves and displays the account information and transaction history of the user.
+        public static void InitializeAccountInformation(string email)
         {
+            // Retrieve the account ID, customer's first name, account balance, and transaction history
             string accountId = BankingServices.retrieveAccountId(email);
-            // Load the customer's information.
             string customerFirstName = BankingServices.retrieveCustomerFirstName(email);
             double accountBalance = BankingServices.retrieveAccountBalance(email);
             List<Transaction> transactionHistory = BankingServices.retrieveAccountTransactionHistory(accountId);
-            // Set the customer information to the TextBox.
+            // Set the account balance and greet the user with their first name
             balanceLabel.Text = "₱ " + accountBalance;
-            // Greet the user with their first name
             greetUserLabel.Text = "Welcome, " + customerFirstName;
             // Load transaction history into ListView
             foreach (Transaction transaction in transactionHistory)
             {
+                // Create a new ListViewItem for each transaction
                 ListViewItem item = new ListViewItem(transaction.TransactionId);
                 item.SubItems.Add(transaction.Amount.ToString("F2"));
                 item.SubItems.Add(transaction.Date.ToString("yyyy-MM-dd"));
                 item.SubItems.Add(transaction.TransactionType);
+                // Add the ListViewItem to the ListView
                 transactionHistoryView.Items.Add(item);
             }
+        }
+        // Displays a message box with the specified message.
+        private void ShowMessageBox(string message)
+        {
+            MessageBox.Show(message);
         }
     }
 }

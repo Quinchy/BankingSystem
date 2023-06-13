@@ -23,6 +23,7 @@ namespace BankingSystem.Forms.TellerDashBoard
             transactionScreenButton = new RoundedButton();
             logoutButton = new RoundedButton();
             label1 = new Label();
+            informationUpdateButton = new RoundedButton();
             SuspendLayout();
             // 
             // line1
@@ -141,12 +142,37 @@ namespace BankingSystem.Forms.TellerDashBoard
             label1.TabIndex = 8;
             label1.Text = "Administrator";
             // 
+            // informationUpdateButton
+            // 
+            informationUpdateButton.BorderColor = Color.Transparent;
+            informationUpdateButton.ButtonColor = Color.FromArgb(48, 46, 65);
+            informationUpdateButton.CornerRadius = 5;
+            informationUpdateButton.Cursor = Cursors.Hand;
+            informationUpdateButton.FlatAppearance.BorderSize = 0;
+            informationUpdateButton.FlatAppearance.MouseDownBackColor = Color.FromArgb(48, 46, 65);
+            informationUpdateButton.FlatAppearance.MouseOverBackColor = Color.FromArgb(48, 46, 65);
+            informationUpdateButton.FlatStyle = FlatStyle.Flat;
+            informationUpdateButton.Font = new Font("Century Gothic", 14.25F, FontStyle.Bold, GraphicsUnit.Point);
+            informationUpdateButton.ForeColor = Color.FromArgb(48, 48, 51);
+            informationUpdateButton.Location = new Point(12, 221);
+            informationUpdateButton.Name = "informationUpdateButton";
+            informationUpdateButton.OnHoverBorderColor = Color.Transparent;
+            informationUpdateButton.OnHoverButtonColor = Color.FromArgb(65, 64, 89);
+            informationUpdateButton.OnHoverTextColor = Color.WhiteSmoke;
+            informationUpdateButton.Size = new Size(215, 40);
+            informationUpdateButton.TabIndex = 9;
+            informationUpdateButton.Text = "INFORMATIONS";
+            informationUpdateButton.TextColor = Color.WhiteSmoke;
+            informationUpdateButton.UseVisualStyleBackColor = false;
+            informationUpdateButton.Click += informationUpdateButton_Click;
+            // 
             // DashboardForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(48, 46, 65);
             ClientSize = new Size(1280, 720);
+            Controls.Add(informationUpdateButton);
             Controls.Add(label1);
             Controls.Add(logoutButton);
             Controls.Add(transactionScreenButton);
@@ -169,6 +195,7 @@ namespace BankingSystem.Forms.TellerDashBoard
         private RoundedButton transactionScreenButton;
         private RoundedButton logoutButton;
         private Label label1;
+        private RoundedButton informationUpdateButton;
         public static Panel dashboardPanel;
     }
 }

@@ -48,6 +48,7 @@ namespace BankingSystem.Forms
             // Call the RegisterUser function to put the Customer into the database.
             RegistrationServices.registerUser(newCustomer);
             // Change the screen to Login.
+            loginForm = new LoginForm();
             Helpers.changeScreen(baseFormPanel, loginForm);
         }
         // Handles the CheckedChanged event of the showPasswordCheckbox.
@@ -61,8 +62,7 @@ namespace BankingSystem.Forms
         // Handles the Click event of the back button.
         // Changes the screen to the login form.
         private void backButton_Click(object sender, EventArgs e)
-        {
-            // Change the screen to Login.
+        {       
             Helpers.changeScreen(baseFormPanel, loginForm);
         }
         // Displays a message box with the specified message, title, buttons, and icon.

@@ -1,4 +1,5 @@
-﻿using BankingSystem.Utils;
+﻿using BankingSystem.Services.CustomerServices;
+using BankingSystem.Utils;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -21,7 +22,34 @@ namespace BankingSystem.Forms
         }
         private void resetButton_Click(object sender, EventArgs e)
         {
+            string email = emailTextBox.Text;
+            string newPassword = passwordTextBox.Text;
+            string confirmPassword = confirmPasswordTextBox.Text;
 
+            // Check if all fields are filled up
+            if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(newPassword) || string.IsNullOrEmpty(confirmPassword))
+            {
+                MessageBox.Show("Please fill up all fields.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            // Check if passwordTextBox and confirmPasswordTextBox are matching
+            if (newPassword != confirmPassword)
+            {
+                MessageBox.Show("Passwords do not match. Please try again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            try
+            {
+                // Request a password reset
+                ForgetPasswordServices.requestResetPassword(email, newPassword);
+                // Alert the user that their request has been sent
+                MessageBox.Show("Your password reset request has been sent.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                // Alert the user about the error
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
         // Handles the Click event of the back button.
         // Changes the screen to the login form.

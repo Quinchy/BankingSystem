@@ -18,10 +18,10 @@ namespace BankingSystem.Forms
     public partial class LoginForm : Form
     {
         Control baseFormPanel = BaseForm.GetContentPanel();
-        static CustomerDashBoard.DashboardForm customerDashboardForm;
-        static TellerDashBoard.DashboardForm tellerDashboardForm = new TellerDashBoard.DashboardForm();
-        static RegistrationForm registrationForm = new RegistrationForm();
-        static ForgetPasswordForm forgetPasswordForm = new ForgetPasswordForm();
+        CustomerDashBoard.DashboardForm customerDashboardForm;
+        TellerDashBoard.DashboardForm tellerDashboardForm;
+        RegistrationForm registrationForm;
+        ForgetPasswordForm forgetPasswordForm;
         public LoginForm()
         {
             InitializeComponent();
@@ -42,6 +42,7 @@ namespace BankingSystem.Forms
             // Check if the user is an admin (teller)
             if (email == "admin" && password == "admin")
             {
+                tellerDashboardForm = new TellerDashBoard.DashboardForm();
                 // Change the screen to Teller Dashboard
                 Helpers.changeScreen(baseFormPanel, tellerDashboardForm);
                 return;
@@ -80,7 +81,11 @@ namespace BankingSystem.Forms
         // Handles the LinkClicked event of the createAccountLinkLabel.
         // Changes the screen to the registration form.
         private void createAccountLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
+        {            
+            if(registrationForm == null) 
+            {            
+                registrationForm = new RegistrationForm();
+            }
             // Change the screen to Registration.
             Helpers.changeScreen(baseFormPanel, registrationForm);
         }
@@ -94,6 +99,7 @@ namespace BankingSystem.Forms
         // Changes the screen to the forget password form.
         private void forgetPasswordLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
+            forgetPasswordForm = new ForgetPasswordForm();
             // Change the screen to Forget Password Form.
             Helpers.changeScreen(baseFormPanel, forgetPasswordForm);
         }

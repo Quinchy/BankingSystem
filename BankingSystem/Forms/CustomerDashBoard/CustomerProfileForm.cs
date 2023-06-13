@@ -51,7 +51,7 @@ namespace BankingSystem.Forms.CustomerDashBoard
         {
             if (customerUpdateForm == null)
             {
-                customerUpdateForm = new CustomerUpdateForm(email);
+                customerUpdateForm = new CustomerUpdateForm(accountIDTextBox.Text, email);
             }
             Helpers.changeScreen(dashboardPanel, customerUpdateForm);
         }

@@ -16,6 +16,15 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Forms\CustomerDashBoard\CustomerUpdate\CustomerPhoneNumberForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\CustomerDashBoard\CustomerUpdate\CustomerPassword.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\TellerDashBoard\UpdateRequestsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="Forms\TellerDashBoard\TransactionProcessingForm.cs">
       <SubType>Form</SubType>
     </Compile>

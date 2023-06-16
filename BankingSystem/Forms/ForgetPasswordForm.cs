@@ -15,7 +15,6 @@ namespace BankingSystem.Forms
     public partial class ForgetPasswordForm : Form
     {
         Control baseFormPanel = BaseForm.GetContentPanel();
-        LoginForm loginForm = new LoginForm();
         public ForgetPasswordForm()
         {
             InitializeComponent();
@@ -56,6 +55,7 @@ namespace BankingSystem.Forms
         private void backButton_Click(object sender, EventArgs e)
         {
             // Change the screen to Login.
+            var loginForm = new LoginForm();
             Helpers.changeScreen(baseFormPanel, loginForm);
         }
         // Handles the CheckedChanged event of the showPasswordCheckbox.

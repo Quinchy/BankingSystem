@@ -15,42 +15,36 @@ namespace BankingSystem.Forms.CustomerDashBoard
     {
         private string email;
         Control baseFormPanel = BaseForm.GetContentPanel();
-        LoginForm loginForm = new LoginForm();
-        HomeScreenForm homeScreenForm;
-        CustomerProfileForm customerProfileForm;
         public DashboardForm(string email)
         {
             this.email = email;
             InitializeComponent();
             InitializeHomeScreen(email);
-            if (homeScreenForm == null || customerProfileForm == null)
-            {
-                homeScreenForm = new HomeScreenForm(email);
-                customerProfileForm = new CustomerProfileForm(email);
-            }
         }
         // Changes the current form displayed in the dashboard panel.
         private static void ChangeDashboardForm(Form newForm)
         {
-            // Clear any existing controls in the dashboard panel
+            foreach (Control control in dashboardPanel.Controls)
+            {
+                if (control is Form form)
+                {
+                    form.Dispose(); // Dispose the form
+                }
+            }
             dashboardPanel.Controls.Clear();
-            // Set the new form to be a child form, remove the border, and fill the panel
             newForm.TopLevel = false;
             newForm.FormBorderStyle = FormBorderStyle.None;
             newForm.Dock = DockStyle.Fill;
-            // Add the new form to the dashboard panel and display it
             dashboardPanel.Controls.Add(newForm);
             newForm.Show();
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
         }
         // Handles the Click event of the home screen button.
         // Changes the form displayed in the dashboard panel to the home screen form.
         private void homeScreenButton_Click(object sender, EventArgs e)
         {           
-            if (homeScreenForm == null)
-            {
-                homeScreenForm = new HomeScreenForm(email);
-            }
-            // Change the displayed form to the home screen form
+            var   homeScreenForm = new HomeScreenForm(email);
             ChangeDashboardForm(homeScreenForm);
             // Change the button colors to indicate the active screen
             homeScreenButton.ButtonColor = Color.FromArgb(92, 184, 92);
@@ -62,12 +56,7 @@ namespace BankingSystem.Forms.CustomerDashBoard
         // Changes the form displayed in the dashboard panel to the customer profile form.
         private void accountButton_Click(object sender, EventArgs e)
         {
-            // If the customer profile form has not been created yet, create it
-            if (customerProfileForm == null)
-            {
-                customerProfileForm = new CustomerProfileForm(email);
-            }
-            // Change the displayed form to the customer profile form
+            var  customerProfileForm = new CustomerProfileForm(email);
             ChangeDashboardForm(customerProfileForm);
             // Change the button colors to indicate the active screen
             accountButton.ButtonColor = Color.FromArgb(92, 184, 92);
@@ -78,18 +67,15 @@ namespace BankingSystem.Forms.CustomerDashBoard
         // Handles the Click event of the logout button.
         // Changes the screen to the login form.
         private void logoutButton_Click(object sender, EventArgs e)
-        {     
+        {
+            var loginForm = new LoginForm();
             Helpers.changeScreen(baseFormPanel, loginForm);
         }
         // Initializes the home screen with the given email.
+        // Change the displayed form to the home screen form
         public void InitializeHomeScreen(string email)
         {
-            // If the home screen form has not been created yet, create it
-            if (homeScreenForm == null)
-            {
-                homeScreenForm = new HomeScreenForm(email);
-            }
-            // Change the displayed form to the home screen form
+            var homeScreenForm = new HomeScreenForm(email);
             ChangeDashboardForm(homeScreenForm);
         }
     }

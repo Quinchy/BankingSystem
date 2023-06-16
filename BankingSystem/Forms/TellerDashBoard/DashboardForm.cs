@@ -16,37 +16,35 @@ namespace BankingSystem.Forms.TellerDashBoard
     public partial class DashboardForm : Form
     {
         Control baseFormPanel = BaseForm.GetContentPanel();
-        LoginForm loginForm;
-        AccountManagementForm accountManagementForm;
-        TransactionProcessingForm transactionProcessingForm;
-        UpdateRequestForm updateRequestForm;
         public DashboardForm()
         {
-            InitializeComponent();
-            accountManagementForm = new AccountManagementForm();
-            InitializeAccountManagementForm();
-            loginForm = new LoginForm();
-            transactionProcessingForm = new TransactionProcessingForm();
-            updateRequestForm = new UpdateRequestForm();
+            InitializeComponent();        
+            InitializeAccountManagementForm();                        
         }
         // Changes the current form displayed in the dashboard panel.
         private static void ChangeDashboardForm(Form newForm)
         {
-            // Clear any existing controls in the dashboard panel
+            foreach (Control control in dashboardPanel.Controls)
+            {
+                if (control is Form form)
+                {
+                    form.Dispose(); // Dispose the form
+                }
+            }
             dashboardPanel.Controls.Clear();
-            // Set the new form to be a child form, remove the border, and fill the panel
             newForm.TopLevel = false;
             newForm.FormBorderStyle = FormBorderStyle.None;
             newForm.Dock = DockStyle.Fill;
-            // Add the new form to the dashboard panel and display it
             dashboardPanel.Controls.Add(newForm);
             newForm.Show();
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
         }
         // Handles the Click event of the account management button.
-        // Changes the form displayed in the dashboard panel to the account management form.
         private void accountScreenButton_Click(object sender, EventArgs e)
         {
             // Change the displayed form to the account management form.
+            var accountManagementForm = new AccountManagementForm();
             ChangeDashboardForm(accountManagementForm);
             // Change the button colors to indicate the active screen
             accountScreenButton.ButtonColor = Color.FromArgb(92, 184, 92);
@@ -57,10 +55,10 @@ namespace BankingSystem.Forms.TellerDashBoard
             informationUpdateButton.OnHoverButtonColor = Color.FromArgb(65, 64, 89);
         }
         // Handles the Click event of the transaction processing button.
-        // Changes the form displayed in the dashboard panel to the transaction processing form.
         private void transactionScreenButton_Click(object sender, EventArgs e)
         {
-            // Change the displayed form to thetransaction processing form.
+            // Change the displayed form to the transaction processing form.
+            var transactionProcessingForm = new TransactionProcessingForm();
             ChangeDashboardForm(transactionProcessingForm);
             // Change the button colors to indicate the active screen
             transactionScreenButton.ButtonColor = Color.FromArgb(92, 184, 92);
@@ -70,22 +68,11 @@ namespace BankingSystem.Forms.TellerDashBoard
             informationUpdateButton.ButtonColor = Color.FromArgb(48, 46, 65);
             informationUpdateButton.OnHoverButtonColor = Color.FromArgb(65, 64, 89);
         }
-        // Handles the Click event of the logout button.
-        // Changes the screen to the login form.
-        private void logoutButton_Click(object sender, EventArgs e)
-        {
-            Helpers.changeScreen(baseFormPanel, loginForm);
-        }
-        // Initializes the account management form.
-        public void InitializeAccountManagementForm()
-        {
-            // Change the displayed form to the home screen form
-            ChangeDashboardForm(accountManagementForm);
-        }
-
+        // Handles the Click event of the information update button.
         private void informationUpdateButton_Click(object sender, EventArgs e)
         {
             // Change the displayed form to the update requests form
+            var updateRequestForm = new UpdateRequestForm();
             ChangeDashboardForm(updateRequestForm);
             // Change the button colors to indicate the active screen
             informationUpdateButton.ButtonColor = Color.FromArgb(92, 184, 92);
@@ -94,6 +81,20 @@ namespace BankingSystem.Forms.TellerDashBoard
             accountScreenButton.OnHoverButtonColor = Color.FromArgb(65, 64, 89);
             transactionScreenButton.ButtonColor = Color.FromArgb(48, 46, 65);
             transactionScreenButton.OnHoverButtonColor = Color.FromArgb(65, 64, 89);
+        }
+        // Handles the Click event of the logout button.
+        private void logoutButton_Click(object sender, EventArgs e)
+        {
+            // Change the displayed form to the login form.
+            var loginForm = new LoginForm();
+            Helpers.changeScreen(baseFormPanel, loginForm);
+        }
+        // Initializes the account management form.
+        public void InitializeAccountManagementForm()
+        {
+            // Change the displayed form to the home screen form
+            var accountManagementForm = new AccountManagementForm();
+            ChangeDashboardForm(accountManagementForm);
         }
     }
 }

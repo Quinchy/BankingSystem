@@ -18,10 +18,6 @@ namespace BankingSystem.Forms
     public partial class LoginForm : Form
     {
         Control baseFormPanel = BaseForm.GetContentPanel();
-        CustomerDashBoard.DashboardForm customerDashboardForm;
-        TellerDashBoard.DashboardForm tellerDashboardForm;
-        RegistrationForm registrationForm;
-        ForgetPasswordForm forgetPasswordForm;
         public LoginForm()
         {
             InitializeComponent();
@@ -42,8 +38,7 @@ namespace BankingSystem.Forms
             // Check if the user is an admin (teller)
             if (email == "admin" && password == "admin")
             {
-                tellerDashboardForm = new TellerDashBoard.DashboardForm();
-                // Change the screen to Teller Dashboard
+                var tellerDashboardForm = new TellerDashBoard.DashboardForm();
                 Helpers.changeScreen(baseFormPanel, tellerDashboardForm);
                 return;
             }
@@ -53,7 +48,7 @@ namespace BankingSystem.Forms
             {
                 case 1:
                     // If both email and password are correct then Change the screen to Dashboard.
-                    customerDashboardForm = new CustomerDashBoard.DashboardForm(email);                  
+                    var customerDashboardForm = new CustomerDashBoard.DashboardForm(email);                  
                     Helpers.changeScreen(baseFormPanel, customerDashboardForm);
                     break;
                 case -2:
@@ -81,12 +76,8 @@ namespace BankingSystem.Forms
         // Handles the LinkClicked event of the createAccountLinkLabel.
         // Changes the screen to the registration form.
         private void createAccountLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {            
-            if(registrationForm == null) 
-            {            
-                registrationForm = new RegistrationForm();
-            }
-            // Change the screen to Registration.
+        {
+            var registrationForm = new RegistrationForm();
             Helpers.changeScreen(baseFormPanel, registrationForm);
         }
         // Handles the CheckedChanged event of the showPasswordCheckbox.
@@ -99,8 +90,7 @@ namespace BankingSystem.Forms
         // Changes the screen to the forget password form.
         private void forgetPasswordLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            forgetPasswordForm = new ForgetPasswordForm();
-            // Change the screen to Forget Password Form.
+            var forgetPasswordForm = new ForgetPasswordForm();
             Helpers.changeScreen(baseFormPanel, forgetPasswordForm);
         }
         // Displays a message box with the specified message, title, buttons, and icon.

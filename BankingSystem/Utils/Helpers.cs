@@ -16,17 +16,21 @@ namespace BankingSystem.Utils
         // It clear and add the new specified Form to that panel.
         public static void changeScreen(Control baseFormPanel, Form newForm)
         {
-            if (baseFormPanel == null)
-                throw new ArgumentNullException(nameof(baseFormPanel));
-
-            if (newForm == null)
-                throw new ArgumentNullException(nameof(newForm));
+            foreach (Control control in baseFormPanel.Controls)
+            {
+                if (control is Form form)
+                {
+                    form.Dispose(); // Dispose the form
+                }
+            }
             baseFormPanel.Controls.Clear();
             newForm.TopLevel = false;
             newForm.FormBorderStyle = FormBorderStyle.None;
             newForm.Dock = DockStyle.Fill;
             baseFormPanel.Controls.Add(newForm);
             newForm.Show();
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
         }
     }
 }

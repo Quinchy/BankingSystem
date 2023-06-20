@@ -23,6 +23,12 @@ namespace BankingSystem.Forms
         // Handles the click event of the submit button on the registration form.
         private void submitButton_Click(object sender, EventArgs e)
         {
+            // Check if the password is at least 8 characters long
+            if (passwordTextBox.Text.Length < 8)
+            {
+                ShowMessageBox("The password is too short. It must be at least 8 characters long.", "Password Too Short", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
             // Check if the password and confirmation password match
             if (!RegistrationServices.IsPasswordMatch(passwordTextBox.Text, confirmPasswordTextBox.Text))
             {

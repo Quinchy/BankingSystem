@@ -15,7 +15,7 @@ namespace BankingSystem.Forms.CustomerDashBoard.TransactionReceipt
 {
     public partial class TransactionCard : UserControl
     {
-        public string TransactionId { get; set; } // Add this property
+        public string TransactionId { get; set; }
         public TransactionCard()
         {
             InitializeComponent();

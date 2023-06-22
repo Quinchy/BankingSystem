@@ -43,24 +43,42 @@ namespace BankingSystem.Forms.CustomerDashBoard
         // Handles the Click event of the home screen button.
         // Changes the form displayed in the dashboard panel to the home screen form.
         private void homeScreenButton_Click(object sender, EventArgs e)
-        {           
-            var   homeScreenForm = new HomeScreenForm(email);
+        {
+            var homeScreenForm = new HomeScreenForm(email);
             ChangeDashboardForm(homeScreenForm);
             // Change the button colors to indicate the active screen
             homeScreenButton.ButtonColor = Color.FromArgb(92, 184, 92);
             homeScreenButton.OnHoverButtonColor = Color.FromArgb(124, 205, 124);
             accountButton.ButtonColor = Color.FromArgb(48, 46, 65);
             accountButton.OnHoverButtonColor = Color.FromArgb(65, 64, 89);
+            historyButton.ButtonColor = Color.FromArgb(48, 46, 65);
+            historyButton.OnHoverButtonColor = Color.FromArgb(65, 64, 89);
         }
         // Handles the Click event of the account button.
         // Changes the form displayed in the dashboard panel to the customer profile form.
         private void accountButton_Click(object sender, EventArgs e)
         {
-            var  customerProfileForm = new CustomerProfileForm(email);
+            var customerProfileForm = new CustomerProfileForm(email);
             ChangeDashboardForm(customerProfileForm);
             // Change the button colors to indicate the active screen
             accountButton.ButtonColor = Color.FromArgb(92, 184, 92);
             accountButton.OnHoverButtonColor = Color.FromArgb(124, 205, 124);
+            homeScreenButton.ButtonColor = Color.FromArgb(48, 46, 65);
+            homeScreenButton.OnHoverButtonColor = Color.FromArgb(65, 64, 89);
+            historyButton.ButtonColor = Color.FromArgb(48, 46, 65);
+            historyButton.OnHoverButtonColor = Color.FromArgb(65, 64, 89);
+        }
+        // Handles the Click event of the history button.
+        // Changes the form displayed in the dashboard panel to the transaction history form.
+        private void historyButton_Click(object sender, EventArgs e)
+        {
+            var transactionHistoryForm = new TransactionHistoryForm(email);
+            ChangeDashboardForm(transactionHistoryForm);
+            // Change the button colors to indicate the active screen
+            historyButton.ButtonColor = Color.FromArgb(92, 184, 92);
+            historyButton.OnHoverButtonColor = Color.FromArgb(124, 205, 124);
+            accountButton.ButtonColor = Color.FromArgb(48, 46, 65);
+            accountButton.OnHoverButtonColor = Color.FromArgb(65, 64, 89);
             homeScreenButton.ButtonColor = Color.FromArgb(48, 46, 65);
             homeScreenButton.OnHoverButtonColor = Color.FromArgb(65, 64, 89);
         }
@@ -78,5 +96,6 @@ namespace BankingSystem.Forms.CustomerDashBoard
             var homeScreenForm = new HomeScreenForm(email);
             ChangeDashboardForm(homeScreenForm);
         }
+
     }
 }

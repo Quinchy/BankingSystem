@@ -154,21 +154,9 @@ namespace BankingSystem.Forms.CustomerDashBoard
             string accountId = BankingServices.retrieveAccountId(email);
             string customerFirstName = BankingServices.retrieveCustomerFirstName(email);
             double accountBalance = BankingServices.retrieveAccountBalance(email);
-            List<Transaction> transactionHistory = BankingServices.retrieveAccountTransactionHistory(accountId);
             // Set the account balance and greet the user with their first name
             balanceLabel.Text = "₱ " + accountBalance;
             greetUserLabel.Text = "Welcome, " + customerFirstName;
-            // Load transaction history into ListView
-            foreach (Transaction transaction in transactionHistory)
-            {
-                // Create a new ListViewItem for each transaction
-                ListViewItem item = new ListViewItem(transaction.TransactionId);
-                item.SubItems.Add(transaction.Amount.ToString("F2"));
-                item.SubItems.Add(transaction.Date.ToString("yyyy-MM-dd"));
-                item.SubItems.Add(transaction.TransactionType);
-                // Add the ListViewItem to the ListView
-                transactionHistoryView.Items.Add(item);
-            }
         }
         // Displays a message box with the specified message.
         private void ShowMessageBox(string message)

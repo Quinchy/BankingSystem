@@ -20,13 +20,7 @@
             line5 = new Panel();
             line6 = new Panel();
             homeScreenPanel = new Panel();
-            transactionHistoryView = new ListView();
-            transactionIDHeader = new ColumnHeader();
-            amountHeader = new ColumnHeader();
-            dateHeader = new ColumnHeader();
-            transactionTypeHeader = new ColumnHeader();
             greetUserLabel = new Label();
-            transactionHistoryLabel = new Label();
             balanceCardPanel = new Utils.Components.RoundedPanel();
             cardPicture = new PictureBox();
             balanceLabel = new Label();
@@ -55,7 +49,6 @@
             amountTransactionNumeric = new NumericUpDown();
             withdrawButton = new Utils.Components.RoundedButton();
             depositButton = new Utils.Components.RoundedButton();
-            roundedPanel1 = new Utils.Components.RoundedPanel();
             homeScreenPanel.SuspendLayout();
             balanceCardPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)cardPicture).BeginInit();
@@ -120,61 +113,15 @@
             // 
             // homeScreenPanel
             // 
-            homeScreenPanel.AutoScroll = true;
-            homeScreenPanel.AutoScrollMinSize = new Size(0, 1100);
             homeScreenPanel.BackColor = Color.FromArgb(34, 33, 46);
-            homeScreenPanel.Controls.Add(transactionHistoryView);
             homeScreenPanel.Controls.Add(greetUserLabel);
-            homeScreenPanel.Controls.Add(transactionHistoryLabel);
             homeScreenPanel.Controls.Add(balanceCardPanel);
             homeScreenPanel.Controls.Add(transferCardPanel);
             homeScreenPanel.Controls.Add(transactionCardPanel);
-            homeScreenPanel.Controls.Add(roundedPanel1);
-            homeScreenPanel.Location = new Point(0, -1);
+            homeScreenPanel.Location = new Point(0, 0);
             homeScreenPanel.Name = "homeScreenPanel";
-            homeScreenPanel.Size = new Size(1040, 723);
+            homeScreenPanel.Size = new Size(1039, 723);
             homeScreenPanel.TabIndex = 30;
-            // 
-            // transactionHistoryView
-            // 
-            transactionHistoryView.BackColor = Color.White;
-            transactionHistoryView.BorderStyle = BorderStyle.None;
-            transactionHistoryView.Columns.AddRange(new ColumnHeader[] { transactionIDHeader, amountHeader, dateHeader, transactionTypeHeader });
-            transactionHistoryView.Font = new Font("Century Gothic", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            transactionHistoryView.ForeColor = Color.Black;
-            transactionHistoryView.HeaderStyle = ColumnHeaderStyle.Nonclickable;
-            transactionHistoryView.Location = new Point(74, 758);
-            transactionHistoryView.MultiSelect = false;
-            transactionHistoryView.Name = "transactionHistoryView";
-            transactionHistoryView.Scrollable = false;
-            transactionHistoryView.Size = new Size(874, 248);
-            transactionHistoryView.TabIndex = 31;
-            transactionHistoryView.UseCompatibleStateImageBehavior = false;
-            transactionHistoryView.View = View.Details;
-            // 
-            // transactionIDHeader
-            // 
-            transactionIDHeader.Text = "Transaction ID";
-            transactionIDHeader.TextAlign = HorizontalAlignment.Center;
-            transactionIDHeader.Width = 200;
-            // 
-            // amountHeader
-            // 
-            amountHeader.Text = "Amount";
-            amountHeader.TextAlign = HorizontalAlignment.Center;
-            amountHeader.Width = 200;
-            // 
-            // dateHeader
-            // 
-            dateHeader.Text = "Date of Transaction";
-            dateHeader.TextAlign = HorizontalAlignment.Center;
-            dateHeader.Width = 250;
-            // 
-            // transactionTypeHeader
-            // 
-            transactionTypeHeader.Text = "Transaction Type";
-            transactionTypeHeader.TextAlign = HorizontalAlignment.Center;
-            transactionTypeHeader.Width = 251;
             // 
             // greetUserLabel
             // 
@@ -186,17 +133,6 @@
             greetUserLabel.Size = new Size(288, 44);
             greetUserLabel.TabIndex = 26;
             greetUserLabel.Text = "Welcome, User";
-            // 
-            // transactionHistoryLabel
-            // 
-            transactionHistoryLabel.AutoSize = true;
-            transactionHistoryLabel.Font = new Font("Century Gothic", 27.75F, FontStyle.Bold, GraphicsUnit.Point);
-            transactionHistoryLabel.ForeColor = Color.White;
-            transactionHistoryLabel.Location = new Point(61, 671);
-            transactionHistoryLabel.Name = "transactionHistoryLabel";
-            transactionHistoryLabel.Size = new Size(351, 44);
-            transactionHistoryLabel.TabIndex = 29;
-            transactionHistoryLabel.Text = "Transaction History";
             // 
             // balanceCardPanel
             // 
@@ -586,23 +522,12 @@
             depositButton.UseVisualStyleBackColor = false;
             depositButton.Click += depositButton_Click;
             // 
-            // roundedPanel1
-            // 
-            roundedPanel1.BackColor = Color.Transparent;
-            roundedPanel1.BorderColor = Color.White;
-            roundedPanel1.CornerRadius = 10;
-            roundedPanel1.ForeColor = Color.Transparent;
-            roundedPanel1.Location = new Point(61, 745);
-            roundedPanel1.Name = "roundedPanel1";
-            roundedPanel1.Size = new Size(901, 277);
-            roundedPanel1.TabIndex = 40;
-            // 
             // HomeScreenForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.WhiteSmoke;
-            ClientSize = new Size(1039, 1000);
+            ClientSize = new Size(1039, 723);
             Controls.Add(homeScreenPanel);
             FormBorderStyle = FormBorderStyle.None;
             MinimumSize = new Size(1039, 723);
@@ -645,16 +570,13 @@
         private Utils.Components.RoundedPanel amountTransferPanel;
         private Utils.Components.RoundedPanel yourIDPanel;
         private Utils.Components.RoundedPanel receiverIDPanel;
-        private static Label greetUserLabel;
         private Label availableBalanceLabel;
-        private static Label balanceLabel;
         private Label yourIDLabel;
         private Label receiverIDLabel;
         private Label amountTransactionLabel;
         private Label amountTransferLabel;
         private Label transactionLabel;
         private Label transferLabel;
-        private Label transactionHistoryLabel;
         private TextBox yourIDTextBox;
         private TextBox receiverIDTextBox;
         private NumericUpDown amountTransactionNumeric;
@@ -662,16 +584,12 @@
         private Utils.Components.RoundedButton depositButton;
         private Utils.Components.RoundedButton withdrawButton;
         private Utils.Components.RoundedButton confirmButton;
-        private static ListView transactionHistoryView;
-        private ColumnHeader transactionIDHeader;
-        private ColumnHeader amountHeader;
-        private ColumnHeader dateHeader;
-        private ColumnHeader transactionTypeHeader;
         private PictureBox cardPicture;
         private Label yourIDTransactionLabel;
         private Utils.Components.RoundedPanel yourIDTransactionPanel;
         private TextBox yourIDTransactionTextBox;
         private Panel panel1;
-        private Utils.Components.RoundedPanel roundedPanel1;
+        private static Label greetUserLabel;
+        private static Label balanceLabel;
     }
 }

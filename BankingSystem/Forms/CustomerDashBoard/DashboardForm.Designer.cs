@@ -20,6 +20,7 @@
             homeScreenButton = new Utils.Components.RoundedButton();
             accountButton = new Utils.Components.RoundedButton();
             logoutButton = new Utils.Components.RoundedButton();
+            historyButton = new Utils.Components.RoundedButton();
             SuspendLayout();
             // 
             // line1
@@ -127,12 +128,37 @@
             logoutButton.UseVisualStyleBackColor = false;
             logoutButton.Click += logoutButton_Click;
             // 
+            // historyButton
+            // 
+            historyButton.BorderColor = Color.Transparent;
+            historyButton.ButtonColor = Color.FromArgb(48, 46, 65);
+            historyButton.CornerRadius = 5;
+            historyButton.Cursor = Cursors.Hand;
+            historyButton.FlatAppearance.BorderSize = 0;
+            historyButton.FlatAppearance.MouseDownBackColor = Color.FromArgb(48, 46, 65);
+            historyButton.FlatAppearance.MouseOverBackColor = Color.FromArgb(48, 46, 65);
+            historyButton.FlatStyle = FlatStyle.Flat;
+            historyButton.Font = new Font("Century Gothic", 14.25F, FontStyle.Bold, GraphicsUnit.Point);
+            historyButton.ForeColor = Color.FromArgb(48, 48, 51);
+            historyButton.Location = new Point(12, 219);
+            historyButton.Name = "historyButton";
+            historyButton.OnHoverBorderColor = Color.Transparent;
+            historyButton.OnHoverButtonColor = Color.FromArgb(65, 64, 89);
+            historyButton.OnHoverTextColor = Color.WhiteSmoke;
+            historyButton.Size = new Size(215, 40);
+            historyButton.TabIndex = 8;
+            historyButton.Text = "HISTORY";
+            historyButton.TextColor = Color.WhiteSmoke;
+            historyButton.UseVisualStyleBackColor = false;
+            historyButton.Click += historyButton_Click;
+            // 
             // DashboardForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(48, 46, 65);
             ClientSize = new Size(1280, 720);
+            Controls.Add(historyButton);
             Controls.Add(logoutButton);
             Controls.Add(accountButton);
             Controls.Add(line2);
@@ -155,6 +181,7 @@
         private Utils.Components.RoundedButton homeScreenButton;
         private Utils.Components.RoundedButton accountButton;
         private Utils.Components.RoundedButton logoutButton;
+        private Utils.Components.RoundedButton historyButton;
         public static Panel dashboardPanel;
     }
 }

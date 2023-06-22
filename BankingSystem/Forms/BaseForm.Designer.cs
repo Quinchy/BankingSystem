@@ -57,6 +57,7 @@
             Name = "BaseForm";
             Text = "OnlyFunds";
             mainPanel.ResumeLayout(false);
+            this.StartPosition = FormStartPosition.CenterScreen;
             ResumeLayout(false);
         }
 

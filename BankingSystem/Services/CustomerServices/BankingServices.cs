@@ -97,39 +97,6 @@ namespace BankingSystem.Services.CustomerServices
             }
             return accountId;
         }
-        // Retrieves the transaction history of an account using the account ID.
-        public static List<Transaction> retrieveAccountTransactionHistory(string accountId)
-        {
-            List<Transaction> transactions = new List<Transaction>();
-            using (MySqlConnection conn = MySQLDatabase.OpenConnection())
-            {
-                if (conn == null)
-                {
-                    Console.WriteLine("Unable to open MySQL connection.");
-                    return null;
-                }
-                // If account id is not null or empty, prepare the SQL command to fetch the transaction history
-                if (!string.IsNullOrEmpty(accountId))
-                {
-                    MySqlCommand transactionCommand = new MySqlCommand("SELECT transaction_id, amount, DATE_FORMAT(date, '%Y-%m-%d') AS date, transaction_type FROM (SELECT * FROM transaction_history WHERE account_id = @AccountId ORDER BY date DESC LIMIT 10) sub ORDER BY date DESC", conn);
-                    transactionCommand.Parameters.AddWithValue("@AccountId", accountId);
-                    using (MySqlDataReader transactionReader = transactionCommand.ExecuteReader())
-                    {
-                        // For each record, create a new Transaction object and add it to the transactions list
-                        while (transactionReader.Read())
-                        {
-                            string transactionId = transactionReader["transaction_id"].ToString();
-                            double amount = Convert.ToDouble(transactionReader["amount"]);
-                            DateTime date = DateTime.Parse(transactionReader["date"].ToString());
-                            string transactionType = transactionReader["transaction_type"].ToString();
-                            Transaction transaction = new Transaction(transactionId, amount, date, transactionType);
-                            transactions.Add(transaction);
-                        }
-                    }
-                }
-            }
-            return transactions;
-        }
         // Check if the account id they provided is theirs.
         public static bool isTheirAccount(string email, string accountId)
         {

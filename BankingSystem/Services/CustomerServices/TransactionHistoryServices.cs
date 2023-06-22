@@ -77,16 +77,14 @@ namespace BankingSystem.Services.CustomerServices
             {
                 // SQL query to get the customer ID and account ID for a transaction
                 string sqlFetch = @"
-            SELECT a.account_id, a.customer_id
-            FROM account a
-            JOIN transaction_history th ON a.account_id = th.account_id
-            WHERE th.transaction_id = @TransactionId";
+                    SELECT a.account_id, a.customer_id
+                    FROM account a
+                    JOIN transaction_history th ON a.account_id = th.account_id
+                    WHERE th.transaction_id = @TransactionId";
                 MySqlCommand commandFetch = new MySqlCommand(sqlFetch, connection);
                 commandFetch.Parameters.AddWithValue("@TransactionId", transaction.TransactionId);
-
                 string accountId = null;
                 string customerId = null;
-
                 // Execute the command and process the results
                 using (MySqlDataReader reader = commandFetch.ExecuteReader())
                 {
@@ -96,25 +94,22 @@ namespace BankingSystem.Services.CustomerServices
                         customerId = reader.GetString("customer_id");
                     }
                 }
-
                 if (accountId != null && customerId != null)
                 {
                     // Check if receipt already exists
                     string sqlCheck = @"
-                SELECT COUNT(*)
-                FROM transaction_receipt
-                WHERE transaction_id = @TransactionId";
+                        SELECT COUNT(*)
+                        FROM transaction_receipt
+                        WHERE transaction_id = @TransactionId";
                     MySqlCommand commandCheck = new MySqlCommand(sqlCheck, connection);
                     commandCheck.Parameters.AddWithValue("@TransactionId", transaction.TransactionId);
-
                     var receiptExists = Convert.ToInt32(commandCheck.ExecuteScalar()) > 0;
-
                     if (!receiptExists)
                     {
                         // SQL query to insert into transaction receipt
                         string sqlInsert = @"
-                INSERT INTO transaction_receipt (reference_number, customer_id, account_id, transaction_id)
-                VALUES (@ReferenceNumber, @CustomerId, @AccountId, @TransactionId)";
+                            INSERT INTO transaction_receipt (reference_number, customer_id, account_id, transaction_id)
+                            VALUES (@ReferenceNumber, @CustomerId, @AccountId, @TransactionId)";
                         MySqlCommand commandInsert = new MySqlCommand(sqlInsert, connection);
                         commandInsert.Parameters.AddWithValue("@ReferenceNumber", GenerateReferenceNumber());
                         commandInsert.Parameters.AddWithValue("@CustomerId", customerId);
@@ -125,7 +120,6 @@ namespace BankingSystem.Services.CustomerServices
                 }
             }
         }
-
         private static string GenerateReferenceNumber()
         {
             Random rnd = new Random();
@@ -134,7 +128,6 @@ namespace BankingSystem.Services.CustomerServices
         public static Receipt GetReceiptFromDatabase(string transactionId)
         {
             Receipt receipt = null;
-
             // Open a connection to the MySQL database
             using (MySqlConnection connection = MySQLDatabase.OpenConnection())
             {
@@ -149,7 +142,6 @@ namespace BankingSystem.Services.CustomerServices
                 MySqlCommand command = new MySqlCommand(sql, connection);
                 // Use the transactionId parameter in the SQL query
                 command.Parameters.AddWithValue("@TransactionId", transactionId);
-
                 // Execute the command and process the results
                 using (MySqlDataReader reader = command.ExecuteReader())
                 {

@@ -22,6 +22,9 @@
     <Compile Update="Forms\CustomerDashBoard\CustomerUpdate\CustomerPassword.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="Forms\TellerDashBoard\AccountCards\AccountListCards.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Update="Forms\TellerDashBoard\UpdateRequestsForm.cs">
       <SubType>Form</SubType>
     </Compile>

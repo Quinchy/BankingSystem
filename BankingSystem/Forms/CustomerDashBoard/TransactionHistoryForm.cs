@@ -1,5 +1,7 @@
 ﻿using BankingSystem.Forms.CustomerDashBoard.TransactionReceipt;
+using BankingSystem.Forms.TellerDashBoard.AccountCards;
 using BankingSystem.Services.CustomerServices;
+using BankingSystem.Services.TellerServices;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -40,7 +42,7 @@ namespace BankingSystem.Forms.CustomerDashBoard
                 card.amount.Text = "₱ " + transaction.Amount.ToString();
                 card.date.Text = transaction.Date.ToShortDateString();
                 card.TransactionId = transaction.TransactionId; // Set TransactionId for this card
-               // Generate receipt for this transaction
+                                                                // Generate receipt for this transaction
                 TransactionHistoryServices.GenerateReceiptForTransaction(transaction);
                 // Depending on your transactionType, you can change the transactionPicture
                 if (card.transactionType.Text == "Withdraw")
@@ -62,9 +64,7 @@ namespace BankingSystem.Forms.CustomerDashBoard
             pageCountLabel.Text = $"Page {currentPage} of {totalPages}";
             // Update state of Previous and Next buttons
             UpdatePaginationButtons();
-            //           
         }
-
         private void UpdatePaginationButtons()
         {
             previousButton.Enabled = currentPage > 1;

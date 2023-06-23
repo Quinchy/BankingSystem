@@ -40,7 +40,7 @@ namespace BankingSystem.Forms.CustomerDashBoard
         }
         private void requestButton_Click(object sender, EventArgs e)
         {
-            var customerUpdateForm = new CustomerUpdateForm(accountIDTextBox.Text, email);           
+            var customerUpdateForm = new CustomerUpdateForm(accountIDTextBox.Text, email);
             Helpers.changeScreen(dashboardPanel, customerUpdateForm);
         }
         private void InitializeCustomerProfile(string email)

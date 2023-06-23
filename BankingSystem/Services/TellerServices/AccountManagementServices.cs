@@ -13,109 +13,132 @@ namespace BankingSystem.Services.TellerServices
     // A service class for managing account request and also managing the closing and opening of an account.
     internal class AccountManagementServices
     {
-        // Loads a list of account requests with pending status from the database
-        public static List<AccountRequest> loadAccountRequest()
+        public static List<AccountRequest> RetrieveAccountRequests(int limit = 6, int offset = 0)
         {
-            var accountRequests = new List<AccountRequest>();
-            // Open a connection to the MySQL database using a connection pool
-            using (var connection = MySQLDatabase.OpenConnection())
+            List<AccountRequest> requests = new List<AccountRequest>();
+            // Open a connection to the MySQL database
+            using (MySqlConnection connection = MySQLDatabase.OpenConnection())
             {
-                if (connection != null)
+                // SQL query to retrieve account requests
+                string sql = @"
+                    SELECT ar.request_id, ci.first_name, ci.last_name, ci.email, ci.phone_number, ci.password, ar.request_date, ar.request_status
+                    FROM account_request ar
+                    JOIN customer_information ci ON ar.customer_id = ci.customer_id
+                    WHERE ar.request_status = 'Pending'
+                    ORDER BY ar.request_date DESC
+                    LIMIT @Limit
+                    OFFSET @Offset";
+                MySqlCommand command = new MySqlCommand(sql, connection);
+                // Use the limit and offset parameters in the SQL query
+                command.Parameters.AddWithValue("@Limit", limit);
+                command.Parameters.AddWithValue("@Offset", offset);
+                // Execute the command and process the results
+                using (MySqlDataReader reader = command.ExecuteReader())
                 {
-                    // Construct the SQL query to retrieve account request information
-                    string query = @"SELECT account_request.request_id, 
-                        account_request.customer_id, 
-                        customer_information.email,
-                        account_request.request_date,
-                        account_request.request_status
-                        FROM account_request
-                        INNER JOIN customer_information 
-                        ON account_request.customer_id = customer_information.customer_id
-                        WHERE account_request.request_status = 'Pending'";
-                    // Create a MySqlCommand object with the query and connection
-                    using (var command = new MySqlCommand(query, connection))
+                    while (reader.Read())
                     {
-                        // Execute the query and retrieve the data reader
-                        using (var reader = command.ExecuteReader())
-                        {
-                            // Iterate through each row in the result set
-                            while (reader.Read())
-                            {
-                                // Extract the account request details from the reader
-                                var requestId = reader["request_id"].ToString();
-                                var customerId = reader["customer_id"].ToString();
-                                var email = reader["email"].ToString();
-                                var dateOfRequest = Convert.ToDateTime(reader["request_date"]);
-                                var requestStatus = reader["request_status"].ToString();
-
-                                // Create an AccountRequest object and add it to the list
-                                accountRequests.Add(new AccountRequest(requestId, customerId, email, dateOfRequest, requestStatus));
-                            }
-                        }
+                        AccountRequest request = new AccountRequest(
+                            reader.GetString("request_id"),
+                            reader.GetString("first_name"),
+                            reader.GetString("last_name"),
+                            reader.GetString("email"),
+                            reader.GetString("phone_number"),
+                            reader.GetString("password"),
+                            reader.GetDateTime("request_date"),
+                            reader.GetString("request_status")
+                        );
+                        requests.Add(request);
                     }
                 }
             }
-            return accountRequests;
+            return requests;
         }
         // Loads a list of accounts from the database
-        public static List<Account> loadAccountList()
+        public static List<AccountList> RetrieveAccountLists(int limit = 6, int offset = 0)
         {
-            var accounts = new List<Account>();
-            // Open a connection to the MySQL database using a connection pool
-            using (var connection = MySQLDatabase.OpenConnection())
+            List<AccountList> accountLists = new List<AccountList>();
+
+            // Open a connection to the MySQL database
+            using (MySqlConnection connection = MySQLDatabase.OpenConnection())
             {
-                if (connection != null)
+                // SQL query to retrieve account requests
+                string sql = @"
+                    SELECT a.account_id, ci.first_name, ci.last_name, ci.email, ci.phone_number, ci.password, a.balance, a.account_status
+                    FROM account a
+                    JOIN customer_information ci ON a.customer_id = ci.customer_id
+                    ORDER BY a.account_id DESC
+                    LIMIT @Limit
+                    OFFSET @Offset";
+                MySqlCommand command = new MySqlCommand(sql, connection);
+                // Use the limit and offset parameters in the SQL query
+                command.Parameters.AddWithValue("@Limit", limit);
+                command.Parameters.AddWithValue("@Offset", offset);
+
+                // Execute the command and process the results
+                using (MySqlDataReader reader = command.ExecuteReader())
                 {
-                    // Construct the SQL query to retrieve account information
-                    string query = "SELECT account_id, customer_id, balance, account_status FROM account";
-                    // Create a MySqlCommand object with the query and connection
-                    using (var command = new MySqlCommand(query, connection))
+                    while (reader.Read())
                     {
-                        // Execute the query and retrieve the data reader
-                        using (var reader = command.ExecuteReader())
-                        {
-                            // Iterate through each row in the result set
-                            while (reader.Read())
-                            {
-                                // Extract the account details from the reader
-                                var accountId = reader["account_id"].ToString();
-                                var customerId = reader["customer_id"].ToString();
-                                var balance = Convert.ToDouble(reader["balance"]);
-                                var accountStatus = reader["account_status"].ToString();
-                                // Create an Account object and add it to the list
-                                accounts.Add(new Account(accountId, customerId, balance, accountStatus));
-                            }
-                        }
+                        AccountList account = new AccountList(
+                            reader.GetString("account_id"),
+                            reader.GetString("first_name"),
+                            reader.GetString("last_name"),
+                            reader.GetString("email"),
+                            reader.GetString("phone_number"),
+                            reader.GetString("password"),
+                            reader.GetDouble("balance"),
+                            reader.GetString("account_status")
+                        );
+                        accountLists.Add(account);
                     }
                 }
             }
-            return accounts;
+            return accountLists;
+        }
+        public static int RetrieveTotalAccountRequests()
+        {
+            int totalRequests = 0;
+            using (MySqlConnection connection = MySQLDatabase.OpenConnection())
+            {
+                string sql = "SELECT COUNT(*) FROM account_request WHERE request_status = 'Pending'";
+                MySqlCommand command = new MySqlCommand(sql, connection);
+                totalRequests = Convert.ToInt32(command.ExecuteScalar());
+            }
+            return totalRequests;
+        }
+
+        public static int RetrieveTotalAccountLists()
+        {
+            int totalAccounts = 0;
+            using (MySqlConnection connection = MySQLDatabase.OpenConnection())
+            {
+                string sql = "SELECT COUNT(*) FROM account";
+                MySqlCommand command = new MySqlCommand(sql, connection);
+                totalAccounts = Convert.ToInt32(command.ExecuteScalar());
+            }
+            return totalAccounts;
         }
         // Approve a request for an account.
-        public static void approveAccount(int requestId)
+        public static void ApproveAccount(string requestId)
         {
-            // Open connection using MySQLDatabase.OpenConnection()
-            using (var connection = MySQLDatabase.OpenConnection())
+            using (var connection = BankingSystem.Database.MySQLDatabase.OpenConnection())
             {
                 if (connection != null)
                 {
-                    // Retrieve the customer ID from the account_request table
                     string query = "SELECT customer_id FROM account_request WHERE request_id = @RequestId";
                     using (var command = new MySqlCommand(query, connection))
                     {
                         command.Parameters.AddWithValue("@RequestId", requestId);
-                        // Execute the query and get the customer ID
                         var customerId = command.ExecuteScalar();
-                        // Fetch the customer's details using customerId
+
                         query = "SELECT first_name, last_name, phone_number FROM customer_information WHERE customer_id = @CustomerId";
                         using (var customerCommand = new MySqlCommand(query, connection))
                         {
                             customerCommand.Parameters.AddWithValue("@CustomerId", customerId);
-                            // Variables for storing the customer's details
                             string firstName = null;
                             string lastName = null;
                             string phoneNumber = null;
-                            // Execute the query and get the customer's details
+
                             using (var reader = customerCommand.ExecuteReader())
                             {
                                 while (reader.Read())
@@ -125,27 +148,24 @@ namespace BankingSystem.Services.TellerServices
                                     phoneNumber = reader["phone_number"].ToString();
                                 }
                             }
-                            // Generate account ID
-                            string accountId = generateAccountId(firstName, lastName, phoneNumber);
-                            // Insert a new row into the Account table
+
+                            string accountId = GenerateAccountId(firstName, lastName, phoneNumber);
                             query = "INSERT INTO account (account_id, customer_id, balance, account_status) VALUES (@AccountId, @CustomerId, @Balance, @AccountStatus)";
+
                             using (var accountCommand = new MySqlCommand(query, connection))
                             {
                                 accountCommand.Parameters.AddWithValue("@AccountId", accountId);
-                                accountCommand.Parameters.AddWithValue("@Balance", 0.0); // Assuming that the initial balance is 0
                                 accountCommand.Parameters.AddWithValue("@CustomerId", customerId);
+                                accountCommand.Parameters.AddWithValue("@Balance", 0.0);
                                 accountCommand.Parameters.AddWithValue("@AccountStatus", "Open");
-
-                                // Execute the query
                                 accountCommand.ExecuteNonQuery();
                             }
-                            // Update the request_status in the account_request table
+
                             query = "UPDATE account_request SET request_status = 'Approved' WHERE request_id = @RequestId";
+
                             using (var updateCommand = new MySqlCommand(query, connection))
                             {
                                 updateCommand.Parameters.AddWithValue("@RequestId", requestId);
-
-                                // Execute the query
                                 updateCommand.ExecuteNonQuery();
                             }
                         }
@@ -153,24 +173,36 @@ namespace BankingSystem.Services.TellerServices
                 }
             }
         }
+
         // Reject the request for an account.
-        public static void rejectAccount(int requestId)
+        public static void RejectAccount(string requestId)
         {
-            // Open connection using MySQLDatabase.OpenConnection()
-            using (var connection = MySQLDatabase.OpenConnection())
+            using (var connection = BankingSystem.Database.MySQLDatabase.OpenConnection())
             {
                 if (connection != null)
                 {
-                    // Update the request_status in the account_request table
                     string query = "UPDATE account_request SET request_status = 'Rejected' WHERE request_id = @RequestId";
                     using (var command = new MySqlCommand(query, connection))
                     {
                         command.Parameters.AddWithValue("@RequestId", requestId);
-                        // Execute the query
                         command.ExecuteNonQuery();
                     }
                 }
             }
+        }
+
+        // Generate an account id for new customer
+        public static string GenerateAccountId(string firstName, string lastName, string phoneNumber)
+        {
+            // Get the first two characters of the first name
+            string firstPart = firstName.Substring(0, 2).ToUpper();
+            // Get the last two characters of the last name
+            string secondPart = lastName.Substring(lastName.Length - 2, 2).ToUpper();
+            // Get the last four characters of the phone number
+            string thirdPart = phoneNumber.Substring(phoneNumber.Length - 4, 4);
+            // Concatenate the parts to form the account ID
+            string accountId = firstPart + secondPart + thirdPart;
+            return accountId;
         }
         // Open the account for the customer.
         public static void openAnAccount(string accountId)
@@ -209,19 +241,6 @@ namespace BankingSystem.Services.TellerServices
                     }
                 }
             }
-        }
-        // Generate an account id for new customer
-        public static string generateAccountId(string firstName, string lastName, string phoneNumber)
-        {
-            // Get the first two characters of the first name
-            string firstPart = firstName.Substring(0, 2).ToUpper();
-            // Get the last two characters of the last name
-            string secondPart = lastName.Substring(lastName.Length - 2, 2).ToUpper();
-            // Get the last four characters of the phone number
-            string thirdPart = phoneNumber.Substring(phoneNumber.Length - 4, 4);
-            // Concatenate the parts to form the account ID
-            string accountId = firstPart + secondPart + thirdPart;
-            return accountId;
         }
     }
 }

@@ -1,7 +1,10 @@
-﻿using BankingSystem.Models;
+﻿using BankingSystem.Forms.CustomerDashBoard.TransactionReceipt;
+using BankingSystem.Models;
 using BankingSystem.Models.TellerModels;
 using BankingSystem.Services;
+using BankingSystem.Services.CustomerServices;
 using BankingSystem.Services.TellerServices;
+using BankingSystem.Forms.TellerDashBoard.AccountCards;
 using Org.BouncyCastle.Asn1.Ocsp;
 using System;
 using System.Collections.Generic;
@@ -18,91 +21,105 @@ namespace BankingSystem.Forms.TellerDashBoard
 {
     public partial class AccountManagementForm : Form
     {
+        private int currentPage = 1;
+        private int totalRecords = 0;
+        private int recordsPerPage = 6;
+        private int totalPages => (totalRecords + recordsPerPage - 1) / recordsPerPage;
         public AccountManagementForm()
         {
             InitializeComponent();
-            InitializeAccountRequest();
-            InitializeAccountList();
+            InitializeRequestCards();
         }
-        // Handles the Click event of the approve button.
-        // Approves all checked account requests in the ListView.
-        private void approveButton_Click(object sender, EventArgs e)
+        public void InitializeRequestCards()
         {
-            // Iterate over all checked items in the ListView
-            foreach (ListViewItem item in accountManagementListView.CheckedItems)
+            // Clear existing controls        
+            accountFlowPanel.Controls.Clear();
+            totalRecords = AccountManagementServices.RetrieveTotalAccountRequests();
+            var requests = AccountManagementServices.RetrieveAccountRequests(6, (currentPage - 1) * 6);
+            foreach (var request in requests)
             {
-                // Parse the ID and approve the account
-                int requestId = int.Parse(item.SubItems[0].Text);
-                AccountManagementServices.approveAccount(requestId);
+                // Create a new card for this request
+                AccountRequestCards card = new AccountRequestCards();
+                // Set the labels on the card using the request data
+                card.dateValueLabel.Text = request.RequestDate.ToShortDateString();
+                card.statusValueLabel.Text = request.RequestStatus;
+                card.emailValueLabel.Text = request.Email;
+                card.lastNameValueLabel.Text = request.LastName;
+                card.firstNameValueLabel.Text = request.FirstName;
+                card.passwordValueLabel.Text = request.Password;
+                card.phoneValueLabel.Text = request.PhoneNumber;
+                card.RequestId = request.RequestId;
+                // Add the card to the panel
+                accountFlowPanel.Controls.Add(card);
             }
-            // Refresh the account request and account list views
-            InitializeAccountRequest();
-            InitializeAccountList();
+            // Updating the pageCountLabel as per the current page and total number of pages
+            pageCountLabel.Text = $"Page {currentPage} of {totalPages}";
+            // Update state of Previous and Next buttons
+            UpdatePaginationButtons();
         }
-        // Handles the Click event of the reject button.
-        // Rejects all checked account requests in the ListView.
-        private void rejectButton_Click(object sender, EventArgs e)
+        public void InitializeAccountListCards()
         {
-            // Iterate over all checked items in the ListView
-            foreach (ListViewItem item in accountManagementListView.CheckedItems)
-            {
-                // Parse the ID and reject the account
-                int requestId = int.Parse(item.SubItems[0].Text);
-                AccountManagementServices.rejectAccount(requestId);
-            }
-            // Refresh the account request and account list views
-            InitializeAccountRequest();
-            InitializeAccountList();
-        }
-        // Handles the Click event of the open account button.
-        // Opens all checked accounts in the ListView.
-        private void openAccountButton_Click(object sender, EventArgs e)
-        {
-            // Iterate over all checked items in the ListView
-            foreach (ListViewItem item in accountListView.CheckedItems)
-            {
-                // Parse the ID and open the account
-                string accountId = item.SubItems[0].Text;
-                AccountManagementServices.openAnAccount(accountId);
-            }
-            // Refresh the account list view
-            InitializeAccountList();
-        }
-        // Handles the Click event of the close account button.
-        // Closes all checked accounts in the ListView.
-        private void closeAccountButton_Click(object sender, EventArgs e)
-        {
-            // Iterate over all checked items in the ListView
-            foreach (ListViewItem item in accountListView.CheckedItems)
-            {
-                // Parse the ID and close the account
-                string accountId = item.SubItems[0].Text;
-                AccountManagementServices.closeAnAccount(accountId);
-            }
-            // Refresh the account list view
-            InitializeAccountList();
-        }
-        // Initializes the account request ListView with data from the AccountManagementServices.
-        private void InitializeAccountRequest()
-        {
-            var accountRequests = AccountManagementServices.loadAccountRequest();
-            accountManagementListView.Items.Clear();
-            foreach (var request in accountRequests)
-            {
-                ListViewItem item = new ListViewItem(new[] { request.RequestId, request.CustomerId, request.Email, request.RequestDate.ToString("yyyy-MM-dd"), request.RequestStatus });
-                accountManagementListView.Items.Add(item);
-            }
-        }
-        // Initializes the account list ListView with data from the AccountManagementServices.
-        private void InitializeAccountList()
-        {
-            var accounts = AccountManagementServices.loadAccountList();
-            accountListView.Items.Clear();
+            // Clear existing controls        
+            accountFlowPanel.Controls.Clear();
+            totalRecords = AccountManagementServices.RetrieveTotalAccountLists();
+            var accounts = AccountManagementServices.RetrieveAccountLists(6, (currentPage - 1) * 6);
             foreach (var account in accounts)
             {
-                ListViewItem item = new ListViewItem(new[] { account.AccountId, account.CustomerId, account.Balance.ToString(), account.AccountStatus });
-                accountListView.Items.Add(item);
+                // Create a new card for this request
+                AccountListCards card = new AccountListCards();
+                // Set the labels on the card using the account data
+                card.firstNameValueLabel.Text = account.FirstName;
+                card.lastNameValueLabel.Text = account.LastName;
+                card.emailValueLabel.Text = account.Email;
+                card.phoneValueLabel.Text = account.PhoneNumber;
+                card.passwordValueLabel.Text = account.Password;
+                card.statusValueLabel.Text = account.AccountStatus;
+                card.accountIdValueLabel.Text = account.AccountId;
+                card.balanceValueLabel.Text = "₱ " + account.Balance.ToString();
+
+                // Add the card to the panel
+                accountFlowPanel.Controls.Add(card);
             }
+            // Updating the pageCountLabel as per the current page and total number of pages
+            pageCountLabel.Text = $"Page {currentPage} of {totalPages}";
+            // Update state of Previous and Next buttons
+            UpdatePaginationButtons();
+        }
+        private void UpdatePaginationButtons()
+        {
+            previousButton.Enabled = currentPage > 1;
+            nextButton.Enabled = currentPage < totalPages;
+        }
+        private void previousButton_Click(object sender, EventArgs e)
+        {
+            if (currentPage > 1)
+            {
+                currentPage--;
+                InitializeRequestCards();
+            }
+        }
+        private void nextButton_Click(object sender, EventArgs e)
+        {
+            if (currentPage < totalPages)
+            {
+                currentPage++;
+                InitializeRequestCards();
+            }
+        }
+        private void accountRequestButton_Click(object sender, EventArgs e)
+        {
+            currentPage = 1;
+            InitializeRequestCards();
+            accountRequestButton.ForeColor = Color.FromArgb(92, 184, 92);
+            accountListButton.ForeColor = Color.FromArgb(34, 33, 46);
+        }
+
+        private void accountListButton_Click(object sender, EventArgs e)
+        {
+            currentPage = 1;
+            InitializeAccountListCards();
+            accountRequestButton.ForeColor = Color.FromArgb(34, 33, 46);
+            accountListButton.ForeColor = Color.FromArgb(92, 184, 92);
         }
     }
 }

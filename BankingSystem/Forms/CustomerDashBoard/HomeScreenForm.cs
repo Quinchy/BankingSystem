@@ -1,4 +1,5 @@
-﻿using BankingSystem.Models.CustomerModels;
+﻿using BankingSystem.Database;
+using BankingSystem.Models.CustomerModels;
 using BankingSystem.Services.CustomerServices;
 using System;
 using System.Collections.Generic;
@@ -40,6 +41,12 @@ namespace BankingSystem.Forms.CustomerDashBoard
                 ShowMessageBox("This is not your account ID.");
                 return; // Exit the method
             }
+            // Check if there are any pending requests
+            if (BankingServices.checkPendingRequests(email))
+            {
+                ShowMessageBox("You have a pending request. You cannot perform another transaction until your pending request has been dealt with.");
+                return; // Exit the method
+            }
             // Ask the user to confirm the deposit
             var confirmResult = MessageBox.Show("Are you sure to deposit this amount?", "Confirm Deposit!", MessageBoxButtons.YesNo);
             // If the user confirms the deposit
@@ -73,6 +80,19 @@ namespace BankingSystem.Forms.CustomerDashBoard
             if (!BankingServices.isTheirAccount(email, accountId))
             {
                 ShowMessageBox("This is not your account ID.");
+                return; // Exit the method
+            }
+            // Check if the withdraw amount is greater than the account balance
+            double balance = BankingServices.retrieveAccountBalance(email);
+            if (withdrawAmount > balance)
+            {
+                ShowMessageBox("Insufficient balance.");
+                return; // Exit the method
+            }
+            // Check if there are any pending requests
+            if (BankingServices.checkPendingRequests(email))
+            {
+                ShowMessageBox("You have a pending request. You cannot perform another transaction until your pending request has been dealt with.");
                 return; // Exit the method
             }
             // Ask the user to confirm the withdraw
@@ -125,9 +145,16 @@ namespace BankingSystem.Forms.CustomerDashBoard
                 return; // Exit the method
             }
             // If the balance is less than the transfer amount
-            if (double.Parse(balanceLabel.Text.Substring(2)) < transferAmount)
+            double balance = BankingServices.retrieveAccountBalance(email);
+            if (transferAmount > balance)
             {
                 ShowMessageBox("Insufficient balance.");
+                return; // Exit the method
+            }
+            // Check if there are any pending requests
+            if (BankingServices.checkPendingRequests(email))
+            {
+                ShowMessageBox("You have a pending request. You cannot perform another transaction until your pending request has been dealt with.");
                 return; // Exit the method
             }
             // Ask the user to confirm the transfer
@@ -150,8 +177,7 @@ namespace BankingSystem.Forms.CustomerDashBoard
         // Retrieves and displays the account information and transaction history of the user.
         public static void InitializeAccountInformation(string email)
         {
-            // Retrieve the account ID, customer's first name, account balance, and transaction history
-            string accountId = BankingServices.retrieveAccountId(email);
+            // Retrieve the customer's first name, account balance, and transaction history
             string customerFirstName = BankingServices.retrieveCustomerFirstName(email);
             double accountBalance = BankingServices.retrieveAccountBalance(email);
             // Set the account balance and greet the user with their first name

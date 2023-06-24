@@ -72,31 +72,6 @@ namespace BankingSystem.Services.CustomerServices
             // Return the retrieved balance (or 0 if no balance was retrieved)
             return balance;
         }
-        // Retrieves the account ID of a customer using their email.
-        public static string retrieveAccountId(string email)
-        {
-            string accountId = null;
-            using (MySqlConnection conn = MySQLDatabase.OpenConnection())
-            {
-                if (conn == null)
-                {
-                    Console.WriteLine("Unable to open MySQL connection.");
-                    return null;
-                }
-                // Prepare the SQL command to fetch the account id
-                MySqlCommand command = new MySqlCommand("SELECT account_id FROM account WHERE customer_id = (SELECT customer_id FROM customer_information WHERE email = @Email)", conn);
-                command.Parameters.AddWithValue("@Email", email);
-                using (MySqlDataReader reader = command.ExecuteReader())
-                {
-                    // If the reader has data, assign the account id
-                    if (reader.Read())
-                    {
-                        accountId = reader["account_id"].ToString();
-                    }
-                }
-            }
-            return accountId;
-        }
         // Check if the account id they provided is theirs.
         public static bool isTheirAccount(string email, string accountId)
         {
@@ -118,6 +93,51 @@ namespace BankingSystem.Services.CustomerServices
                     object result = cmd.ExecuteScalar();
                     // Return true if a result is found, otherwise false
                     return result != null;
+                }
+            }
+        }
+        public static bool checkPendingRequests(string email)
+        {
+            using (MySqlConnection connection = MySQLDatabase.OpenConnection())
+            {
+                if (connection != null)
+                {
+                    try
+                    {
+                        string query = @"SELECT tp.process_id 
+                                 FROM transaction_processing tp 
+                                 JOIN account a ON tp.account_id = a.account_id
+                                 JOIN customer_information ci ON a.customer_id = ci.customer_id
+                                 WHERE ci.email = @Email AND tp.process_status = 'Pending'";
+
+                        using (MySqlCommand cmd = new MySqlCommand(query, connection))
+                        {
+                            cmd.Parameters.AddWithValue("@Email", email);
+
+                            using (MySqlDataReader reader = cmd.ExecuteReader())
+                            {
+                                if (reader.HasRows)
+                                {
+                                    // There are pending requests
+                                    return true;
+                                }
+                                else
+                                {
+                                    // There are no pending requests
+                                    return false;
+                                }
+                            }
+                        }
+                    }
+                    catch (MySqlException ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                        return false;
+                    }
+                }
+                else
+                {
+                    return false;
                 }
             }
         }

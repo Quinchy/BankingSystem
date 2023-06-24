@@ -35,11 +35,31 @@ namespace BankingSystem.Forms
                 ShowMessageBox("The password and confirmation password do not match. Please try again.", "Password Mismatch", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
+            // Check for valid phone number format (PH)
+            if (!RegistrationServices.IsValidPhoneNumber(phoneNumberTextBox.Text))
+            {
+                ShowMessageBox("The phone number is not valid. It must be 11 digits and follow the format for Philippines phone numbers.", "Invalid Phone Number", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            // Check for valid email format
+            if (!RegistrationServices.IsValidEmail(emailTextBox.Text))
+            {
+                ShowMessageBox("The email address is not valid. Please check the format (e.g., user@example.com).", "Invalid Email", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            // Check for valid name format and correct it if necessary
+            string correctedFirstName = RegistrationServices.CorrectNameFormat(firstNameTextBox.Text);
+            string correctedLastName = RegistrationServices.CorrectNameFormat(lastNameTextBox.Text);
+            if (correctedFirstName == null || correctedLastName == null)
+            {
+                ShowMessageBox("The name is not valid. It should contain only letters and spaces.", "Invalid Name", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
             // Create a new Customer Object
             Customer newCustomer = new Customer(
                 null,
-                firstNameTextBox.Text,
-                lastNameTextBox.Text,
+                correctedFirstName,
+                correctedLastName,
                 emailTextBox.Text,
                 phoneNumberTextBox.Text,
                 passwordTextBox.Text
@@ -52,6 +72,7 @@ namespace BankingSystem.Forms
             }
             // Call the RegisterUser function to put the Customer into the database.
             RegistrationServices.registerUser(newCustomer);
+
             // Change the screen to Login.
             var loginForm = new LoginForm();
             Helpers.changeScreen(baseFormPanel, loginForm);

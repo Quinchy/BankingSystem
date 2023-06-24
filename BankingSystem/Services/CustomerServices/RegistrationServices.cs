@@ -2,8 +2,10 @@
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace BankingSystem.Services.CustomerServices
@@ -11,6 +13,11 @@ namespace BankingSystem.Services.CustomerServices
     // A service class for sending request for an account.
     internal class RegistrationServices
     {
+        // Regex pattern for valid email address
+        private static readonly string EmailPattern = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";
+
+        // Regex pattern for PH phone number (starts with 09 and followed by 9 digits)
+        private static readonly string PhoneNumberPattern = @"^09\d{9}$";
         // Registers a new user in the system
         public static void registerUser(Customer customer)
         {
@@ -63,6 +70,34 @@ namespace BankingSystem.Services.CustomerServices
             }
             // If all fields contain data, return true
             return true;
+        }
+        // Method to check if an email is valid
+        public static bool IsValidEmail(string email)
+        {
+            if (string.IsNullOrEmpty(email)) return false;
+
+            return Regex.IsMatch(email, EmailPattern, RegexOptions.IgnoreCase);
+        }
+
+        // Method to check if a phone number is valid
+        public static bool IsValidPhoneNumber(string phoneNumber)
+        {
+            if (string.IsNullOrEmpty(phoneNumber)) return false;
+
+            return Regex.IsMatch(phoneNumber, PhoneNumberPattern);
+        }
+
+        // Method to correct name format (capitalize first letter of each word, trim spaces)
+        public static string CorrectNameFormat(string name)
+        {
+            if (string.IsNullOrEmpty(name)) return null;
+
+            // Ensure the name contains only letters and spaces
+            if (!name.All(c => char.IsLetter(c) || char.IsWhiteSpace(c))) return null;
+
+            // Capitalize first letter of each word, make rest lowercase
+            TextInfo textInfo = new CultureInfo("en-US", false).TextInfo;
+            return textInfo.ToTitleCase(name.ToLower());
         }
     }
 }

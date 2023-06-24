@@ -1,4 +1,6 @@
-﻿using BankingSystem.Models;
+﻿using BankingSystem.Forms.TellerDashBoard.TransactionCards;
+using BankingSystem.Forms.TellerDashBoard.UpdateCards;
+using BankingSystem.Models;
 using BankingSystem.Services.CustomerServices;
 using BankingSystem.Services.TellerServices;
 using System;
@@ -15,91 +17,77 @@ namespace BankingSystem.Forms.TellerDashBoard
 {
     public partial class UpdateRequestForm : Form
     {
+        private int currentPage = 1;
+        private int totalRecords = 0;
+        private int recordsPerPage = 4;
+        private int totalPages => (totalRecords + recordsPerPage - 1) / recordsPerPage;
         public UpdateRequestForm()
         {
             InitializeComponent();
-            InitializeUpdateRequestListView();
+            InitializeUpdateRequestCards();
         }
-        // Handles the Click event of the approve button.
-        // Approves all checked transactions in the ListView.
-        private void approveButton_Click(object sender, EventArgs e)
+        public void InitializeUpdateRequestCards()
         {
-            // Check if any transactions are selected
-            if (updateRequestListView.CheckedItems.Count > 0)
+            // Clear existing controls        
+            updateFlowPanel.Controls.Clear();
+            totalRecords = UpdateRequestServices.RetrieveTotalUpdateRequests();            
+            var updates = UpdateRequestServices.RetrieveUpdateRequests(4, (currentPage - 1) * 4);
+            foreach (var update in updates) 
             {
-                // Iterate over all checked items in the ListView
-                foreach (ListViewItem selectedItem in updateRequestListView.CheckedItems)
+                // Create a new card for this transaction
+                UpdateRequestCards card = new UpdateRequestCards();
+                card.UpdateId = update.UpdateId;
+                card.updateStatusValue.Text = update.UpdateStatus;
+                card.senderFullNameValue.Text = update.FullName;
+                card.senderAccountIdValue.Text = update.AccountId;
+                card.InformationType = update.InformationType;
+                card.informationTypeValue.Text = update.InformationType;
+                card.currentInformationLabel.Text = update.InformationType;
+                card.currentInformationValue.Text = update.CurrentInformation;
+                card.newInformationLabel.Text = update.InformationType;
+                card.newInformationValue.Text = update.ChangedInformation;
+                if (update.InformationType == "Email")
                 {
-                    string updateId = selectedItem.SubItems[0].Text;
-                    string informationType = selectedItem.SubItems[2].Text;
-                    try
-                    {
-                        // Approve the transaction.
-                        switch (informationType)
-                        {
-                            case "Email":
-                                UpdateRequestServices.approveEmailUpdate(updateId);
-                                break;
-                            case "Phone Number":
-                                UpdateRequestServices.approvePhoneNumberUpdate(updateId);
-                                break;
-                            case "Password":
-                                UpdateRequestServices.approvePasswordUpdate(updateId);
-                                break;
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show(ex.Message);
-                    }
+                    card.updateRequestPicture.BackgroundImage = Properties.Resources.envelope;
                 }
-                // Refresh the update request list view
-                InitializeUpdateRequestListView();
-            }
-            else
-            {
-                MessageBox.Show("Please check an update to approve.");
-            }
-        }
-        // Handles the Click event of the reject button.
-        // Rejects all checked transactions in the ListView.
-        private void rejectButton_Click(object sender, EventArgs e)
-        {
-            // Check if any transactions are selected
-            if (updateRequestListView.CheckedItems.Count > 0)
-            {
-                // Iterate over all checked items in the ListView
-                foreach (ListViewItem selectedItem in updateRequestListView.CheckedItems)
+                else if (update.InformationType == "Phone Number")
                 {
-                    string updateId = selectedItem.SubItems[0].Text;
-                    try
-                    {
-                        // Reject the transaction.
-                        UpdateRequestServices.rejectUpdate(updateId);
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show(ex.Message);
-                    }
+                    card.updateRequestPicture.BackgroundImage = Properties.Resources.telephone;
                 }
-                // Refresh the update request list view
-                InitializeUpdateRequestListView();
+                else if (update.InformationType == "Password")
+                {
+                    card.updateRequestPicture.BackgroundImage = Properties.Resources.locked_computer;
+                }
+                updateFlowPanel.Controls.Add(card);
             }
-            else
+            // Updating the pageCountLabel as per the current page and total number of pages
+            if (totalRecords == 0)
             {
-                MessageBox.Show("Please check an update to reject.");
+                currentPage = 0;
+            }
+            pageCountLabel.Text = $"Page {currentPage} of {totalPages}";
+            // Update state of Previous and Next buttons
+            UpdatePaginationButtons();
+        }
+        private void UpdatePaginationButtons()
+        {
+            previousButton.Enabled = currentPage > 1;
+            nextButton.Enabled = currentPage < totalPages;
+        }
+        private void previousButton_Click(object sender, EventArgs e)
+        {
+            if (currentPage > 1)
+            {
+                currentPage--;
+                InitializeUpdateRequestCards();
             }
         }
-        // Initializes the update request ListView with data from the UpdateRequestServices.
-        private void InitializeUpdateRequestListView()
+        private void nextButton_Click(object sender, EventArgs e)
         {
-            var transactions = UpdateRequestServices.loadUpdateRequest();
-            updateRequestListView.Items.Clear();
-            // Add each transaction to the ListView
-            foreach (var transaction in transactions)
+            if (currentPage < totalPages)
             {
-                ListViewItem item = new ListViewItem(new[] { transaction.UpdateId, transaction.AccountId, transaction.InformationType, transaction.ChangedInformation, transaction.UpdateStatus });
-                updateRequestListView.Items.Add(item);
+                currentPage++;
+                InitializeUpdateRequestCards();
             }
         }
     }

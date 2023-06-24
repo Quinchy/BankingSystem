@@ -21,13 +21,11 @@ namespace BankingSystem.Forms.TellerDashBoard.AccountCards
         private void acceptButton_Click(object sender, EventArgs e)
         {
             AccountManagementServices.ApproveAccount(this.RequestId);
-            // Assuming InitializeTransactionCards is a method in the parent form
             (this.ParentForm as AccountManagementForm).InitializeRequestCards();
         }
         private void rejectButton_Click(object sender, EventArgs e)
         {
             AccountManagementServices.RejectAccount(this.RequestId);
-            // Assuming InitializeTransactionCards is a method in the parent form
             (this.ParentForm as AccountManagementForm).InitializeRequestCards();
         }
     }

@@ -26,6 +26,8 @@
             referenceNumberLabel = new Label();
             transactionDateLabel = new Label();
             transactionReferenceNumberLabel = new Label();
+            label1 = new Label();
+            label2 = new Label();
             accountIdPanel.SuspendLayout();
             amountPanel.SuspendLayout();
             SuspendLayout();
@@ -42,13 +44,14 @@
             // fullNameLabel
             // 
             fullNameLabel.AutoSize = true;
-            fullNameLabel.Font = new Font("Century Gothic", 14.25F, FontStyle.Bold, GraphicsUnit.Point);
-            fullNameLabel.ForeColor = Color.FromArgb(92, 184, 92);
-            fullNameLabel.Location = new Point(48, 75);
+            fullNameLabel.Font = new Font("Century Gothic", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            fullNameLabel.ForeColor = SystemColors.WindowFrame;
+            fullNameLabel.Location = new Point(90, 355);
             fullNameLabel.Name = "fullNameLabel";
-            fullNameLabel.Size = new Size(230, 23);
+            fullNameLabel.Size = new Size(106, 21);
             fullNameLabel.TabIndex = 9;
-            fullNameLabel.Text = "Cyril James De Guzman";
+            fullNameLabel.Text = "Samuel Cruz";
+            fullNameLabel.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // accountIdLabel
             // 
@@ -67,7 +70,7 @@
             accountIdPanel.Controls.Add(accountIdLabel);
             accountIdPanel.CornerRadius = 10;
             accountIdPanel.ForeColor = Color.Transparent;
-            accountIdPanel.Location = new Point(95, 100);
+            accountIdPanel.Location = new Point(102, 69);
             accountIdPanel.Name = "accountIdPanel";
             accountIdPanel.Size = new Size(127, 25);
             accountIdPanel.TabIndex = 33;
@@ -76,7 +79,7 @@
             // 
             transactionTypeLabel.AutoSize = true;
             transactionTypeLabel.Font = new Font("Century Gothic", 15.75F, FontStyle.Regular, GraphicsUnit.Point);
-            transactionTypeLabel.Location = new Point(70, 150);
+            transactionTypeLabel.Location = new Point(70, 130);
             transactionTypeLabel.Name = "transactionTypeLabel";
             transactionTypeLabel.Size = new Size(181, 24);
             transactionTypeLabel.TabIndex = 34;
@@ -134,7 +137,7 @@
             // 
             referenceNumberLabel.AutoSize = true;
             referenceNumberLabel.Font = new Font("Century Gothic", 12F, FontStyle.Italic, GraphicsUnit.Point);
-            referenceNumberLabel.Location = new Point(25, 348);
+            referenceNumberLabel.Location = new Point(25, 385);
             referenceNumberLabel.Name = "referenceNumberLabel";
             referenceNumberLabel.Size = new Size(162, 19);
             referenceNumberLabel.TabIndex = 46;
@@ -144,7 +147,8 @@
             // 
             transactionDateLabel.AutoSize = true;
             transactionDateLabel.Font = new Font("Century Gothic", 12F, FontStyle.Italic, GraphicsUnit.Point);
-            transactionDateLabel.Location = new Point(186, 413);
+            transactionDateLabel.ForeColor = SystemColors.WindowFrame;
+            transactionDateLabel.Location = new Point(84, 413);
             transactionDateLabel.Name = "transactionDateLabel";
             transactionDateLabel.Size = new Size(112, 19);
             transactionDateLabel.TabIndex = 47;
@@ -155,16 +159,39 @@
             transactionReferenceNumberLabel.AutoSize = true;
             transactionReferenceNumberLabel.Font = new Font("Century Gothic", 12F, FontStyle.Regular, GraphicsUnit.Point);
             transactionReferenceNumberLabel.ForeColor = SystemColors.WindowFrame;
-            transactionReferenceNumberLabel.Location = new Point(42, 367);
+            transactionReferenceNumberLabel.Location = new Point(188, 385);
             transactionReferenceNumberLabel.Name = "transactionReferenceNumberLabel";
             transactionReferenceNumberLabel.Size = new Size(119, 21);
             transactionReferenceNumberLabel.TabIndex = 48;
             transactionReferenceNumberLabel.Text = "0000-000-0000";
             // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Font = new Font("Century Gothic", 12F, FontStyle.Italic, GraphicsUnit.Point);
+            label1.Location = new Point(25, 355);
+            label1.Name = "label1";
+            label1.Size = new Size(67, 19);
+            label1.TabIndex = 49;
+            label1.Text = "Name: ";
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Font = new Font("Century Gothic", 12F, FontStyle.Italic, GraphicsUnit.Point);
+            label2.Location = new Point(25, 413);
+            label2.Name = "label2";
+            label2.Size = new Size(59, 19);
+            label2.TabIndex = 50;
+            label2.Text = "Date: ";
+            // 
             // ReceiptCard
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            Controls.Add(label2);
+            Controls.Add(label1);
+            Controls.Add(fullNameLabel);
             Controls.Add(transactionReferenceNumberLabel);
             Controls.Add(transactionDateLabel);
             Controls.Add(referenceNumberLabel);
@@ -172,7 +199,6 @@
             Controls.Add(line1);
             Controls.Add(transactionTypeLabel);
             Controls.Add(accountIdPanel);
-            Controls.Add(fullNameLabel);
             Controls.Add(appLogoIcon);
             Controls.Add(amountPanel);
             Name = "ReceiptCard";
@@ -184,6 +210,7 @@
             ResumeLayout(false);
             PerformLayout();
         }
+
         private Panel appLogoIcon;
         public Label fullNameLabel;
         public Label accountIdLabel;
@@ -197,5 +224,7 @@
         private Label referenceNumberLabel;
         public Label transactionDateLabel;
         public Label transactionReferenceNumberLabel;
+        private Label label1;
+        private Label label2;
     }
 }

@@ -61,6 +61,10 @@ namespace BankingSystem.Forms.CustomerDashBoard
                 transactionHistoryFlowPanel.Controls.Add(card);
             }
             // Updating the pageCountLabel as per the current page and total number of pages
+            if (totalRecords == 0)
+            {
+                currentPage = 0;
+            }
             pageCountLabel.Text = $"Page {currentPage} of {totalPages}";
             // Update state of Previous and Next buttons
             UpdatePaginationButtons();

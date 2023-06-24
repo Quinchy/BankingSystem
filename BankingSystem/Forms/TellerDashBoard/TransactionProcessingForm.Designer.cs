@@ -15,144 +15,155 @@ namespace BankingSystem.Forms.TellerDashBoard
         }
         private void InitializeComponent()
         {
-            transactionProcessingLabel = new Label();
+            profileUpdateCardPanel = new RoundedPanel();
             transactionProcessingPanel = new RoundedPanel();
-            transactionProcessingListView = new ListView();
-            processIDHeader = new ColumnHeader();
-            accountIDHeader = new ColumnHeader();
-            currentBalanceHeader = new ColumnHeader();
-            transactionTypeHeader = new ColumnHeader();
-            amountHeader = new ColumnHeader();
-            processDateHeader = new ColumnHeader();
-            rejectButton = new RoundedButton();
-            approveButton = new RoundedButton();
+            transactionProcessingLabel = new Label();
+            pageCountLabel = new Label();
+            previousButton = new Button();
+            nextButton = new Button();
+            transactionFlowPanel = new FlowLayoutPanel();
+            line1 = new Panel();
+            transactionHistoryButton = new Button();
+            transactionRequestButton = new Button();
+            profileUpdateCardPanel.SuspendLayout();
             transactionProcessingPanel.SuspendLayout();
             SuspendLayout();
             // 
-            // transactionProcessingLabel
+            // profileUpdateCardPanel
             // 
-            transactionProcessingLabel.AutoSize = true;
-            transactionProcessingLabel.Font = new Font("Century Gothic", 27.75F, FontStyle.Bold, GraphicsUnit.Point);
-            transactionProcessingLabel.ForeColor = Color.White;
-            transactionProcessingLabel.Location = new Point(54, 27);
-            transactionProcessingLabel.Name = "transactionProcessingLabel";
-            transactionProcessingLabel.Size = new Size(449, 44);
-            transactionProcessingLabel.TabIndex = 31;
-            transactionProcessingLabel.Text = "Transaction Proccessing";
+            profileUpdateCardPanel.BackColor = Color.Transparent;
+            profileUpdateCardPanel.BorderColor = Color.WhiteSmoke;
+            profileUpdateCardPanel.Controls.Add(transactionProcessingPanel);
+            profileUpdateCardPanel.Controls.Add(pageCountLabel);
+            profileUpdateCardPanel.Controls.Add(previousButton);
+            profileUpdateCardPanel.Controls.Add(nextButton);
+            profileUpdateCardPanel.Controls.Add(transactionFlowPanel);
+            profileUpdateCardPanel.Controls.Add(line1);
+            profileUpdateCardPanel.Controls.Add(transactionHistoryButton);
+            profileUpdateCardPanel.Controls.Add(transactionRequestButton);
+            profileUpdateCardPanel.CornerRadius = 5;
+            profileUpdateCardPanel.ForeColor = Color.Transparent;
+            profileUpdateCardPanel.Location = new Point(30, 12);
+            profileUpdateCardPanel.Name = "profileUpdateCardPanel";
+            profileUpdateCardPanel.Size = new Size(979, 699);
+            profileUpdateCardPanel.TabIndex = 60;
             // 
             // transactionProcessingPanel
             // 
             transactionProcessingPanel.BackColor = Color.Transparent;
-            transactionProcessingPanel.BorderColor = Color.White;
-            transactionProcessingPanel.Controls.Add(transactionProcessingListView);
-            transactionProcessingPanel.CornerRadius = 10;
+            transactionProcessingPanel.BorderColor = Color.FromArgb(92, 184, 92);
+            transactionProcessingPanel.Controls.Add(transactionProcessingLabel);
+            transactionProcessingPanel.CornerRadius = 5;
             transactionProcessingPanel.ForeColor = Color.Transparent;
-            transactionProcessingPanel.Location = new Point(54, 87);
+            transactionProcessingPanel.Location = new Point(17, 10);
             transactionProcessingPanel.Name = "transactionProcessingPanel";
-            transactionProcessingPanel.Size = new Size(901, 491);
-            transactionProcessingPanel.TabIndex = 43;
+            transactionProcessingPanel.Size = new Size(943, 45);
+            transactionProcessingPanel.TabIndex = 62;
             // 
-            // transactionProcessingListView
+            // transactionProcessingLabel
             // 
-            transactionProcessingListView.BackColor = Color.White;
-            transactionProcessingListView.BorderStyle = BorderStyle.None;
-            transactionProcessingListView.CheckBoxes = true;
-            transactionProcessingListView.Columns.AddRange(new ColumnHeader[] { processIDHeader, accountIDHeader, currentBalanceHeader, transactionTypeHeader, amountHeader, processDateHeader });
-            transactionProcessingListView.Font = new Font("Century Gothic", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            transactionProcessingListView.ForeColor = Color.Black;
-            transactionProcessingListView.HeaderStyle = ColumnHeaderStyle.Nonclickable;
-            transactionProcessingListView.Location = new Point(20, 14);
-            transactionProcessingListView.MultiSelect = false;
-            transactionProcessingListView.Name = "transactionProcessingListView";
-            transactionProcessingListView.Scrollable = false;
-            transactionProcessingListView.Size = new Size(861, 459);
-            transactionProcessingListView.TabIndex = 41;
-            transactionProcessingListView.UseCompatibleStateImageBehavior = false;
-            transactionProcessingListView.View = View.Details;
+            transactionProcessingLabel.AutoSize = true;
+            transactionProcessingLabel.Font = new Font("Century Gothic", 15.75F, FontStyle.Bold, GraphicsUnit.Point);
+            transactionProcessingLabel.ForeColor = Color.White;
+            transactionProcessingLabel.Location = new Point(24, 10);
+            transactionProcessingLabel.Name = "transactionProcessingLabel";
+            transactionProcessingLabel.Size = new Size(242, 25);
+            transactionProcessingLabel.TabIndex = 37;
+            transactionProcessingLabel.Text = "Transaction Processing";
             // 
-            // processIDHeader
+            // pageCountLabel
             // 
-            processIDHeader.Text = "   Process ID";
-            processIDHeader.TextAlign = HorizontalAlignment.Center;
-            processIDHeader.Width = 110;
+            pageCountLabel.AutoSize = true;
+            pageCountLabel.Font = new Font("Century Gothic", 14.25F, FontStyle.Italic, GraphicsUnit.Point);
+            pageCountLabel.ForeColor = Color.Black;
+            pageCountLabel.Location = new Point(750, 655);
+            pageCountLabel.Name = "pageCountLabel";
+            pageCountLabel.Size = new Size(114, 22);
+            pageCountLabel.TabIndex = 64;
+            pageCountLabel.Text = "Page 1 of 1";
             // 
-            // accountIDHeader
+            // previousButton
             // 
-            accountIDHeader.Text = "Account ID";
-            accountIDHeader.TextAlign = HorizontalAlignment.Center;
-            accountIDHeader.Width = 150;
+            previousButton.BackColor = Color.Transparent;
+            previousButton.BackgroundImage = Properties.Resources.left;
+            previousButton.BackgroundImageLayout = ImageLayout.Stretch;
+            previousButton.Cursor = Cursors.Hand;
+            previousButton.FlatAppearance.BorderSize = 0;
+            previousButton.FlatAppearance.MouseDownBackColor = Color.Transparent;
+            previousButton.FlatAppearance.MouseOverBackColor = Color.Transparent;
+            previousButton.FlatStyle = FlatStyle.Flat;
+            previousButton.Location = new Point(885, 648);
+            previousButton.Name = "previousButton";
+            previousButton.Size = new Size(35, 35);
+            previousButton.TabIndex = 63;
+            previousButton.UseVisualStyleBackColor = false;
+            previousButton.Click += previousButton_Click;
             // 
-            // currentBalanceHeader
+            // nextButton
             // 
-            currentBalanceHeader.Text = "Current Balance";
-            currentBalanceHeader.TextAlign = HorizontalAlignment.Center;
-            currentBalanceHeader.Width = 170;
+            nextButton.BackColor = Color.Transparent;
+            nextButton.BackgroundImage = Properties.Resources.right;
+            nextButton.BackgroundImageLayout = ImageLayout.Stretch;
+            nextButton.Cursor = Cursors.Hand;
+            nextButton.FlatAppearance.BorderSize = 0;
+            nextButton.FlatAppearance.MouseDownBackColor = Color.Transparent;
+            nextButton.FlatAppearance.MouseOverBackColor = Color.Transparent;
+            nextButton.FlatStyle = FlatStyle.Flat;
+            nextButton.Location = new Point(926, 648);
+            nextButton.Name = "nextButton";
+            nextButton.Size = new Size(35, 35);
+            nextButton.TabIndex = 62;
+            nextButton.UseVisualStyleBackColor = false;
+            nextButton.Click += nextButton_Click;
             // 
-            // transactionTypeHeader
+            // transactionFlowPanel
             // 
-            transactionTypeHeader.Text = "Transaction Type";
-            transactionTypeHeader.TextAlign = HorizontalAlignment.Center;
-            transactionTypeHeader.Width = 150;
+            transactionFlowPanel.Location = new Point(8, 105);
+            transactionFlowPanel.Name = "transactionFlowPanel";
+            transactionFlowPanel.Size = new Size(965, 537);
+            transactionFlowPanel.TabIndex = 61;
             // 
-            // amountHeader
+            // line1
             // 
-            amountHeader.Text = "Amount";
-            amountHeader.TextAlign = HorizontalAlignment.Center;
-            amountHeader.Width = 152;
+            line1.BackColor = Color.Gainsboro;
+            line1.Location = new Point(17, 98);
+            line1.Name = "line1";
+            line1.Size = new Size(943, 1);
+            line1.TabIndex = 60;
             // 
-            // processDateHeader
+            // transactionHistoryButton
             // 
-            processDateHeader.Text = "Process Status";
-            processDateHeader.TextAlign = HorizontalAlignment.Center;
-            processDateHeader.Width = 130;
+            transactionHistoryButton.Cursor = Cursors.Hand;
+            transactionHistoryButton.FlatAppearance.BorderSize = 0;
+            transactionHistoryButton.FlatAppearance.MouseDownBackColor = Color.Transparent;
+            transactionHistoryButton.FlatAppearance.MouseOverBackColor = Color.Transparent;
+            transactionHistoryButton.FlatStyle = FlatStyle.Flat;
+            transactionHistoryButton.Font = new Font("Century Gothic", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            transactionHistoryButton.ForeColor = Color.FromArgb(34, 33, 46);
+            transactionHistoryButton.Location = new Point(486, 66);
+            transactionHistoryButton.Name = "transactionHistoryButton";
+            transactionHistoryButton.Size = new Size(160, 26);
+            transactionHistoryButton.TabIndex = 59;
+            transactionHistoryButton.Text = "Transaction History";
+            transactionHistoryButton.UseVisualStyleBackColor = true;
+            transactionHistoryButton.Click += transactionHistoryButton_Click;
             // 
-            // rejectButton
+            // transactionRequestButton
             // 
-            rejectButton.BorderColor = Color.Transparent;
-            rejectButton.ButtonColor = Color.FromArgb(92, 184, 92);
-            rejectButton.CornerRadius = 5;
-            rejectButton.Cursor = Cursors.Hand;
-            rejectButton.FlatAppearance.BorderSize = 0;
-            rejectButton.FlatAppearance.MouseDownBackColor = Color.Transparent;
-            rejectButton.FlatAppearance.MouseOverBackColor = Color.Transparent;
-            rejectButton.FlatStyle = FlatStyle.Flat;
-            rejectButton.Font = new Font("Century Gothic", 15.75F, FontStyle.Bold, GraphicsUnit.Point);
-            rejectButton.ForeColor = Color.White;
-            rejectButton.Location = new Point(789, 611);
-            rejectButton.Name = "rejectButton";
-            rejectButton.OnHoverBorderColor = Color.Transparent;
-            rejectButton.OnHoverButtonColor = Color.FromArgb(124, 205, 124);
-            rejectButton.OnHoverTextColor = Color.WhiteSmoke;
-            rejectButton.Size = new Size(166, 45);
-            rejectButton.TabIndex = 46;
-            rejectButton.Text = "REJECT";
-            rejectButton.TextColor = Color.WhiteSmoke;
-            rejectButton.UseVisualStyleBackColor = false;
-            rejectButton.Click += rejectButton_Click;
-            // 
-            // approveButton
-            // 
-            approveButton.BorderColor = Color.Transparent;
-            approveButton.ButtonColor = Color.FromArgb(92, 184, 92);
-            approveButton.CornerRadius = 5;
-            approveButton.Cursor = Cursors.Hand;
-            approveButton.FlatAppearance.BorderSize = 0;
-            approveButton.FlatAppearance.MouseDownBackColor = Color.Transparent;
-            approveButton.FlatAppearance.MouseOverBackColor = Color.Transparent;
-            approveButton.FlatStyle = FlatStyle.Flat;
-            approveButton.Font = new Font("Century Gothic", 15.75F, FontStyle.Bold, GraphicsUnit.Point);
-            approveButton.ForeColor = Color.White;
-            approveButton.Location = new Point(600, 611);
-            approveButton.Name = "approveButton";
-            approveButton.OnHoverBorderColor = Color.Transparent;
-            approveButton.OnHoverButtonColor = Color.FromArgb(124, 205, 124);
-            approveButton.OnHoverTextColor = Color.WhiteSmoke;
-            approveButton.Size = new Size(166, 45);
-            approveButton.TabIndex = 45;
-            approveButton.Text = "APPROVE";
-            approveButton.TextColor = Color.WhiteSmoke;
-            approveButton.UseVisualStyleBackColor = false;
-            approveButton.Click += approveButton_Click;
+            transactionRequestButton.Cursor = Cursors.Hand;
+            transactionRequestButton.FlatAppearance.BorderSize = 0;
+            transactionRequestButton.FlatAppearance.MouseDownBackColor = Color.Transparent;
+            transactionRequestButton.FlatAppearance.MouseOverBackColor = Color.Transparent;
+            transactionRequestButton.FlatStyle = FlatStyle.Flat;
+            transactionRequestButton.Font = new Font("Century Gothic", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            transactionRequestButton.ForeColor = Color.FromArgb(92, 184, 92);
+            transactionRequestButton.Location = new Point(308, 66);
+            transactionRequestButton.Name = "transactionRequestButton";
+            transactionRequestButton.Size = new Size(172, 26);
+            transactionRequestButton.TabIndex = 58;
+            transactionRequestButton.Text = "Transaction Request";
+            transactionRequestButton.UseVisualStyleBackColor = true;
+            transactionRequestButton.Click += transactionRequestButton_Click;
             // 
             // TransactionProcessingForm
             // 
@@ -160,28 +171,26 @@ namespace BankingSystem.Forms.TellerDashBoard
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(34, 33, 46);
             ClientSize = new Size(1039, 723);
-            Controls.Add(rejectButton);
-            Controls.Add(transactionProcessingPanel);
-            Controls.Add(approveButton);
-            Controls.Add(transactionProcessingLabel);
+            Controls.Add(profileUpdateCardPanel);
             FormBorderStyle = FormBorderStyle.None;
             Name = "TransactionProcessingForm";
             Text = "UserProfileForm";
+            profileUpdateCardPanel.ResumeLayout(false);
+            profileUpdateCardPanel.PerformLayout();
             transactionProcessingPanel.ResumeLayout(false);
+            transactionProcessingPanel.PerformLayout();
             ResumeLayout(false);
-            PerformLayout();
         }
 
-        private Label transactionProcessingLabel;
+        private RoundedPanel profileUpdateCardPanel;
         private RoundedPanel transactionProcessingPanel;
-        private ListView transactionProcessingListView;
-        private ColumnHeader processIDHeader;
-        private ColumnHeader accountIDHeader;
-        private ColumnHeader currentBalanceHeader;
-        private ColumnHeader transactionTypeHeader;
-        private ColumnHeader amountHeader;
-        private RoundedButton rejectButton;
-        private RoundedButton approveButton;
-        private ColumnHeader processDateHeader;
+        private Label transactionProcessingLabel;
+        private Label pageCountLabel;
+        private Button previousButton;
+        private Button nextButton;
+        private FlowLayoutPanel transactionFlowPanel;
+        private Panel line1;
+        private Button transactionHistoryButton;
+        private Button transactionRequestButton;
     }
 }

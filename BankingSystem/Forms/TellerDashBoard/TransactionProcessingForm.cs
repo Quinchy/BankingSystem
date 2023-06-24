@@ -1,4 +1,5 @@
-﻿using BankingSystem.Models;
+﻿using BankingSystem.Forms.TellerDashBoard.TransactionCards;
+using BankingSystem.Models;
 using BankingSystem.Services.CustomerServices;
 using BankingSystem.Services.TellerServices;
 using System;
@@ -15,93 +16,189 @@ namespace BankingSystem.Forms.TellerDashBoard
 {
     public partial class TransactionProcessingForm : Form
     {
+        private int currentPage = 1;
+        private int totalRecords = 0;
+        private int recordsPerPage = 4;
+        private int totalPages => (totalRecords + recordsPerPage - 1) / recordsPerPage;
+        private bool viewingRequests = true;
         public TransactionProcessingForm()
         {
             InitializeComponent();
-            InitializeTransactionProcessingListView();
+            InitializeTransactionRequestCards();
         }
-        // Handles the Click event of the approve button.
-        // Approves all checked transactions in the ListView.
-        private void approveButton_Click(object sender, EventArgs e)
+        public void InitializeTransactionRequestCards()
         {
-            // Check if any transactions are selected
-            if (transactionProcessingListView.CheckedItems.Count > 0)
-            {
-                // Iterate over all checked items in the ListView
-                foreach (ListViewItem selectedItem in transactionProcessingListView.CheckedItems)
-                {
-                    string processId = selectedItem.SubItems[0].Text;
-                    string transactionType = selectedItem.SubItems[3].Text;                   
-                    try
-                    {
-                        // Approve the transaction.
-                        switch (transactionType)
-                        {
-                            case "Deposit":
-                                TransactionProcessingServices.approveDeposit(processId);
-                                break;
-                            case "Withdraw":
-                                TransactionProcessingServices.approveWithdraw(processId);
-                                break;
-                            case "Transfer":
-                                TransactionProcessingServices.approveTransfer(processId);
-                                break;
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show(ex.Message);
-                    }
-                }
-
-                // Refresh the transaction processing list view
-                InitializeTransactionProcessingListView();
-            }
-            else
-            {
-                MessageBox.Show("Please check a transaction to approve.");
-            }
-        }
-        // Handles the Click event of the reject button.
-        // Rejects all checked transactions in the ListView.
-        private void rejectButton_Click(object sender, EventArgs e)
-        {
-            // Check if any transactions are selected
-            if (transactionProcessingListView.CheckedItems.Count > 0)
-            {
-                // Iterate over all checked items in the ListView
-                foreach (ListViewItem selectedItem in transactionProcessingListView.CheckedItems)
-                {
-                    string processId = selectedItem.SubItems[0].Text;                 
-                    try
-                    {
-                        // Reject the transaction.
-                        TransactionProcessingServices.rejectTransaction(processId);
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show(ex.Message);
-                    }
-                }
-                // Refresh the transaction processing list view
-                InitializeTransactionProcessingListView();
-            }
-            else
-            {
-                MessageBox.Show("Please check a transaction to reject.");
-            }
-        }
-        // Initializes the transaction processing ListView with data from the TransactionProcessingServices.
-        private void InitializeTransactionProcessingListView()
-        {
-            var transactions = TransactionProcessingServices.loadTransactionRequest();
-            transactionProcessingListView.Items.Clear();
-            // Add each transaction to the ListView
+            // Clear existing controls        
+            transactionFlowPanel.Controls.Clear();
+            totalRecords = TransactionProcessingServices.RetrieveTotalTransactionRequests();
+            var transactions = TransactionProcessingServices.RetrieveTransactionRequests(4, (currentPage - 1) * 4);
             foreach (var transaction in transactions)
             {
-                ListViewItem item = new ListViewItem(new[] { transaction.ProcessId, transaction.AccountId, transaction.Balance.ToString(), transaction.TransactionType, transaction.Amount.ToString(), transaction.ProcessStatus });
-                transactionProcessingListView.Items.Add(item);
+                // Create a new card for this transaction
+                TransactionRequestCards card = new TransactionRequestCards();
+                // Update the labels in the card with data from the transaction
+                card.senderFullNameValue.Text = transaction.SenderFullName;
+                card.senderAccountIdValue.Text = transaction.SenderAccountId;
+                card.currentBalanceValue.Text = transaction.CurrentBalance.ToString("N2");
+                card.transactionTypeValue.Text = transaction.TransactionType;
+                card.amountValue.Text = transaction.Amount.ToString("N2");
+                card.transactionStatusValue.Text = transaction.TransactionStatus;
+                card.TransactionType = transaction.TransactionType;
+                card.ProcessId = transaction.ProcessId;
+                if (transaction.TransactionType == "Withdraw" || transaction.TransactionType == "Deposit")
+                {
+                    card.receiverLabel.Visible = false;
+                    card.line2.Visible = false;
+                    card.receiverFullNameValue.Visible = false;
+                    card.receiverAccountIdValue.Visible = false;
+                }
+                else
+                {
+                    card.receiverLabel.Visible = true;
+                    card.line2.Visible = true;
+                    card.receiverFullNameValue.Visible = true;
+                    card.receiverAccountIdValue.Visible = true;
+                    card.receiverFullNameValue.Text = transaction.ReceiverFullName;
+                    card.receiverAccountIdValue.Text = transaction.ReceiverAccountId;
+                }
+                if (transaction.TransactionType == "Withdraw")
+                {
+                    card.transactionRequestPicture.BackgroundImage = Properties.Resources.withdraw1;
+                }
+                else if (transaction.TransactionType == "Deposit")
+                {
+                    card.transactionRequestPicture.BackgroundImage = Properties.Resources.deposit1;
+                }
+                else if (transaction.TransactionType == "Transfer")
+                {
+                    card.transactionRequestPicture.BackgroundImage = Properties.Resources.transfer1;
+                }
+
+                // Add the card to the panel
+                transactionFlowPanel.Controls.Add(card);
             }
+            // Updating the pageCountLabel as per the current page and total number of pages
+            if (totalRecords == 0)
+            {
+                currentPage = 0;
+            }
+            pageCountLabel.Text = $"Page {currentPage} of {totalPages}";
+            // Update state of Previous and Next buttons
+            UpdatePaginationButtons();
+        }
+        public void InitializeTransactionHistoryCards()
+        {
+            // Clear existing controls        
+            transactionFlowPanel.Controls.Clear();
+            totalRecords = TransactionProcessingServices.RetrieveTotalTransactionHistory();
+            var histories = TransactionProcessingServices.RetrieveTransactionHistory(4, (currentPage - 1) * 4);
+            foreach (var history in histories)
+            {
+                // Create a new card for this transaction
+                TransactionHistoryCards card = new TransactionHistoryCards();
+
+                // Update the labels in the card with data from the history
+                card.senderFullNameValue.Text = history.SenderFullName;
+                card.senderAccountIdValue.Text = history.SenderAccountId;
+                card.transactionTypeValue.Text = history.TransactionType;
+                card.transactionDateLabel.Visible = history.ProcessStatus == "Approved";
+                card.transactionDateValue.Visible = history.ProcessStatus == "Approved";
+                card.transactionDateValue.Text = history.TransactionDate.ToString("dd/MM/yyyy");
+                card.TransactionId = history.TransactionId;
+                card.viewReceipt.Visible = history.ProcessStatus == "Approved";
+                card.amountValue.Text = history.Amount.ToString("N2");
+                card.processStatusValue.Text = history.ProcessStatus;
+                if (history.TransactionType == "Withdraw" || history.TransactionType == "Deposit")
+                {
+                    card.receiverLabel.Visible = false;
+                    card.line2.Visible = false;
+                    card.receiverFullNameValue.Visible = false;
+                    card.receiverAccountIdValue.Visible = false;
+                }
+                else
+                {
+                    card.receiverLabel.Visible = true;
+                    card.line2.Visible = true;
+                    card.receiverFullNameValue.Visible = true;
+                    card.receiverAccountIdValue.Visible = true;
+                    card.receiverFullNameValue.Text = history.ReceiverFullName;
+                    card.receiverAccountIdValue.Text = history.ReceiverAccountId;
+                }
+                if (history.TransactionType == "Withdraw")
+                {
+                    card.transactionHistoryPicture.BackgroundImage = Properties.Resources.withdraw1;
+                }
+                else if (history.TransactionType == "Deposit")
+                {
+                    card.transactionHistoryPicture.BackgroundImage = Properties.Resources.deposit1;
+                }
+                else if (history.TransactionType == "Transfer")
+                {
+                    card.transactionHistoryPicture.BackgroundImage = Properties.Resources.transfer1;
+                }
+
+                // Add the card to the panel
+                transactionFlowPanel.Controls.Add(card);
+            }
+            // Updating the pageCountLabel as per the current page and total number of pages
+            if (totalRecords == 0)
+            {
+                currentPage = 0;
+            }
+            pageCountLabel.Text = $"Page {currentPage} of {totalPages}";
+            // Update state of Previous and Next buttons
+            UpdatePaginationButtons();
+        }
+        private void UpdatePaginationButtons()
+        {
+            previousButton.Enabled = currentPage > 1;
+            nextButton.Enabled = currentPage < totalPages;
+        }
+        private void previousButton_Click(object sender, EventArgs e)
+        {
+            if (currentPage > 1)
+            {
+                currentPage--;
+                if (viewingRequests)
+                {
+                    InitializeTransactionRequestCards();
+                }
+                else
+                {
+                    InitializeTransactionHistoryCards();
+                }
+            }
+        }
+        private void nextButton_Click(object sender, EventArgs e)
+        {
+            if (currentPage < totalPages)
+            {
+                currentPage++;
+                if (viewingRequests)
+                {
+                    InitializeTransactionRequestCards();
+                }
+                else
+                {
+                    InitializeTransactionHistoryCards();
+                }
+            }
+        }
+        private void transactionRequestButton_Click(object sender, EventArgs e)
+        {
+            currentPage = 1;
+            viewingRequests = true; 
+            InitializeTransactionRequestCards();
+            transactionRequestButton.ForeColor = Color.FromArgb(92, 184, 92);
+            transactionHistoryButton.ForeColor = Color.FromArgb(34, 33, 46);
+        }
+        private void transactionHistoryButton_Click(object sender, EventArgs e)
+        {
+            currentPage = 1;
+            viewingRequests = false;
+            InitializeTransactionHistoryCards();
+            transactionRequestButton.ForeColor = Color.FromArgb(34, 33, 46);
+            transactionHistoryButton.ForeColor = Color.FromArgb(92, 184, 92);
         }
     }
 }

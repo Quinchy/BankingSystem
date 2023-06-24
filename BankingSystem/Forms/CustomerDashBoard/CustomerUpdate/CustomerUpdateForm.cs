@@ -16,10 +16,12 @@ namespace BankingSystem.Forms.CustomerDashBoard
     public partial class CustomerUpdateForm : Form
     {
         private string email;
+        private string accountId;
         Control dashboardPanel = DashboardForm.GetContentPanel();
         public CustomerUpdateForm(string accountId, string email)
         {
             this.email = email;
+            this.accountId = accountId;
             InitializeComponent();
             InitializeCustomerEmailForm();
         }
@@ -50,7 +52,7 @@ namespace BankingSystem.Forms.CustomerDashBoard
         private void phoneNumberUpdateButton_Click(object sender, EventArgs e)
         {
             // Change the displayed form to the customer phone number form
-            var customerPhoneNumberForm = new CustomerPhoneNumberForm(email);
+            var customerPhoneNumberForm = new CustomerPhoneNumberForm(accountId);
             ChangeCustomerUpdateForm(customerPhoneNumberForm);
             // Change the color of links
             emailUpdateButton.ForeColor = Color.FromArgb(34, 33, 46);
@@ -60,7 +62,7 @@ namespace BankingSystem.Forms.CustomerDashBoard
         private void passwordUpdateButton_Click(object sender, EventArgs e)
         {
             // Change the displayed form to the customer password form
-            var customerPasswordForm = new CustomerPasswordForm(email);
+            var customerPasswordForm = new CustomerPasswordForm(accountId);
             ChangeCustomerUpdateForm(customerPasswordForm);
             // Change the color of links
             emailUpdateButton.ForeColor = Color.FromArgb(34, 33, 46);
@@ -70,7 +72,7 @@ namespace BankingSystem.Forms.CustomerDashBoard
         private void emailUpdateButton_Click(object sender, EventArgs e)
         {
             // Change the displayed form to the customer email form
-            var customerEmailForm = new CustomerEmailForm(email);
+            var customerEmailForm = new CustomerEmailForm(accountId);
             ChangeCustomerUpdateForm(customerEmailForm);
             // Change the color of links
             emailUpdateButton.ForeColor = Color.FromArgb(92, 184, 92);
@@ -80,7 +82,7 @@ namespace BankingSystem.Forms.CustomerDashBoard
         public void InitializeCustomerEmailForm()
         {
             // Change the displayed form to the customer email form
-            var customerEmailForm = new CustomerEmailForm(email);
+            var customerEmailForm = new CustomerEmailForm(accountId);
             ChangeCustomerUpdateForm(customerEmailForm);
         }
     }

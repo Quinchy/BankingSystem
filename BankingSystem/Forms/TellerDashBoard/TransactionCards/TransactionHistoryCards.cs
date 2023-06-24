@@ -1,5 +1,7 @@
-﻿using BankingSystem.Models.CustomerModels;
+﻿using BankingSystem.Forms.CustomerDashBoard.TransactionReceipt;
+using BankingSystem.Models.CustomerModels;
 using BankingSystem.Services.CustomerServices;
+using BankingSystem.Services.TellerServices;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -8,19 +10,17 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Transactions;
 using System.Windows.Forms;
 
-namespace BankingSystem.Forms.CustomerDashBoard.TransactionReceipt
+namespace BankingSystem.Forms.TellerDashBoard.TransactionCards
 {
-    public partial class TransactionCard : UserControl
+    public partial class TransactionHistoryCards : UserControl
     {
         public string TransactionId { get; set; }
-        public TransactionCard()
+        public TransactionHistoryCards()
         {
             InitializeComponent();
         }
-
         private void viewReceipt_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             Receipt receipt = TransactionHistoryServices.GetReceiptFromDatabase(this.TransactionId);

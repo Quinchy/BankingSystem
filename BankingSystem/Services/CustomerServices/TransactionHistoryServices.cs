@@ -94,36 +94,7 @@ namespace BankingSystem.Services.CustomerServices
                         customerId = reader.GetString("customer_id");
                     }
                 }
-                if (accountId != null && customerId != null)
-                {
-                    // Check if receipt already exists
-                    string sqlCheck = @"
-                        SELECT COUNT(*)
-                        FROM transaction_receipt
-                        WHERE transaction_id = @TransactionId";
-                    MySqlCommand commandCheck = new MySqlCommand(sqlCheck, connection);
-                    commandCheck.Parameters.AddWithValue("@TransactionId", transaction.TransactionId);
-                    var receiptExists = Convert.ToInt32(commandCheck.ExecuteScalar()) > 0;
-                    if (!receiptExists)
-                    {
-                        // SQL query to insert into transaction receipt
-                        string sqlInsert = @"
-                            INSERT INTO transaction_receipt (reference_number, customer_id, account_id, transaction_id)
-                            VALUES (@ReferenceNumber, @CustomerId, @AccountId, @TransactionId)";
-                        MySqlCommand commandInsert = new MySqlCommand(sqlInsert, connection);
-                        commandInsert.Parameters.AddWithValue("@ReferenceNumber", GenerateReferenceNumber());
-                        commandInsert.Parameters.AddWithValue("@CustomerId", customerId);
-                        commandInsert.Parameters.AddWithValue("@AccountId", accountId);
-                        commandInsert.Parameters.AddWithValue("@TransactionId", transaction.TransactionId);
-                        commandInsert.ExecuteNonQuery();
-                    }
-                }
             }
-        }
-        private static string GenerateReferenceNumber()
-        {
-            Random rnd = new Random();
-            return string.Format("{0:D4}-{1:D3}-{2:D4}", rnd.Next(0, 9999), rnd.Next(0, 999), rnd.Next(0, 9999));
         }
         public static Receipt GetReceiptFromDatabase(string transactionId)
         {

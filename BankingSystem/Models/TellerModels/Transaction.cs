@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 
 namespace BankingSystem.Models.TellerModels
 {
-    // Defines the TransactionRequest class.
-    internal class TransactionRequest
+    internal class Transaction
     {
         // Gets or sets the process ID.
         public string ProcessId { get; set; }
@@ -15,10 +14,12 @@ namespace BankingSystem.Models.TellerModels
         public string SenderFullName { get; set; }
         // Gets or sets the sender account ID.
         public string SenderAccountId { get; set; }
-        // Gets or sets the current balance.
-        public double CurrentBalance { get; set; }
         // Gets or sets the transaction type.
         public string TransactionType { get; set; }
+        // Gets or sets the transaction type.
+        public DateTime TransactionDate { get; set; }
+        // Get or sets the transaction id.
+        public string TransactionId { get; set; }
         // Gets or sets the receiver full name.
         public string ReceiverFullName { get; set; }
         // Gets or sets the receiver account ID.
@@ -26,29 +27,31 @@ namespace BankingSystem.Models.TellerModels
         // Gets or sets the amount.
         public double Amount { get; set; }
         // Gets or sets the transaction status.
-        public string TransactionStatus { get; set; }
+        public string ProcessStatus { get; set; }
 
         // Initializes a new instance of the TransactionRequestDetail class.
-        public TransactionRequest(
+        public Transaction(
             string processId,
             string senderFullName,
             string senderAccountId,
-            double currentBalance,
             string transactionType,
+            DateTime transactionDate,
+            string transactionId,
             string receiverFullName,
             string receiverAccountId,
             double amount,
-            string transactionStatus)
+            string processStatus)
         {
             ProcessId = processId;
             SenderFullName = senderFullName;
             SenderAccountId = senderAccountId;
-            CurrentBalance = currentBalance;
             TransactionType = transactionType;
+            TransactionDate = transactionDate;
+            TransactionId = transactionId;
             ReceiverFullName = receiverFullName;
             ReceiverAccountId = receiverAccountId;
             Amount = amount;
-            TransactionStatus = transactionStatus;
+            ProcessStatus = processStatus;
         }
     }
 }

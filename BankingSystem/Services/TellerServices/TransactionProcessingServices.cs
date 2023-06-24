@@ -12,254 +12,329 @@ namespace BankingSystem.Services.TellerServices
     // A service class for managing customer' transaction request. Also performs the withdrawal, deposit and transfer of money.
     internal class TransactionProcessingServices
     {
-        // Loads a list of transaction requests with pending status from the database
-        public static List<TransactionRequest> loadTransactionRequest()
+        public static int RetrieveTotalTransactionRequests()
         {
-            var transactionRequests = new List<TransactionRequest>();
-            // Open a connection to the MySQL database using a connection pool
-            using (var conn = MySQLDatabase.OpenConnection())
+            int totalRequests = 0;
+            using (MySqlConnection connection = MySQLDatabase.OpenConnection())
             {
-                // Construct the SQL query to retrieve transaction request information
-                string query = @"SELECT tp.process_id, tp.account_id, a.balance, tp.transaction_type, tp.amount, tp.process_status 
+                string sql = "SELECT COUNT(*) FROM transaction_processing WHERE process_status = 'Pending'";
+                MySqlCommand command = new MySqlCommand(sql, connection);
+                totalRequests = Convert.ToInt32(command.ExecuteScalar());
+            }
+            return totalRequests;
+        }
+        public static int RetrieveTotalTransactionHistory()
+        {
+            int totalHistory = 0;
+            using (MySqlConnection connection = MySQLDatabase.OpenConnection())
+            {
+                string sql = @"SELECT COUNT(*) FROM transaction_processing WHERE process_status IN ('Approved', 'Rejected')";
+                MySqlCommand command = new MySqlCommand(sql, connection);
+                totalHistory = Convert.ToInt32(command.ExecuteScalar());
+            }
+            return totalHistory;
+        }
+
+        public static List<TransactionRequest> RetrieveTransactionRequests(int limit = 4, int offset = 0)
+        {
+            List<TransactionRequest> requests = new List<TransactionRequest>();
+            using (MySqlConnection connection = MySQLDatabase.OpenConnection())
+            {
+                string sql = @"
+                    SELECT tp.process_id, CONCAT(c.first_name, ' ', c.last_name) as sender_full_name, tp.account_id as sender_account_id,
+                    a.balance as current_balance, tp.transaction_type,
+                    CASE WHEN tp.transaction_type = 'Transfer' THEN CONCAT(rci.first_name, ' ', rci.last_name) ELSE NULL END as receiver_full_name,
+                    CASE WHEN tp.transaction_type = 'Transfer' THEN tp.receiver_account_id ELSE NULL END as receiver_account_id, 
+                    tp.amount, tp.process_status as transaction_status
                     FROM transaction_processing tp
                     JOIN account a ON tp.account_id = a.account_id
-                    WHERE tp.process_status = 'Pending'";
-                // Create a MySqlCommand object with the query and connection
-                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                    JOIN customer_information c ON a.customer_id = c.customer_id
+                    LEFT JOIN account ra ON tp.receiver_account_id = ra.account_id AND tp.transaction_type = 'Transfer'
+                    LEFT JOIN customer_information rci ON ra.customer_id = rci.customer_id AND tp.transaction_type = 'Transfer'
+                    WHERE tp.process_status = 'Pending'
+                    ORDER BY tp.process_id DESC
+                    LIMIT @Limit
+                    OFFSET @Offset";
+                MySqlCommand command = new MySqlCommand(sql, connection);
+                command.Parameters.AddWithValue("@Limit", limit);
+                command.Parameters.AddWithValue("@Offset", offset);
+                using (MySqlDataReader reader = command.ExecuteReader())
                 {
-                    // Execute the query and retrieve the data reader
-                    using (MySqlDataReader reader = cmd.ExecuteReader())
+                    while (reader.Read())
                     {
-                        // Iterate through each row in the result set
-                        while (reader.Read())
-                        {
-                            // Extract the transaction request details from the reader
-                            var processId = reader["process_id"].ToString();
-                            var accountId = reader["account_id"].ToString();
-                            var balance = Convert.ToDouble(reader["balance"]);
-                            var transactionType = reader["transaction_type"].ToString();
-                            var amount = Convert.ToDouble(reader["amount"]);
-                            var processStatus = reader["process_status"].ToString();
-                            // Create a TransactionRequest object and add it to the list
-                            transactionRequests.Add(new TransactionRequest(processId, accountId, balance, transactionType, amount, processStatus));
-                        }
+                        TransactionRequest request = new TransactionRequest(
+                            reader.GetString("process_id"),
+                            reader.GetString("sender_full_name"),
+                            reader.GetString("sender_account_id"),
+                            reader.GetDouble("current_balance"),
+                            reader.GetString("transaction_type"),
+                            reader.IsDBNull(reader.GetOrdinal("receiver_full_name")) ? null : reader.GetString("receiver_full_name"),
+                            reader.IsDBNull(reader.GetOrdinal("receiver_account_id")) ? null : reader.GetString("receiver_account_id"),
+                            reader.GetDouble("amount"),
+                            reader.GetString("transaction_status")
+                        );
+                        requests.Add(request);
                     }
                 }
             }
-            return transactionRequests;
+            return requests;
         }
-        // Approves a deposit transaction by updating the balance and process status, and inserting a transaction record
-        public static void approveDeposit(string processId)
+        public static List<Transaction> RetrieveTransactionHistory(int limit = 4, int offset = 0)
         {
-            using (var conn = MySQLDatabase.OpenConnection())
+            List<Transaction> transactions = new List<Transaction>();
+            using (MySqlConnection connection = MySQLDatabase.OpenConnection())
             {
-                string accountId;
-                double depositAmount;
-                // Retrieve transaction details based on the process ID
-                using (var selectCommand = new MySqlCommand("SELECT * FROM transaction_processing WHERE process_id = @processId", conn))
+                string sql = @"
+                    SELECT tp.process_id, CONCAT(c.first_name, ' ', c.last_name) as sender_full_name, tp.account_id as sender_account_id,
+                    CASE WHEN tp.process_status = 'Approved' THEN th.transaction_type ELSE tp.transaction_type END as transaction_type,
+                    th.date as transaction_date, th.transaction_id as transaction_history_id,
+                    CASE WHEN th.transaction_type = 'Transfer' THEN CONCAT(rci.first_name, ' ', rci.last_name) ELSE NULL END as receiver_full_name,
+                    CASE WHEN th.transaction_type = 'Transfer' THEN tp.receiver_account_id ELSE NULL END as receiver_account_id, 
+                    CASE WHEN tp.process_status = 'Approved' THEN th.amount ELSE tp.amount END as transaction_amount,
+                    tp.process_status as transaction_status
+                    FROM transaction_processing tp
+                    JOIN account a ON tp.account_id = a.account_id
+                    JOIN customer_information c ON a.customer_id = c.customer_id
+                    LEFT JOIN account ra ON tp.receiver_account_id = ra.account_id
+                    LEFT JOIN customer_information rci ON ra.customer_id = rci.customer_id
+                    LEFT JOIN transaction_history th ON tp.account_id = th.account_id AND tp.process_status = 'Approved'
+                    WHERE tp.process_status IN ('Approved', 'Rejected')
+                    ORDER BY tp.process_id DESC
+                    LIMIT @Limit
+                    OFFSET @Offset";
+                MySqlCommand command = new MySqlCommand(sql, connection);
+                command.Parameters.AddWithValue("@Limit", limit);
+                command.Parameters.AddWithValue("@Offset", offset);
+                using (MySqlDataReader reader = command.ExecuteReader())
                 {
-                    selectCommand.Parameters.AddWithValue("@processId", processId);
-
-                    using (var reader = selectCommand.ExecuteReader())
+                    while (reader.Read())
                     {
-                        if (reader.Read())
-                        {
-                            accountId = reader["account_id"].ToString();
-                            depositAmount = Convert.ToDouble(reader["amount"]);
-                        }
-                        else
-                        {
-                            throw new Exception("Process ID not found.");
-                        }
+                        Transaction transaction = new Transaction(
+                            reader.GetString("process_id"),
+                            reader.GetString("sender_full_name"),
+                            reader.GetString("sender_account_id"),
+                            reader.GetString("transaction_type"),
+                            reader.IsDBNull(reader.GetOrdinal("transaction_date")) ? DateTime.MinValue : reader.GetDateTime("transaction_date"),
+                            reader.IsDBNull(reader.GetOrdinal("transaction_history_id")) ? null : reader.GetString("transaction_history_id"),
+                            reader.IsDBNull(reader.GetOrdinal("receiver_full_name")) ? null : reader.GetString("receiver_full_name"),
+                            reader.IsDBNull(reader.GetOrdinal("receiver_account_id")) ? null : reader.GetString("receiver_account_id"),
+                            reader.GetDouble("transaction_amount"),
+                            reader.GetString("transaction_status")
+                        );
+                        transactions.Add(transaction);
                     }
-                }
-                // Retrieve current balance of the account
-                using (var selectBalanceCommand = new MySqlCommand("SELECT balance FROM Account WHERE account_id = @accountId", conn))
-                {
-                    selectBalanceCommand.Parameters.AddWithValue("@accountId", accountId);
-                    object result = selectBalanceCommand.ExecuteScalar();
-
-                    if (result != null)
-                    {
-                        double currentBalance = Convert.ToDouble(result);
-                        double newBalance = currentBalance + depositAmount;
-
-                        // Update the balance of the account
-                        using (var updateBalanceCommand = new MySqlCommand("UPDATE Account SET balance = @balance WHERE account_id = @accountId", conn))
-                        {
-                            updateBalanceCommand.Parameters.AddWithValue("@accountId", accountId);
-                            updateBalanceCommand.Parameters.AddWithValue("@balance", newBalance);
-                            updateBalanceCommand.ExecuteNonQuery();
-                        }
-                    }
-                    else
-                    {
-                        throw new Exception("Account ID not found.");
-                    }
-                }
-                // Update the process status to 'Approved'
-                using (var updateCommand = new MySqlCommand("UPDATE transaction_processing SET process_status = 'Approved' WHERE process_id = @processId", conn))
-                {
-                    updateCommand.Parameters.AddWithValue("@processId", processId);
-                    updateCommand.ExecuteNonQuery();
-                }
-                // Insert a record in the transaction history
-                using (var insertCommand = new MySqlCommand("INSERT INTO transaction_history (account_id, amount, date, transaction_type) VALUES (@accountId, @amount, NOW(), 'Deposit')", conn))
-                {
-                    insertCommand.Parameters.AddWithValue("@accountId", accountId);
-                    insertCommand.Parameters.AddWithValue("@amount", depositAmount);
-                    insertCommand.ExecuteNonQuery();
                 }
             }
+            return transactions;
         }
-        // Approves a withdrawal transaction by updating the balance and process status, and inserting a transaction record
-        public static void approveWithdraw(string processId)
+        public static void ApproveWithdraw(string processId)
         {
-            using (var conn = MySQLDatabase.OpenConnection())
+            using (MySqlConnection connection = MySQLDatabase.OpenConnection())
             {
-                string accountId;
-                double withdrawAmount;
-                // Retrieve transaction details based on the process ID
-                using (var selectCommand = new MySqlCommand("SELECT * FROM transaction_processing WHERE process_id = @processId", conn))
+                MySqlTransaction transaction = connection.BeginTransaction();
+
+                try
                 {
-                    selectCommand.Parameters.AddWithValue("@processId", processId);
-                    using (var reader = selectCommand.ExecuteReader())
-                    {
-                        if (reader.Read())
-                        {
-                            accountId = reader["account_id"].ToString();
-                            withdrawAmount = Convert.ToDouble(reader["amount"]);
-                        }
-                        else
-                        {
-                            throw new Exception("Process ID not found.");
-                        }
-                    }
+                    // Update process_status in transaction_processing table
+                    string sql1 = "UPDATE transaction_processing SET process_status = 'Approved' WHERE process_id = @ProcessId";
+                    MySqlCommand command1 = new MySqlCommand(sql1, connection);
+                    command1.Parameters.AddWithValue("@ProcessId", processId);
+                    command1.ExecuteNonQuery();
+
+                    // Perform withdrawal and update account balance
+                    string sql2 = @"
+                        UPDATE account a
+                        JOIN transaction_processing tp ON a.account_id = tp.account_id
+                        SET a.balance = a.balance - tp.amount
+                        WHERE tp.process_id = @ProcessId";
+                    MySqlCommand command2 = new MySqlCommand(sql2, connection);
+                    command2.Parameters.AddWithValue("@ProcessId", processId);
+                    command2.ExecuteNonQuery();
+
+                    // Insert into transaction_history
+                    string sql3 = @"
+                        INSERT INTO transaction_history (account_id, amount, date, transaction_type)
+                        SELECT tp.account_id, tp.amount, NOW(), tp.transaction_type
+                        FROM transaction_processing tp
+                        WHERE tp.process_id = @ProcessId";
+                    MySqlCommand command3 = new MySqlCommand(sql3, connection);
+                    command3.Parameters.AddWithValue("@ProcessId", processId);
+                    command3.ExecuteNonQuery();
+
+                    // Get the transaction_id of the last inserted row in transaction_history
+                    string transactionId = command3.LastInsertedId.ToString();
+
+                    // Generate reference number
+                    string referenceNumber = GenerateReferenceNumber();
+
+                    // Insert into transaction_receipt
+                    string sql4 = @"
+                        INSERT INTO transaction_receipt (reference_number, customer_id, account_id, transaction_id)
+                        SELECT @ReferenceNumber, a.customer_id, tp.account_id, @TransactionId
+                        FROM transaction_processing tp
+                        JOIN account a ON a.account_id = tp.account_id
+                        WHERE tp.process_id = @ProcessId";
+                    MySqlCommand command4 = new MySqlCommand(sql4, connection);
+                    command4.Parameters.AddWithValue("@ReferenceNumber", referenceNumber);
+                    command4.Parameters.AddWithValue("@ProcessId", processId);
+                    command4.Parameters.AddWithValue("@TransactionId", transactionId);
+                    command4.ExecuteNonQuery();
+
+                    transaction.Commit();
                 }
-                // Retrieve current balance of the account
-                using (var selectBalanceCommand = new MySqlCommand("SELECT balance FROM Account WHERE account_id = @accountId", conn))
+                catch
                 {
-                    selectBalanceCommand.Parameters.AddWithValue("@accountId", accountId);
-                    object result = selectBalanceCommand.ExecuteScalar();
-                    if (result != null)
-                    {
-                        double currentBalance = Convert.ToDouble(result);
-                        if (currentBalance < withdrawAmount)
-                        {
-                            throw new Exception("Insufficient balance.");
-                        }
-                        double newBalance = currentBalance - withdrawAmount;
-                        // Update the balance of the account
-                        using (var updateBalanceCommand = new MySqlCommand("UPDATE Account SET balance = @balance WHERE account_id = @accountId", conn))
-                        {
-                            updateBalanceCommand.Parameters.AddWithValue("@accountId", accountId);
-                            updateBalanceCommand.Parameters.AddWithValue("@balance", newBalance);
-                            updateBalanceCommand.ExecuteNonQuery();
-                        }
-                    }
-                    else
-                    {
-                        throw new Exception("Account ID not found.");
-                    }
-                }
-                // Update the process status to 'Approved'
-                using (var updateCommand = new MySqlCommand("UPDATE transaction_processing SET process_status = 'Approved' WHERE process_id = @processId", conn))
-                {
-                    updateCommand.Parameters.AddWithValue("@processId", processId);
-                    updateCommand.ExecuteNonQuery();
-                }
-                // Insert a record in the transaction history
-                using (var insertCommand = new MySqlCommand("INSERT INTO transaction_history (account_id, amount, date, transaction_type) VALUES (@accountId, @amount, NOW(), 'Withdraw')", conn))
-                {
-                    insertCommand.Parameters.AddWithValue("@accountId", accountId);
-                    insertCommand.Parameters.AddWithValue("@amount", withdrawAmount);
-                    insertCommand.ExecuteNonQuery();
+                    transaction.Rollback();
+                    throw;
                 }
             }
         }
-        // Approves a transfer transaction by updating balances and process status, and inserting a transaction record
-        public static void approveTransfer(string processId)
+        public static void ApproveDeposit(string processId)
         {
-            using (var conn = MySQLDatabase.OpenConnection())
+            using (MySqlConnection connection = MySQLDatabase.OpenConnection())
             {
-                string senderAccountId;
-                string receiverAccountId;
-                double transferAmount;
-                // Retrieve transaction details based on the process ID
-                using (var selectCommand = new MySqlCommand("SELECT * FROM transaction_processing WHERE process_id = @processId", conn))
-                {
-                    selectCommand.Parameters.AddWithValue("@processId", processId);
+                MySqlTransaction transaction = connection.BeginTransaction();
 
-                    using (var reader = selectCommand.ExecuteReader())
-                    {
-                        if (reader.Read())
-                        {
-                            senderAccountId = reader["account_id"].ToString();
-                            receiverAccountId = reader["receiver_account_id"].ToString();
-                            transferAmount = Convert.ToDouble(reader["amount"]);
-                        }
-                        else
-                        {
-                            throw new Exception("Process ID not found.");
-                        }
-                    }
-                }
-                // Update sender's account balance
-                using (var updateBalanceCommand = new MySqlCommand("UPDATE Account SET balance = balance - @amount WHERE account_id = @accountId", conn))
+                try
                 {
-                    updateBalanceCommand.Parameters.AddWithValue("@amount", transferAmount);
-                    updateBalanceCommand.Parameters.AddWithValue("@accountId", senderAccountId);
-                    int rowsAffected = updateBalanceCommand.ExecuteNonQuery();
+                    // Update process_status in transaction_processing table
+                    string sql1 = "UPDATE transaction_processing SET process_status = 'Approved' WHERE process_id = @ProcessId";
+                    MySqlCommand command1 = new MySqlCommand(sql1, connection);
+                    command1.Parameters.AddWithValue("@ProcessId", processId);
+                    command1.ExecuteNonQuery();
 
-                    if (rowsAffected == 0)
-                    {
-                        throw new Exception("Sender's Account ID not found.");
-                    }
-                }
-                // Update receiver's account balance
-                using (var updateBalanceCommand = new MySqlCommand("UPDATE Account SET balance = balance + @amount WHERE account_id = @accountId", conn))
-                {
-                    updateBalanceCommand.Parameters.AddWithValue("@amount", transferAmount);
-                    updateBalanceCommand.Parameters.AddWithValue("@accountId", receiverAccountId);
-                    int rowsAffected = updateBalanceCommand.ExecuteNonQuery();
+                    // Perform deposit and update account balance
+                    string sql2 = @"
+                        UPDATE account a
+                        JOIN transaction_processing tp ON a.account_id = tp.account_id
+                        SET a.balance = a.balance + tp.amount
+                        WHERE tp.process_id = @ProcessId";
+                    MySqlCommand command2 = new MySqlCommand(sql2, connection);
+                    command2.Parameters.AddWithValue("@ProcessId", processId);
+                    command2.ExecuteNonQuery();
 
-                    if (rowsAffected == 0)
-                    {
-                        throw new Exception("Receiver's Account ID not found.");
-                    }
+                    // Insert into transaction_history
+                    string sql3 = @"
+                        INSERT INTO transaction_history (account_id, amount, date, transaction_type)
+                        SELECT tp.account_id, tp.amount, NOW(), tp.transaction_type
+                        FROM transaction_processing tp
+                        WHERE tp.process_id = @ProcessId";
+                    MySqlCommand command3 = new MySqlCommand(sql3, connection);
+                    command3.Parameters.AddWithValue("@ProcessId", processId);
+                    command3.ExecuteNonQuery();
+
+                    // Get the transaction_id of the last inserted row in transaction_history
+                    string transactionId = command3.LastInsertedId.ToString();
+
+                    // Generate reference number
+                    string referenceNumber = GenerateReferenceNumber();
+
+                    // Insert into transaction_receipt
+                    string sql4 = @"
+                        INSERT INTO transaction_receipt (reference_number, customer_id, account_id, transaction_id)
+                        SELECT @ReferenceNumber, a.customer_id, tp.account_id, @TransactionId
+                        FROM transaction_processing tp
+                        JOIN account a ON a.account_id = tp.account_id
+                        WHERE tp.process_id = @ProcessId";
+                    MySqlCommand command4 = new MySqlCommand(sql4, connection);
+                    command4.Parameters.AddWithValue("@ReferenceNumber", referenceNumber);
+                    command4.Parameters.AddWithValue("@ProcessId", processId);
+                    command4.Parameters.AddWithValue("@TransactionId", transactionId);
+                    command4.ExecuteNonQuery();
+
+                    transaction.Commit();
                 }
-                // Update the process status to 'Approved'
-                using (var updateCommand = new MySqlCommand("UPDATE transaction_processing SET process_status = 'Approved' WHERE process_id = @processId", conn))
+                catch
                 {
-                    updateCommand.Parameters.AddWithValue("@processId", processId);
-                    updateCommand.ExecuteNonQuery();
-                }
-                // Insert a record in the transaction history
-                using (var insertCommand = new MySqlCommand("INSERT INTO transaction_history (account_id, amount, date, transaction_type) VALUES (@accountId, @amount, NOW(), 'Transfer')", conn))
-                {
-                    insertCommand.Parameters.AddWithValue("@accountId", senderAccountId);
-                    insertCommand.Parameters.AddWithValue("@amount", transferAmount);
-                    insertCommand.ExecuteNonQuery();
+                    transaction.Rollback();
+                    throw;
                 }
             }
         }
-        // Rejects a transaction by updating the process status in the database
-        public static void rejectTransaction(string processId)
+        public static void ApproveTransfer(string processId)
         {
-            // Open a connection to the MySQL database using a connection pool
-            using (var conn = MySQLDatabase.OpenConnection())
+            using (MySqlConnection connection = MySQLDatabase.OpenConnection())
             {
-                // Construct the SQL query to update the process status
-                string query = "UPDATE transaction_processing SET process_status = 'Rejected' WHERE process_id = @ProcessId";
-                // Create a MySqlCommand object with the query and connection
-                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                MySqlTransaction transaction = connection.BeginTransaction();
+                try
                 {
-                    // Add the process ID as a parameter to the query to prevent SQL injection
-                    cmd.Parameters.AddWithValue("@ProcessId", processId);
-                    // Execute the query to update the process status
-                    cmd.ExecuteNonQuery();
+                    // Update process_status in transaction_processing table
+                    string sql1 = "UPDATE transaction_processing SET process_status = 'Approved' WHERE process_id = @ProcessId";
+                    MySqlCommand command1 = new MySqlCommand(sql1, connection);
+                    command1.Parameters.AddWithValue("@ProcessId", processId);
+                    command1.ExecuteNonQuery();
+
+                    // Perform transfer and update account balances
+                    string sql2 = @"
+                        UPDATE account a
+                        JOIN transaction_processing tp ON a.account_id = tp.account_id
+                        SET a.balance = a.balance - tp.amount
+                        WHERE tp.process_id = @ProcessId";
+                    MySqlCommand command2 = new MySqlCommand(sql2, connection);
+                    command2.Parameters.AddWithValue("@ProcessId", processId);
+                    command2.ExecuteNonQuery();
+
+                    string sql3 = @"
+                        UPDATE account a
+                        JOIN transaction_processing tp ON a.account_id = tp.receiver_account_id
+                        SET a.balance = a.balance + tp.amount
+                        WHERE tp.process_id = @ProcessId";
+                    MySqlCommand command3 = new MySqlCommand(sql3, connection);
+                    command3.Parameters.AddWithValue("@ProcessId", processId);
+                    command3.ExecuteNonQuery();
+
+                    // Insert into transaction_history
+                    string sql4 = @"
+                        INSERT INTO transaction_history (account_id, amount, date, transaction_type)
+                        SELECT tp.account_id, tp.amount, NOW(), tp.transaction_type
+                        FROM transaction_processing tp
+                        WHERE tp.process_id = @ProcessId";
+                    MySqlCommand command4 = new MySqlCommand(sql4, connection);
+                    command4.Parameters.AddWithValue("@ProcessId", processId);
+                    command4.ExecuteNonQuery();
+
+                    // Get the transaction_id of the last inserted row in transaction_history
+                    string transactionId = command4.LastInsertedId.ToString();
+
+                    // Generate reference number
+                    string referenceNumber = GenerateReferenceNumber();
+
+                    // Insert into transaction_receipt
+                    string sql5 = @"
+                        INSERT INTO transaction_receipt (reference_number, customer_id, account_id, transaction_id)
+                        SELECT @ReferenceNumber, a.customer_id, tp.account_id, @TransactionId
+                        FROM transaction_processing tp
+                        JOIN account a ON a.account_id = tp.account_id
+                        WHERE tp.process_id = @ProcessId";
+                    MySqlCommand command5 = new MySqlCommand(sql5, connection);
+                    command5.Parameters.AddWithValue("@ReferenceNumber", referenceNumber);
+                    command5.Parameters.AddWithValue("@ProcessId", processId);
+                    command5.Parameters.AddWithValue("@TransactionId", transactionId);
+                    command5.ExecuteNonQuery();
+
+                    transaction.Commit();
+                }
+                catch
+                {
+                    transaction.Rollback();
+                    throw;
                 }
             }
+        }
+        public static void RejectTransaction(string processId)
+        {
+            using (MySqlConnection connection = MySQLDatabase.OpenConnection())
+            {
+                string sql = "UPDATE transaction_processing SET process_status = 'Rejected' WHERE process_id = @ProcessId";
+                MySqlCommand command = new MySqlCommand(sql, connection);
+                command.Parameters.AddWithValue("@ProcessId", processId);
+                command.ExecuteNonQuery();
+            }
+        }
+        private static string GenerateReferenceNumber()
+        {
+            Random rnd = new Random();
+            return string.Format("{0:D4}-{1:D3}-{2:D4}", rnd.Next(0, 9999), rnd.Next(0, 999), rnd.Next(0, 9999));
         }
     }
 }

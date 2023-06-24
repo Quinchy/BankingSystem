@@ -15,137 +15,117 @@ namespace BankingSystem.Forms.TellerDashBoard
         }
         private void InitializeComponent()
         {
-            updateRequestLabel = new Label();
-            updateRequestPanel = new RoundedPanel();
-            updateRequestListView = new ListView();
-            updateIDHeader = new ColumnHeader();
-            accountIDHeader = new ColumnHeader();
-            informationTypeHeader = new ColumnHeader();
-            changedInformationHeader = new ColumnHeader();
-            updateStatusHeader = new ColumnHeader();
-            rejectButton = new RoundedButton();
-            approveButton = new RoundedButton();
-            updateRequestPanel.SuspendLayout();
+            profileUpdateCardPanel = new RoundedPanel();
+            transactionProcessingPanel = new RoundedPanel();
+            transactionProcessingLabel = new Label();
+            pageCountLabel = new Label();
+            previousButton = new Button();
+            nextButton = new Button();
+            updateFlowPanel = new FlowLayoutPanel();
+            line1 = new Panel();
+            profileUpdateCardPanel.SuspendLayout();
+            transactionProcessingPanel.SuspendLayout();
             SuspendLayout();
             // 
-            // updateRequestLabel
+            // profileUpdateCardPanel
             // 
-            updateRequestLabel.AutoSize = true;
-            updateRequestLabel.Font = new Font("Century Gothic", 27.75F, FontStyle.Bold, GraphicsUnit.Point);
-            updateRequestLabel.ForeColor = Color.White;
-            updateRequestLabel.Location = new Point(54, 27);
-            updateRequestLabel.Name = "updateRequestLabel";
-            updateRequestLabel.Size = new Size(698, 44);
-            updateRequestLabel.TabIndex = 31;
-            updateRequestLabel.Text = "Customer Information Update Request";
+            profileUpdateCardPanel.BackColor = Color.Transparent;
+            profileUpdateCardPanel.BorderColor = Color.WhiteSmoke;
+            profileUpdateCardPanel.Controls.Add(transactionProcessingPanel);
+            profileUpdateCardPanel.Controls.Add(pageCountLabel);
+            profileUpdateCardPanel.Controls.Add(previousButton);
+            profileUpdateCardPanel.Controls.Add(nextButton);
+            profileUpdateCardPanel.Controls.Add(updateFlowPanel);
+            profileUpdateCardPanel.Controls.Add(line1);
+            profileUpdateCardPanel.CornerRadius = 5;
+            profileUpdateCardPanel.ForeColor = Color.Transparent;
+            profileUpdateCardPanel.Location = new Point(30, 12);
+            profileUpdateCardPanel.Name = "profileUpdateCardPanel";
+            profileUpdateCardPanel.Size = new Size(979, 699);
+            profileUpdateCardPanel.TabIndex = 61;
             // 
-            // updateRequestPanel
+            // transactionProcessingPanel
             // 
-            updateRequestPanel.BackColor = Color.Transparent;
-            updateRequestPanel.BorderColor = Color.White;
-            updateRequestPanel.Controls.Add(updateRequestListView);
-            updateRequestPanel.CornerRadius = 10;
-            updateRequestPanel.ForeColor = Color.Transparent;
-            updateRequestPanel.Location = new Point(54, 87);
-            updateRequestPanel.Name = "updateRequestPanel";
-            updateRequestPanel.Size = new Size(901, 491);
-            updateRequestPanel.TabIndex = 43;
+            transactionProcessingPanel.BackColor = Color.Transparent;
+            transactionProcessingPanel.BorderColor = Color.FromArgb(92, 184, 92);
+            transactionProcessingPanel.Controls.Add(transactionProcessingLabel);
+            transactionProcessingPanel.CornerRadius = 5;
+            transactionProcessingPanel.ForeColor = Color.Transparent;
+            transactionProcessingPanel.Location = new Point(17, 10);
+            transactionProcessingPanel.Name = "transactionProcessingPanel";
+            transactionProcessingPanel.Size = new Size(943, 45);
+            transactionProcessingPanel.TabIndex = 62;
             // 
-            // updateRequestListView
+            // transactionProcessingLabel
             // 
-            updateRequestListView.BackColor = Color.White;
-            updateRequestListView.BorderStyle = BorderStyle.None;
-            updateRequestListView.CheckBoxes = true;
-            updateRequestListView.Columns.AddRange(new ColumnHeader[] { updateIDHeader, accountIDHeader, informationTypeHeader, changedInformationHeader, updateStatusHeader });
-            updateRequestListView.Font = new Font("Century Gothic", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            updateRequestListView.ForeColor = Color.Black;
-            updateRequestListView.HeaderStyle = ColumnHeaderStyle.Nonclickable;
-            updateRequestListView.Location = new Point(20, 14);
-            updateRequestListView.MultiSelect = false;
-            updateRequestListView.Name = "updateRequestListView";
-            updateRequestListView.Scrollable = false;
-            updateRequestListView.Size = new Size(861, 459);
-            updateRequestListView.TabIndex = 41;
-            updateRequestListView.UseCompatibleStateImageBehavior = false;
-            updateRequestListView.View = View.Details;
+            transactionProcessingLabel.AutoSize = true;
+            transactionProcessingLabel.Font = new Font("Century Gothic", 15.75F, FontStyle.Bold, GraphicsUnit.Point);
+            transactionProcessingLabel.ForeColor = Color.White;
+            transactionProcessingLabel.Location = new Point(24, 10);
+            transactionProcessingLabel.Name = "transactionProcessingLabel";
+            transactionProcessingLabel.Size = new Size(407, 25);
+            transactionProcessingLabel.TabIndex = 37;
+            transactionProcessingLabel.Text = "Customer Information Update Requests";
             // 
-            // updateIDHeader
+            // pageCountLabel
             // 
-            updateIDHeader.Text = "   Update ID";
-            updateIDHeader.TextAlign = HorizontalAlignment.Center;
-            updateIDHeader.Width = 110;
+            pageCountLabel.AutoSize = true;
+            pageCountLabel.Font = new Font("Century Gothic", 14.25F, FontStyle.Italic, GraphicsUnit.Point);
+            pageCountLabel.ForeColor = Color.Black;
+            pageCountLabel.Location = new Point(750, 655);
+            pageCountLabel.Name = "pageCountLabel";
+            pageCountLabel.Size = new Size(114, 22);
+            pageCountLabel.TabIndex = 64;
+            pageCountLabel.Text = "Page 1 of 1";
             // 
-            // accountIDHeader
+            // previousButton
             // 
-            accountIDHeader.Text = "Account ID";
-            accountIDHeader.TextAlign = HorizontalAlignment.Center;
-            accountIDHeader.Width = 140;
+            previousButton.BackColor = Color.Transparent;
+            previousButton.BackgroundImage = Properties.Resources.left;
+            previousButton.BackgroundImageLayout = ImageLayout.Stretch;
+            previousButton.Cursor = Cursors.Hand;
+            previousButton.FlatAppearance.BorderSize = 0;
+            previousButton.FlatAppearance.MouseDownBackColor = Color.Transparent;
+            previousButton.FlatAppearance.MouseOverBackColor = Color.Transparent;
+            previousButton.FlatStyle = FlatStyle.Flat;
+            previousButton.Location = new Point(885, 648);
+            previousButton.Name = "previousButton";
+            previousButton.Size = new Size(35, 35);
+            previousButton.TabIndex = 63;
+            previousButton.UseVisualStyleBackColor = false;
+            previousButton.Click += previousButton_Click;
             // 
-            // informationTypeHeader
+            // nextButton
             // 
-            informationTypeHeader.Text = "Information Type";
-            informationTypeHeader.TextAlign = HorizontalAlignment.Center;
-            informationTypeHeader.Width = 180;
+            nextButton.BackColor = Color.Transparent;
+            nextButton.BackgroundImage = Properties.Resources.right;
+            nextButton.BackgroundImageLayout = ImageLayout.Stretch;
+            nextButton.Cursor = Cursors.Hand;
+            nextButton.FlatAppearance.BorderSize = 0;
+            nextButton.FlatAppearance.MouseDownBackColor = Color.Transparent;
+            nextButton.FlatAppearance.MouseOverBackColor = Color.Transparent;
+            nextButton.FlatStyle = FlatStyle.Flat;
+            nextButton.Location = new Point(926, 648);
+            nextButton.Name = "nextButton";
+            nextButton.Size = new Size(35, 35);
+            nextButton.TabIndex = 62;
+            nextButton.UseVisualStyleBackColor = false;
+            nextButton.Click += nextButton_Click;
             // 
-            // changedInformationHeader
+            // updateFlowPanel
             // 
-            changedInformationHeader.Text = "Changed Information";
-            changedInformationHeader.TextAlign = HorizontalAlignment.Center;
-            changedInformationHeader.Width = 280;
+            updateFlowPanel.Location = new Point(8, 80);
+            updateFlowPanel.Name = "updateFlowPanel";
+            updateFlowPanel.Size = new Size(965, 559);
+            updateFlowPanel.TabIndex = 61;
             // 
-            // updateStatusHeader
+            // line1
             // 
-            updateStatusHeader.Text = "Update Status";
-            updateStatusHeader.TextAlign = HorizontalAlignment.Center;
-            updateStatusHeader.Width = 152;
-            // 
-            // rejectButton
-            // 
-            rejectButton.BorderColor = Color.Transparent;
-            rejectButton.ButtonColor = Color.FromArgb(92, 184, 92);
-            rejectButton.CornerRadius = 5;
-            rejectButton.Cursor = Cursors.Hand;
-            rejectButton.FlatAppearance.BorderSize = 0;
-            rejectButton.FlatAppearance.MouseDownBackColor = Color.Transparent;
-            rejectButton.FlatAppearance.MouseOverBackColor = Color.Transparent;
-            rejectButton.FlatStyle = FlatStyle.Flat;
-            rejectButton.Font = new Font("Century Gothic", 15.75F, FontStyle.Bold, GraphicsUnit.Point);
-            rejectButton.ForeColor = Color.White;
-            rejectButton.Location = new Point(789, 611);
-            rejectButton.Name = "rejectButton";
-            rejectButton.OnHoverBorderColor = Color.Transparent;
-            rejectButton.OnHoverButtonColor = Color.FromArgb(124, 205, 124);
-            rejectButton.OnHoverTextColor = Color.WhiteSmoke;
-            rejectButton.Size = new Size(166, 45);
-            rejectButton.TabIndex = 46;
-            rejectButton.Text = "REJECT";
-            rejectButton.TextColor = Color.WhiteSmoke;
-            rejectButton.UseVisualStyleBackColor = false;
-            rejectButton.Click += rejectButton_Click;
-            // 
-            // approveButton
-            // 
-            approveButton.BorderColor = Color.Transparent;
-            approveButton.ButtonColor = Color.FromArgb(92, 184, 92);
-            approveButton.CornerRadius = 5;
-            approveButton.Cursor = Cursors.Hand;
-            approveButton.FlatAppearance.BorderSize = 0;
-            approveButton.FlatAppearance.MouseDownBackColor = Color.Transparent;
-            approveButton.FlatAppearance.MouseOverBackColor = Color.Transparent;
-            approveButton.FlatStyle = FlatStyle.Flat;
-            approveButton.Font = new Font("Century Gothic", 15.75F, FontStyle.Bold, GraphicsUnit.Point);
-            approveButton.ForeColor = Color.White;
-            approveButton.Location = new Point(600, 611);
-            approveButton.Name = "approveButton";
-            approveButton.OnHoverBorderColor = Color.Transparent;
-            approveButton.OnHoverButtonColor = Color.FromArgb(124, 205, 124);
-            approveButton.OnHoverTextColor = Color.WhiteSmoke;
-            approveButton.Size = new Size(166, 45);
-            approveButton.TabIndex = 45;
-            approveButton.Text = "APPROVE";
-            approveButton.TextColor = Color.WhiteSmoke;
-            approveButton.UseVisualStyleBackColor = false;
-            approveButton.Click += approveButton_Click;
+            line1.BackColor = Color.Gainsboro;
+            line1.Location = new Point(17, 65);
+            line1.Name = "line1";
+            line1.Size = new Size(943, 1);
+            line1.TabIndex = 60;
             // 
             // UpdateRequestForm
             // 
@@ -153,27 +133,24 @@ namespace BankingSystem.Forms.TellerDashBoard
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(34, 33, 46);
             ClientSize = new Size(1039, 723);
-            Controls.Add(rejectButton);
-            Controls.Add(updateRequestPanel);
-            Controls.Add(approveButton);
-            Controls.Add(updateRequestLabel);
+            Controls.Add(profileUpdateCardPanel);
             FormBorderStyle = FormBorderStyle.None;
             Name = "UpdateRequestForm";
             Text = "UserProfileForm";
-            updateRequestPanel.ResumeLayout(false);
+            profileUpdateCardPanel.ResumeLayout(false);
+            profileUpdateCardPanel.PerformLayout();
+            transactionProcessingPanel.ResumeLayout(false);
+            transactionProcessingPanel.PerformLayout();
             ResumeLayout(false);
-            PerformLayout();
         }
 
-        private Label updateRequestLabel;
-        private RoundedPanel updateRequestPanel;
-        private ListView updateRequestListView;
-        private ColumnHeader updateIDHeader;
-        private ColumnHeader accountIDHeader;
-        private ColumnHeader informationTypeHeader;
-        private ColumnHeader changedInformationHeader;
-        private RoundedButton rejectButton;
-        private RoundedButton approveButton;
-        private ColumnHeader updateStatusHeader;
+        private RoundedPanel profileUpdateCardPanel;
+        private RoundedPanel transactionProcessingPanel;
+        private Label transactionProcessingLabel;
+        private Label pageCountLabel;
+        private Button previousButton;
+        private Button nextButton;
+        private FlowLayoutPanel updateFlowPanel;
+        private Panel line1;
     }
 }

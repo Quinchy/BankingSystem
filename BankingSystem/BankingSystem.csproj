@@ -25,6 +25,12 @@
     <Compile Update="Forms\TellerDashBoard\AccountCards\AccountListCards.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Update="Forms\TellerDashBoard\TransactionCards\TransactionHistoryCards.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="Forms\TellerDashBoard\UpdateCards\UpdateRequestCards.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Update="Forms\TellerDashBoard\UpdateRequestsForm.cs">
       <SubType>Form</SubType>
     </Compile>

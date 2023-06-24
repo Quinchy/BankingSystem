@@ -53,7 +53,7 @@ namespace BankingSystem.Forms.TellerDashBoard
             profileUpdateCardPanel.Controls.Add(line1);
             profileUpdateCardPanel.Controls.Add(accountListButton);
             profileUpdateCardPanel.Controls.Add(accountRequestButton);
-            profileUpdateCardPanel.CornerRadius = 10;
+            profileUpdateCardPanel.CornerRadius = 5;
             profileUpdateCardPanel.ForeColor = Color.Transparent;
             profileUpdateCardPanel.Location = new Point(29, 12);
             profileUpdateCardPanel.Name = "profileUpdateCardPanel";
@@ -65,7 +65,7 @@ namespace BankingSystem.Forms.TellerDashBoard
             accountManagementPanel.BackColor = Color.Transparent;
             accountManagementPanel.BorderColor = Color.FromArgb(92, 184, 92);
             accountManagementPanel.Controls.Add(accountManagementLabel);
-            accountManagementPanel.CornerRadius = 20;
+            accountManagementPanel.CornerRadius = 5;
             accountManagementPanel.ForeColor = Color.Transparent;
             accountManagementPanel.Location = new Point(17, 10);
             accountManagementPanel.Name = "accountManagementPanel";

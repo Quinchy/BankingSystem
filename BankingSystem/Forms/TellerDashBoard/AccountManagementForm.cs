@@ -25,8 +25,9 @@ namespace BankingSystem.Forms.TellerDashBoard
         private int totalRecords = 0;
         private int recordsPerPage = 6;
         private int totalPages => (totalRecords + recordsPerPage - 1) / recordsPerPage;
+        private bool viewingRequests = true;
         public AccountManagementForm()
-        {
+        {       
             InitializeComponent();
             InitializeRequestCards();
         }
@@ -53,6 +54,10 @@ namespace BankingSystem.Forms.TellerDashBoard
                 accountFlowPanel.Controls.Add(card);
             }
             // Updating the pageCountLabel as per the current page and total number of pages
+            if (totalRecords == 0)
+            {
+                currentPage = 0;
+            }
             pageCountLabel.Text = $"Page {currentPage} of {totalPages}";
             // Update state of Previous and Next buttons
             UpdatePaginationButtons();
@@ -81,6 +86,10 @@ namespace BankingSystem.Forms.TellerDashBoard
                 accountFlowPanel.Controls.Add(card);
             }
             // Updating the pageCountLabel as per the current page and total number of pages
+            if (totalRecords == 0)
+            {
+                currentPage = 0;
+            }
             pageCountLabel.Text = $"Page {currentPage} of {totalPages}";
             // Update state of Previous and Next buttons
             UpdatePaginationButtons();
@@ -95,7 +104,14 @@ namespace BankingSystem.Forms.TellerDashBoard
             if (currentPage > 1)
             {
                 currentPage--;
-                InitializeRequestCards();
+                if (viewingRequests)
+                {
+                    InitializeRequestCards();
+                }
+                else 
+                { 
+                    InitializeAccountListCards();
+                }
             }
         }
         private void nextButton_Click(object sender, EventArgs e)
@@ -103,12 +119,20 @@ namespace BankingSystem.Forms.TellerDashBoard
             if (currentPage < totalPages)
             {
                 currentPage++;
-                InitializeRequestCards();
+                if (viewingRequests)
+                {
+                    InitializeRequestCards();
+                }
+                else
+                {
+                    InitializeAccountListCards();
+                }
             }
         }
         private void accountRequestButton_Click(object sender, EventArgs e)
         {
             currentPage = 1;
+            viewingRequests = true;
             InitializeRequestCards();
             accountRequestButton.ForeColor = Color.FromArgb(92, 184, 92);
             accountListButton.ForeColor = Color.FromArgb(34, 33, 46);
@@ -117,6 +141,7 @@ namespace BankingSystem.Forms.TellerDashBoard
         private void accountListButton_Click(object sender, EventArgs e)
         {
             currentPage = 1;
+            viewingRequests = false;
             InitializeAccountListCards();
             accountRequestButton.ForeColor = Color.FromArgb(34, 33, 46);
             accountListButton.ForeColor = Color.FromArgb(92, 184, 92);

@@ -13,22 +13,22 @@ namespace BankingSystem.Forms.TellerDashBoard.AccountCards
 {
     public partial class AccountListCards : UserControl
     {
-        public string RequestId { get; set; }
+        public string AccountId { get; set; }
         public AccountListCards()
         {
             InitializeComponent();
         }
         private void openButton_Click(object sender, EventArgs e)
         {
-            AccountManagementServices.ApproveAccount(this.RequestId);
+            AccountManagementServices.openAnAccount(this.AccountId);
             // Assuming InitializeTransactionCards is a method in the parent form
-            (this.ParentForm as AccountManagementForm).InitializeRequestCards();
+            (this.ParentForm as AccountManagementForm).InitializeAccountListCards();
         }
         private void closeButton_Click(object sender, EventArgs e)
         {
-            AccountManagementServices.RejectAccount(this.RequestId);
+            AccountManagementServices.closeAnAccount(this.AccountId);
             // Assuming InitializeTransactionCards is a method in the parent form
-            (this.ParentForm as AccountManagementForm).InitializeRequestCards();
+            (this.ParentForm as AccountManagementForm).InitializeAccountListCards();
         }
     }
 }

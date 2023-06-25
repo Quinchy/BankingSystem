@@ -81,7 +81,7 @@ namespace BankingSystem.Forms.TellerDashBoard
                 card.statusValueLabel.Text = account.AccountStatus;
                 card.accountIdValueLabel.Text = account.AccountId;
                 card.balanceValueLabel.Text = "₱ " + account.Balance.ToString();
-
+                card.AccountId = account.AccountId;
                 // Add the card to the panel
                 accountFlowPanel.Controls.Add(card);
             }

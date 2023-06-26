@@ -66,7 +66,7 @@ namespace BankingSystem.Services.TellerServices
                     SELECT a.account_id, ci.first_name, ci.last_name, ci.email, ci.phone_number, ci.password, a.balance, a.account_status
                     FROM account a
                     JOIN customer_information ci ON a.customer_id = ci.customer_id
-                    ORDER BY a.account_id DESC
+                    ORDER BY a.customer_id DESC
                     LIMIT @Limit
                     OFFSET @Offset";
                 MySqlCommand command = new MySqlCommand(sql, connection);

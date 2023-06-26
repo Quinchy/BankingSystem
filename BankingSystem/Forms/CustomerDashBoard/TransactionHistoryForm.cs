@@ -41,9 +41,8 @@ namespace BankingSystem.Forms.CustomerDashBoard
                 card.transactionType.Text = transaction.TransactionType;
                 card.amount.Text = "₱ " + transaction.Amount.ToString();
                 card.date.Text = transaction.Date.ToShortDateString();
-                card.TransactionId = transaction.TransactionId; // Set TransactionId for this card
-                                                                // Generate receipt for this transaction
-                TransactionHistoryServices.GenerateReceiptForTransaction(transaction);
+                card.TransactionId = transaction.TransactionId;
+
                 // Depending on your transactionType, you can change the transactionPicture
                 if (card.transactionType.Text == "Withdraw")
                 {

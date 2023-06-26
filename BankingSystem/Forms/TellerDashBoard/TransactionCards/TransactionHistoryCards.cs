@@ -1,6 +1,7 @@
 ﻿using BankingSystem.Forms.CustomerDashBoard.TransactionReceipt;
 using BankingSystem.Models.CustomerModels;
 using BankingSystem.Services.CustomerServices;
+using BankingSystem.Utils;
 using BankingSystem.Services.TellerServices;
 using System;
 using System.Collections.Generic;
@@ -23,7 +24,7 @@ namespace BankingSystem.Forms.TellerDashBoard.TransactionCards
         }
         private void viewReceipt_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            Receipt receipt = TransactionHistoryServices.GetReceiptFromDatabase(this.TransactionId);
+            Receipt receipt = Helpers.GetReceiptFromDatabase(this.TransactionId);
 
             // Create a new ReceiptCard
             ReceiptCard receiptCard = new ReceiptCard();

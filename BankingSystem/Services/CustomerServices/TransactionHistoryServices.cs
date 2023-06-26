@@ -69,67 +69,6 @@ namespace BankingSystem.Services.CustomerServices
                 count = Convert.ToInt32(command.ExecuteScalar());
             }
             return count;
-        }
-        // Generate a transaction receipt and save in the database
-        public static void GenerateReceiptForTransaction(Transaction transaction)
-        {
-            using (MySqlConnection connection = MySQLDatabase.OpenConnection())
-            {
-                // SQL query to get the customer ID and account ID for a transaction
-                string sqlFetch = @"
-                    SELECT a.account_id, a.customer_id
-                    FROM account a
-                    JOIN transaction_history th ON a.account_id = th.account_id
-                    WHERE th.transaction_id = @TransactionId";
-                MySqlCommand commandFetch = new MySqlCommand(sqlFetch, connection);
-                commandFetch.Parameters.AddWithValue("@TransactionId", transaction.TransactionId);
-                string accountId = null;
-                string customerId = null;
-                // Execute the command and process the results
-                using (MySqlDataReader reader = commandFetch.ExecuteReader())
-                {
-                    if (reader.Read())
-                    {
-                        accountId = reader.GetString("account_id");
-                        customerId = reader.GetString("customer_id");
-                    }
-                }
-            }
-        }
-        public static Receipt GetReceiptFromDatabase(string transactionId)
-        {
-            Receipt receipt = null;
-            // Open a connection to the MySQL database
-            using (MySqlConnection connection = MySQLDatabase.OpenConnection())
-            {
-                // SQL query to retrieve receipt
-                string sql = @"
-                    SELECT tr.reference_number, CONCAT(ci.first_name, ' ', ci.last_name) AS full_name, tr.account_id, th.transaction_type, th.amount, th.date
-                    FROM transaction_receipt tr
-                    JOIN transaction_history th ON tr.transaction_id = th.transaction_id
-                    JOIN account a ON th.account_id = a.account_id
-                    JOIN customer_information ci ON a.customer_id = ci.customer_id
-                    WHERE tr.transaction_id = @TransactionId";
-                MySqlCommand command = new MySqlCommand(sql, connection);
-                // Use the transactionId parameter in the SQL query
-                command.Parameters.AddWithValue("@TransactionId", transactionId);
-                // Execute the command and process the results
-                using (MySqlDataReader reader = command.ExecuteReader())
-                {
-                    if (reader.Read())
-                    {
-                        receipt = new Receipt(
-                            reader.GetString("full_name"), // Will return "first_name last_name"
-                            reader.GetString("account_id"),
-                            reader.GetString("transaction_type"),
-                            reader.GetDouble("amount"),
-                            reader.GetString("reference_number"),
-                            reader.GetDateTime("date")
-                        );
-                    }
-                }
-            }
-            return receipt;
-        }
+        }       
     }
 }

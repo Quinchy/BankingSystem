@@ -59,6 +59,6 @@ namespace BankingSystem.Forms
         private void Form1_MouseUp(object sender, MouseEventArgs e)
         {
             mouseDown = false;
-        }
+        }      
     }
 }

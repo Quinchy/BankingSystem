@@ -34,7 +34,6 @@ namespace BankingSystem.Services.TellerServices
             }
             return totalHistory;
         }
-
         public static List<TransactionRequest> RetrieveTransactionRequests(int limit = 4, int offset = 0)
         {
             List<TransactionRequest> requests = new List<TransactionRequest>();
@@ -52,7 +51,7 @@ namespace BankingSystem.Services.TellerServices
                     LEFT JOIN account ra ON tp.receiver_account_id = ra.account_id AND tp.transaction_type = 'Transfer'
                     LEFT JOIN customer_information rci ON ra.customer_id = rci.customer_id AND tp.transaction_type = 'Transfer'
                     WHERE tp.process_status = 'Pending'
-                    ORDER BY tp.process_id DESC
+                    ORDER BY tp.process_id ASC
                     LIMIT @Limit
                     OFFSET @Offset";
                 MySqlCommand command = new MySqlCommand(sql, connection);
@@ -151,34 +150,11 @@ namespace BankingSystem.Services.TellerServices
                     command2.Parameters.AddWithValue("@ProcessId", processId);
                     command2.ExecuteNonQuery();
 
-                    // Insert into transaction_history
-                    string sql3 = @"
-                        INSERT INTO transaction_history (account_id, amount, date, transaction_type)
-                        SELECT tp.account_id, tp.amount, NOW(), tp.transaction_type
-                        FROM transaction_processing tp
-                        WHERE tp.process_id = @ProcessId";
-                    MySqlCommand command3 = new MySqlCommand(sql3, connection);
-                    command3.Parameters.AddWithValue("@ProcessId", processId);
-                    command3.ExecuteNonQuery();
+                    // Create History for transaction
+                    CreateHistoryForTransaction(processId, connection);
 
-                    // Get the transaction_id of the last inserted row in transaction_history
-                    string transactionId = command3.LastInsertedId.ToString();
-
-                    // Generate reference number
-                    string referenceNumber = GenerateReferenceNumber();
-
-                    // Insert into transaction_receipt
-                    string sql4 = @"
-                        INSERT INTO transaction_receipt (reference_number, customer_id, account_id, transaction_id)
-                        SELECT @ReferenceNumber, a.customer_id, tp.account_id, @TransactionId
-                        FROM transaction_processing tp
-                        JOIN account a ON a.account_id = tp.account_id
-                        WHERE tp.process_id = @ProcessId";
-                    MySqlCommand command4 = new MySqlCommand(sql4, connection);
-                    command4.Parameters.AddWithValue("@ReferenceNumber", referenceNumber);
-                    command4.Parameters.AddWithValue("@ProcessId", processId);
-                    command4.Parameters.AddWithValue("@TransactionId", transactionId);
-                    command4.ExecuteNonQuery();
+                    // Generate Receipt for transaction
+                    GenerateReceiptForTransaction(processId, connection);
 
                     transaction.Commit();
                 }
@@ -213,34 +189,11 @@ namespace BankingSystem.Services.TellerServices
                     command2.Parameters.AddWithValue("@ProcessId", processId);
                     command2.ExecuteNonQuery();
 
-                    // Insert into transaction_history
-                    string sql3 = @"
-                        INSERT INTO transaction_history (account_id, amount, date, transaction_type)
-                        SELECT tp.account_id, tp.amount, NOW(), tp.transaction_type
-                        FROM transaction_processing tp
-                        WHERE tp.process_id = @ProcessId";
-                    MySqlCommand command3 = new MySqlCommand(sql3, connection);
-                    command3.Parameters.AddWithValue("@ProcessId", processId);
-                    command3.ExecuteNonQuery();
+                    // Create History for transaction
+                    CreateHistoryForTransaction(processId, connection);
 
-                    // Get the transaction_id of the last inserted row in transaction_history
-                    string transactionId = command3.LastInsertedId.ToString();
-
-                    // Generate reference number
-                    string referenceNumber = GenerateReferenceNumber();
-
-                    // Insert into transaction_receipt
-                    string sql4 = @"
-                        INSERT INTO transaction_receipt (reference_number, customer_id, account_id, transaction_id)
-                        SELECT @ReferenceNumber, a.customer_id, tp.account_id, @TransactionId
-                        FROM transaction_processing tp
-                        JOIN account a ON a.account_id = tp.account_id
-                        WHERE tp.process_id = @ProcessId";
-                    MySqlCommand command4 = new MySqlCommand(sql4, connection);
-                    command4.Parameters.AddWithValue("@ReferenceNumber", referenceNumber);
-                    command4.Parameters.AddWithValue("@ProcessId", processId);
-                    command4.Parameters.AddWithValue("@TransactionId", transactionId);
-                    command4.ExecuteNonQuery();
+                    // Generate Receipt for transaction
+                    GenerateReceiptForTransaction(processId, connection);
 
                     transaction.Commit();
                 }
@@ -283,34 +236,11 @@ namespace BankingSystem.Services.TellerServices
                     command3.Parameters.AddWithValue("@ProcessId", processId);
                     command3.ExecuteNonQuery();
 
-                    // Insert into transaction_history
-                    string sql4 = @"
-                        INSERT INTO transaction_history (account_id, amount, date, transaction_type)
-                        SELECT tp.account_id, tp.amount, NOW(), tp.transaction_type
-                        FROM transaction_processing tp
-                        WHERE tp.process_id = @ProcessId";
-                    MySqlCommand command4 = new MySqlCommand(sql4, connection);
-                    command4.Parameters.AddWithValue("@ProcessId", processId);
-                    command4.ExecuteNonQuery();
+                    // Create History for transaction
+                    CreateHistoryForTransaction(processId, connection);
 
-                    // Get the transaction_id of the last inserted row in transaction_history
-                    string transactionId = command4.LastInsertedId.ToString();
-
-                    // Generate reference number
-                    string referenceNumber = GenerateReferenceNumber();
-
-                    // Insert into transaction_receipt
-                    string sql5 = @"
-                        INSERT INTO transaction_receipt (reference_number, customer_id, account_id, transaction_id)
-                        SELECT @ReferenceNumber, a.customer_id, tp.account_id, @TransactionId
-                        FROM transaction_processing tp
-                        JOIN account a ON a.account_id = tp.account_id
-                        WHERE tp.process_id = @ProcessId";
-                    MySqlCommand command5 = new MySqlCommand(sql5, connection);
-                    command5.Parameters.AddWithValue("@ReferenceNumber", referenceNumber);
-                    command5.Parameters.AddWithValue("@ProcessId", processId);
-                    command5.Parameters.AddWithValue("@TransactionId", transactionId);
-                    command5.ExecuteNonQuery();
+                    // Generate Receipt for transaction
+                    GenerateReceiptForTransaction(processId, connection);
 
                     transaction.Commit();
                 }
@@ -335,6 +265,42 @@ namespace BankingSystem.Services.TellerServices
         {
             Random rnd = new Random();
             return string.Format("{0:D4}-{1:D3}-{2:D4}", rnd.Next(0, 9999), rnd.Next(0, 999), rnd.Next(0, 9999));
+        }
+        public static void GenerateReceiptForTransaction(string processId, MySqlConnection connection)
+        {
+            // Generate reference number
+            string referenceNumber = GenerateReferenceNumber();
+
+            // Get the transaction_id of the last inserted row in transaction_history
+            string sql1 = "SELECT MAX(transaction_id) FROM transaction_history WHERE account_id IN (SELECT account_id FROM transaction_processing WHERE process_id = @ProcessId)";
+            MySqlCommand command1 = new MySqlCommand(sql1, connection);
+            command1.Parameters.AddWithValue("@ProcessId", processId);
+            string transactionId = command1.ExecuteScalar().ToString();
+
+            // Insert into transaction_receipt
+            string sql2 = @"
+                INSERT INTO transaction_receipt (reference_number, customer_id, account_id, transaction_id)
+                SELECT @ReferenceNumber, a.customer_id, tp.account_id, @TransactionId
+                FROM transaction_processing tp
+                JOIN account a ON a.account_id = tp.account_id
+                WHERE tp.process_id = @ProcessId";
+            MySqlCommand command2 = new MySqlCommand(sql2, connection);
+            command2.Parameters.AddWithValue("@ReferenceNumber", referenceNumber);
+            command2.Parameters.AddWithValue("@ProcessId", processId);
+            command2.Parameters.AddWithValue("@TransactionId", transactionId);
+            command2.ExecuteNonQuery();
+        }
+        public static void CreateHistoryForTransaction(string processId, MySqlConnection connection)
+        {
+            // Insert into transaction_history
+            string sql = @"
+                INSERT INTO transaction_history (account_id, amount, date, transaction_type)
+                SELECT tp.account_id, tp.amount, NOW(), tp.transaction_type
+                FROM transaction_processing tp
+                WHERE tp.process_id = @ProcessId";
+            MySqlCommand command = new MySqlCommand(sql, connection);
+            command.Parameters.AddWithValue("@ProcessId", processId);
+            command.ExecuteNonQuery();
         }
     }
 }

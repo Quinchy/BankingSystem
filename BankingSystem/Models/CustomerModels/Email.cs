@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace BankingSystem.Models.CustomerModels
 {
-    internal class Email
+    internal class CurrentUser
     {
-        public static string email { get; set; }
+        public static string Email { get; set; }
     }
 }

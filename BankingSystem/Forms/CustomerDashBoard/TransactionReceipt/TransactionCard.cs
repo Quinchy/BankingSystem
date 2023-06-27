@@ -25,7 +25,7 @@ namespace BankingSystem.Forms.CustomerDashBoard.TransactionReceipt
         private void viewReceipt_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             // Retrieve the account ID associated with the email
-            string accountId = Helpers.GetAccountIdByEmail(Email.email);
+            string accountId = Helpers.GetAccountIdByEmail(CurrentUser.Email);
 
             Receipt receipt = Helpers.GetReceiptFromDatabase(this.TransactionId);
 

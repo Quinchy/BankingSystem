@@ -16,11 +16,9 @@ namespace BankingSystem.Forms.CustomerDashBoard
 {
     public partial class HomeScreenForm : Form
     {
-        private string email;
         public HomeScreenForm(string email)
         {
-            Email.email = email;
-            this.email = email;
+            CurrentUser.Email = email;
             InitializeComponent();
             InitializeAccountInformation(email);
             // Subscribe to the Load event.
@@ -32,7 +30,7 @@ namespace BankingSystem.Forms.CustomerDashBoard
             await Task.Delay(300);
 
             // Now the notifications will be shown after a delay.
-            ShowUnseenNotifications(email);
+            ShowUnseenNotifications(CurrentUser.Email);
         }
         private void ShowUnseenNotifications(string email)
         {
@@ -60,13 +58,13 @@ namespace BankingSystem.Forms.CustomerDashBoard
                 return; // Exit the method
             }
             // If the account ID does not belong to the user
-            if (!BankingServices.IsTheirAccount(email, accountId))
+            if (!BankingServices.IsTheirAccount(CurrentUser.Email, accountId))
             {
                 ShowMessageBox("This is not your account ID.");
                 return; // Exit the method
             }
             // Check if there are any pending requests
-            if (BankingServices.CheckPendingRequests(email))
+            if (BankingServices.CheckPendingRequests(CurrentUser.Email))
             {
                 ShowMessageBox("You have a pending request. You cannot perform another transaction until your pending request has been dealt with.");
                 return; // Exit the method
@@ -101,20 +99,20 @@ namespace BankingSystem.Forms.CustomerDashBoard
                 return; // Exit the method
             }
             // If the account ID does not belong to the user
-            if (!BankingServices.IsTheirAccount(email, accountId))
+            if (!BankingServices.IsTheirAccount(CurrentUser.Email, accountId))
             {
                 ShowMessageBox("This is not your account ID.");
                 return; // Exit the method
             }
             // Check if the withdraw amount is greater than the account balance
-            double balance = BankingServices.RetrieveAccountBalance(email);
+            double balance = BankingServices.RetrieveAccountBalance(CurrentUser.Email);
             if (withdrawAmount > balance)
             {
                 ShowMessageBox("Insufficient balance.");
                 return; // Exit the method
             }
             // Check if there are any pending requests
-            if (BankingServices.CheckPendingRequests(email))
+            if (BankingServices.CheckPendingRequests(CurrentUser.Email))
             {
                 ShowMessageBox("You have a pending request. You cannot perform another transaction until your pending request has been dealt with.");
                 return; // Exit the method
@@ -151,7 +149,7 @@ namespace BankingSystem.Forms.CustomerDashBoard
                 return; // Exit the method
             }
             // If the sender account ID does not belong to the user
-            if (!BankingServices.IsTheirAccount(email, senderAccountId))
+            if (!BankingServices.IsTheirAccount(CurrentUser.Email, senderAccountId))
             {
                 ShowMessageBox("This is not your account ID.");
                 return; // Exit the method
@@ -169,14 +167,14 @@ namespace BankingSystem.Forms.CustomerDashBoard
                 return; // Exit the method
             }
             // If the balance is less than the transfer amount
-            double balance = BankingServices.RetrieveAccountBalance(email);
+            double balance = BankingServices.RetrieveAccountBalance(CurrentUser.Email);
             if (transferAmount > balance)
             {
                 ShowMessageBox("Insufficient balance.");
                 return; // Exit the method
             }
             // Check if there are any pending requests
-            if (BankingServices.CheckPendingRequests(email))
+            if (BankingServices.CheckPendingRequests(CurrentUser.Email))
             {
                 ShowMessageBox("You have a pending request. You cannot perform another transaction until your pending request has been dealt with.");
                 return; // Exit the method

@@ -30,13 +30,24 @@ namespace BankingSystem.Forms.TellerDashBoard.TransactionCards
             ReceiptCard receiptCard = new ReceiptCard();
 
             // Fill the ReceiptCard labels with receipt data
-            receiptCard.fullNameLabel.Text = receipt.FullName;
-            receiptCard.accountIdLabel.Text = "# " + receipt.AccountID;
+            receiptCard.accountIdLabel.Text = "# " + receipt.SenderAccountID;
             receiptCard.transactionTypeLabel.Text = GetReceiptTitle(receipt.TransactionType);
             receiptCard.transactionAmountLabel.Text = "₱ " + receipt.Amount.ToString();
             receiptCard.transactionReferenceNumberLabel.Text = receipt.ReferenceNumber;
             receiptCard.transactionDateLabel.Text = receipt.TransactionDate.ToShortDateString();
 
+            if (receipt.TransactionType == "Withdraw" || receipt.TransactionType == "Deposit")
+            {
+                receiptCard.senderName.Text = "Name:";
+                receiptCard.senderNameValue.Text = receipt.SenderFullName;
+                receiptCard.receiverName.Visible = false;
+                receiptCard.receiverNameValue.Visible = false;
+            }
+            else if (receipt.TransactionType == "Transfer")
+            {
+                receiptCard.senderNameValue.Text = receipt.SenderFullName;
+                receiptCard.receiverNameValue.Text = receipt.ReceiverFullName;
+            }
             // Show the receipt in a new ReceiptForm
             ReceiptForm receiptForm = new ReceiptForm();
             receiptForm.receiptPanel.Controls.Add(receiptCard);

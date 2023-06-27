@@ -19,24 +19,47 @@ namespace BankingSystem.Forms.CustomerDashBoard.TransactionReceipt
         public string TransactionId { get; set; }
         public TransactionCard()
         {
-            InitializeComponent();
+            InitializeComponent();           
         }
 
         private void viewReceipt_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
+            // Retrieve the account ID associated with the email
+            string accountId = Helpers.GetAccountIdByEmail(Email.email);
+
             Receipt receipt = Helpers.GetReceiptFromDatabase(this.TransactionId);
 
             // Create a new ReceiptCard
             ReceiptCard receiptCard = new ReceiptCard();
 
+            // Check if the sender account ID matches the retrieved account ID
+            if (receipt.SenderAccountID != accountId)
+            {
+                receiptCard.accountIdLabel.Text = "# " + receipt.ReceiverAccountID;
+            }
+            else
+            {
+                receiptCard.accountIdLabel.Text = "# " + receipt.SenderAccountID;
+            }
+
             // Fill the ReceiptCard labels with receipt data
-            receiptCard.fullNameLabel.Text = receipt.FullName;
-            receiptCard.accountIdLabel.Text = "# " + receipt.AccountID;
             receiptCard.transactionTypeLabel.Text = GetReceiptTitle(receipt.TransactionType);
             receiptCard.transactionAmountLabel.Text = "₱ " + receipt.Amount.ToString();
             receiptCard.transactionReferenceNumberLabel.Text = receipt.ReferenceNumber;
             receiptCard.transactionDateLabel.Text = receipt.TransactionDate.ToShortDateString();
 
+            if (receipt.TransactionType == "Withdraw" || receipt.TransactionType == "Deposit")
+            {
+                receiptCard.senderName.Text = "Name:";
+                receiptCard.senderNameValue.Text = receipt.SenderFullName;
+                receiptCard.receiverName.Visible = false;
+                receiptCard.receiverNameValue.Visible = false;
+            }
+            else if (receipt.TransactionType == "Transfer")
+            {
+                receiptCard.senderNameValue.Text = receipt.SenderFullName;
+                receiptCard.receiverNameValue.Text = receipt.ReceiverFullName;
+            }
             // Show the receipt in a new ReceiptForm
             ReceiptForm receiptForm = new ReceiptForm();
             receiptForm.receiptPanel.Controls.Add(receiptCard);

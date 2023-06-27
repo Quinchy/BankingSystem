@@ -40,13 +40,17 @@ namespace BankingSystem.Services.TellerServices
             using (MySqlConnection connection = MySQLDatabase.OpenConnection())
             {
                 string sql = @"
-                    SELECT tp.process_id, CONCAT(c.first_name, ' ', c.last_name) as sender_full_name, tp.account_id as sender_account_id,
-                    a.balance as current_balance, tp.transaction_type,
+                    SELECT tp.process_id, 
+                    CONCAT(c.first_name, ' ', c.last_name) as sender_full_name, 
+                    tp.sender_account_id as sender_account_id,
+                    a.balance as current_balance, 
+                    tp.transaction_type,
                     CASE WHEN tp.transaction_type = 'Transfer' THEN CONCAT(rci.first_name, ' ', rci.last_name) ELSE NULL END as receiver_full_name,
                     CASE WHEN tp.transaction_type = 'Transfer' THEN tp.receiver_account_id ELSE NULL END as receiver_account_id, 
-                    tp.amount, tp.process_status as transaction_status
+                    tp.amount, 
+                    tp.process_status as transaction_status
                     FROM transaction_processing tp
-                    JOIN account a ON tp.account_id = a.account_id
+                    JOIN account a ON tp.sender_account_id = a.account_id
                     JOIN customer_information c ON a.customer_id = c.customer_id
                     LEFT JOIN account ra ON tp.receiver_account_id = ra.account_id AND tp.transaction_type = 'Transfer'
                     LEFT JOIN customer_information rci ON ra.customer_id = rci.customer_id AND tp.transaction_type = 'Transfer'
@@ -84,21 +88,45 @@ namespace BankingSystem.Services.TellerServices
             using (MySqlConnection connection = MySQLDatabase.OpenConnection())
             {
                 string sql = @"
-                    SELECT tp.process_id, CONCAT(c.first_name, ' ', c.last_name) as sender_full_name, tp.account_id as sender_account_id,
-                    CASE WHEN tp.process_status = 'Approved' THEN th.transaction_type ELSE tp.transaction_type END as transaction_type,
-                    th.date as transaction_date, th.transaction_id as transaction_history_id,
-                    CASE WHEN th.transaction_type = 'Transfer' THEN CONCAT(rci.first_name, ' ', rci.last_name) ELSE NULL END as receiver_full_name,
-                    CASE WHEN th.transaction_type = 'Transfer' THEN tp.receiver_account_id ELSE NULL END as receiver_account_id, 
-                    CASE WHEN tp.process_status = 'Approved' THEN th.amount ELSE tp.amount END as transaction_amount,
-                    tp.process_status as transaction_status
-                    FROM transaction_processing tp
-                    JOIN account a ON tp.account_id = a.account_id
-                    JOIN customer_information c ON a.customer_id = c.customer_id
-                    LEFT JOIN account ra ON tp.receiver_account_id = ra.account_id
-                    LEFT JOIN customer_information rci ON ra.customer_id = rci.customer_id
-                    LEFT JOIN transaction_history th ON tp.account_id = th.account_id AND tp.process_status = 'Approved'
-                    WHERE tp.process_status IN ('Approved', 'Rejected')
-                    ORDER BY tp.process_id DESC
+                    (
+                        SELECT
+                            th.transaction_id as process_id,
+                            CONCAT(c.first_name, ' ', c.last_name) as sender_full_name,
+                            th.sender_account_id as sender_account_id,
+                            th.transaction_type as transaction_type,
+                            th.date as transaction_date,
+                            th.transaction_id as transaction_history_id,
+                            CONCAT(rci.first_name, ' ', rci.last_name) as receiver_full_name,
+                            th.receiver_account_id as receiver_account_id,
+                            th.amount as transaction_amount,
+                            'Approved' as transaction_status
+                        FROM transaction_history th
+                        JOIN account a ON th.sender_account_id = a.account_id
+                        JOIN customer_information c ON a.customer_id = c.customer_id
+                        LEFT JOIN account ra ON th.receiver_account_id = ra.account_id
+                        LEFT JOIN customer_information rci ON ra.customer_id = rci.customer_id
+                    )
+                    UNION ALL
+                    (
+                        SELECT
+                            tp.process_id,
+                            CONCAT(c.first_name, ' ', c.last_name) as sender_full_name,
+                            tp.sender_account_id as sender_account_id,
+                            tp.transaction_type as transaction_type,
+                            NULL as transaction_date,
+                            NULL as transaction_history_id,
+                            CONCAT(rci.first_name, ' ', rci.last_name) as receiver_full_name,
+                            tp.receiver_account_id as receiver_account_id,
+                            tp.amount as transaction_amount,
+                            tp.process_status as transaction_status
+                        FROM transaction_processing tp
+                        JOIN account a ON tp.sender_account_id = a.account_id
+                        JOIN customer_information c ON a.customer_id = c.customer_id
+                        LEFT JOIN account ra ON tp.receiver_account_id = ra.account_id
+                        LEFT JOIN customer_information rci ON ra.customer_id = rci.customer_id
+                        WHERE tp.process_status = 'Rejected'
+                    )
+                    ORDER BY transaction_date DESC
                     LIMIT @Limit
                     OFFSET @Offset";
                 MySqlCommand command = new MySqlCommand(sql, connection);
@@ -143,19 +171,18 @@ namespace BankingSystem.Services.TellerServices
                     // Perform withdrawal and update account balance
                     string sql2 = @"
                         UPDATE account a
-                        JOIN transaction_processing tp ON a.account_id = tp.account_id
+                        JOIN transaction_processing tp ON a.account_id = tp.sender_account_id
                         SET a.balance = a.balance - tp.amount
                         WHERE tp.process_id = @ProcessId";
                     MySqlCommand command2 = new MySqlCommand(sql2, connection);
                     command2.Parameters.AddWithValue("@ProcessId", processId);
                     command2.ExecuteNonQuery();
 
-                    // Create History for transaction
-                    CreateHistoryForTransaction(processId, connection);
+                    CreateHistoryForTransaction(processId, connection, "Withdraw");
+                    GenerateReceiptForTransaction(processId, connection, "Withdraw");
 
-                    // Generate Receipt for transaction
-                    GenerateReceiptForTransaction(processId, connection);
-
+                    string message = "Your " + "withdraw" + " has been approved. Check your transaction history for more details.";
+                    CreateNotificationForTransaction(GetCustomerIdFromProcessId(processId), message);
                     transaction.Commit();
                 }
                 catch
@@ -182,19 +209,18 @@ namespace BankingSystem.Services.TellerServices
                     // Perform deposit and update account balance
                     string sql2 = @"
                         UPDATE account a
-                        JOIN transaction_processing tp ON a.account_id = tp.account_id
+                        JOIN transaction_processing tp ON a.account_id = tp.sender_account_id
                         SET a.balance = a.balance + tp.amount
                         WHERE tp.process_id = @ProcessId";
                     MySqlCommand command2 = new MySqlCommand(sql2, connection);
                     command2.Parameters.AddWithValue("@ProcessId", processId);
                     command2.ExecuteNonQuery();
 
-                    // Create History for transaction
-                    CreateHistoryForTransaction(processId, connection);
+                    CreateHistoryForTransaction(processId, connection, "Deposit");
+                    GenerateReceiptForTransaction(processId, connection, "Deposit");
 
-                    // Generate Receipt for transaction
-                    GenerateReceiptForTransaction(processId, connection);
-
+                    string message = "Your " + "deposit" + " has been approved. Check your transaction history for more details.";
+                    CreateNotificationForTransaction(GetCustomerIdFromProcessId(processId), message);
                     transaction.Commit();
                 }
                 catch
@@ -220,7 +246,7 @@ namespace BankingSystem.Services.TellerServices
                     // Perform transfer and update account balances
                     string sql2 = @"
                         UPDATE account a
-                        JOIN transaction_processing tp ON a.account_id = tp.account_id
+                        JOIN transaction_processing tp ON a.account_id = tp.sender_account_id
                         SET a.balance = a.balance - tp.amount
                         WHERE tp.process_id = @ProcessId";
                     MySqlCommand command2 = new MySqlCommand(sql2, connection);
@@ -236,12 +262,14 @@ namespace BankingSystem.Services.TellerServices
                     command3.Parameters.AddWithValue("@ProcessId", processId);
                     command3.ExecuteNonQuery();
 
-                    // Create History for transaction
-                    CreateHistoryForTransaction(processId, connection);
+                    CreateHistoryForTransaction(processId, connection, "Transfer"); 
+                    GenerateReceiptForTransaction(processId, connection, "Transfer");
 
-                    // Generate Receipt for transaction
-                    GenerateReceiptForTransaction(processId, connection);
+                    string messageToSender = "Your transfer has been approved. Check your transaction history for more details.";
+                    CreateNotificationForTransaction(GetCustomerIdFromProcessId(processId), messageToSender);
 
+                    string messageToReceiver = "You have received a transfer. Check your transaction history for more details.";
+                    CreateNotificationForTransaction(GetCustomerIdFromReceiverAccountID(processId), messageToReceiver);
                     transaction.Commit();
                 }
                 catch
@@ -253,11 +281,47 @@ namespace BankingSystem.Services.TellerServices
         }
         public static void RejectTransaction(string processId)
         {
+            string transactionType;
+
             using (MySqlConnection connection = MySQLDatabase.OpenConnection())
             {
+                // Get the sender_account_id and transaction_type from the transaction_processing table
+                string sql = "SELECT transaction_type FROM transaction_processing WHERE process_id = @ProcessId";
+                MySqlCommand command = new MySqlCommand(sql, connection);
+                command.Parameters.AddWithValue("@ProcessId", processId);
+
+                using (MySqlDataReader reader = command.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        transactionType = reader.GetString(0);
+                    }
+                    else
+                    {
+                        throw new Exception("Process id not found.");
+                    }
+                }
+            }
+
+            int senderCustomerId = GetCustomerIdFromProcessId(processId); // Use the method you provided earlier to get customer_id
+
+            using (MySqlConnection connection = MySQLDatabase.OpenConnection())
+            {
+                // Update the transaction_processing table
                 string sql = "UPDATE transaction_processing SET process_status = 'Rejected' WHERE process_id = @ProcessId";
                 MySqlCommand command = new MySqlCommand(sql, connection);
                 command.Parameters.AddWithValue("@ProcessId", processId);
+                command.ExecuteNonQuery();
+            }
+
+            using (MySqlConnection connection = MySQLDatabase.OpenConnection())
+            {
+                // Insert a new notification
+                string sql = "INSERT INTO notifications (customer_id, message, is_seen, created_at) VALUES (@CustomerId, @Message, 0, NOW())";
+                MySqlCommand command = new MySqlCommand(sql, connection);
+                command.Parameters.AddWithValue("@CustomerId", senderCustomerId);
+                command.Parameters.AddWithValue("@Message", $"Your {transactionType} transaction has been rejected by the teller.");
+
                 command.ExecuteNonQuery();
             }
         }
@@ -266,13 +330,13 @@ namespace BankingSystem.Services.TellerServices
             Random rnd = new Random();
             return string.Format("{0:D4}-{1:D3}-{2:D4}", rnd.Next(0, 9999), rnd.Next(0, 999), rnd.Next(0, 9999));
         }
-        public static void GenerateReceiptForTransaction(string processId, MySqlConnection connection)
+        public static void GenerateReceiptForTransaction(string processId, MySqlConnection connection, string transactionType)
         {
             // Generate reference number
             string referenceNumber = GenerateReferenceNumber();
 
             // Get the transaction_id of the last inserted row in transaction_history
-            string sql1 = "SELECT MAX(transaction_id) FROM transaction_history WHERE account_id IN (SELECT account_id FROM transaction_processing WHERE process_id = @ProcessId)";
+            string sql1 = "SELECT MAX(transaction_id) FROM transaction_history WHERE sender_account_id IN (SELECT sender_account_id FROM transaction_processing WHERE process_id = @ProcessId)";
             MySqlCommand command1 = new MySqlCommand(sql1, connection);
             command1.Parameters.AddWithValue("@ProcessId", processId);
             string transactionId = command1.ExecuteScalar().ToString();
@@ -280,9 +344,9 @@ namespace BankingSystem.Services.TellerServices
             // Insert into transaction_receipt
             string sql2 = @"
                 INSERT INTO transaction_receipt (reference_number, customer_id, account_id, transaction_id)
-                SELECT @ReferenceNumber, a.customer_id, tp.account_id, @TransactionId
+                SELECT @ReferenceNumber, a.customer_id, tp.sender_account_id, @TransactionId
                 FROM transaction_processing tp
-                JOIN account a ON a.account_id = tp.account_id
+                JOIN account a ON a.account_id = tp.sender_account_id
                 WHERE tp.process_id = @ProcessId";
             MySqlCommand command2 = new MySqlCommand(sql2, connection);
             command2.Parameters.AddWithValue("@ReferenceNumber", referenceNumber);
@@ -290,17 +354,111 @@ namespace BankingSystem.Services.TellerServices
             command2.Parameters.AddWithValue("@TransactionId", transactionId);
             command2.ExecuteNonQuery();
         }
-        public static void CreateHistoryForTransaction(string processId, MySqlConnection connection)
+
+        public static void CreateHistoryForTransaction(string processId, MySqlConnection connection, string transactionType)
         {
-            // Insert into transaction_history
-            string sql = @"
-                INSERT INTO transaction_history (account_id, amount, date, transaction_type)
-                SELECT tp.account_id, tp.amount, NOW(), tp.transaction_type
+            // Select fields depending on the transactionType
+            string sql = transactionType == "Transfer" ? @"
+                INSERT INTO transaction_history (sender_account_id, receiver_account_id, amount, date, transaction_type)
+                SELECT tp.sender_account_id, tp.receiver_account_id, tp.amount, NOW(), tp.transaction_type
+                FROM transaction_processing tp
+                WHERE tp.process_id = @ProcessId" : @"
+                INSERT INTO transaction_history (sender_account_id, amount, date, transaction_type)
+                SELECT tp.sender_account_id, tp.amount, NOW(), tp.transaction_type
                 FROM transaction_processing tp
                 WHERE tp.process_id = @ProcessId";
             MySqlCommand command = new MySqlCommand(sql, connection);
             command.Parameters.AddWithValue("@ProcessId", processId);
             command.ExecuteNonQuery();
+        }
+        public static void CreateNotificationForTransaction(int customerId, string message)
+        {
+            using (MySqlConnection connection = MySQLDatabase.OpenConnection())
+            {
+                string query = "INSERT INTO notifications (customer_id, message, is_seen) VALUES (@CustomerId, @Message, 0)";
+                using (MySqlCommand command = new MySqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@CustomerId", customerId);
+                    command.Parameters.AddWithValue("@Message", message);
+                    command.ExecuteNonQuery();
+                }
+            }
+        }
+        public static int GetCustomerIdFromProcessId(string processId)
+        {
+            int customerId;
+
+            using (MySqlConnection connection = MySQLDatabase.OpenConnection())
+            {
+                string sql = @"
+                    SELECT a.customer_id 
+                    FROM transaction_processing tp
+                    JOIN account a ON tp.sender_account_id = a.account_id
+                    WHERE tp.process_id = @ProcessId";
+
+                MySqlCommand command = new MySqlCommand(sql, connection);
+                command.Parameters.AddWithValue("@ProcessId", processId);
+
+                using (MySqlDataReader reader = command.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        customerId = reader.GetInt32(0); // Assuming customer_id is at index 0
+                    }
+                    else
+                    {
+                        throw new Exception("Process id not found.");
+                    }
+                }
+            }
+
+            return customerId;
+        }
+        public static int GetCustomerIdFromReceiverAccountID(string processId)
+        {
+            string receiverAccountId;
+            int customerId;
+
+            using (MySqlConnection connection = MySQLDatabase.OpenConnection())
+            {
+                // Get the receiver_account_id from the transaction_processing table
+                string sql = "SELECT receiver_account_id FROM transaction_processing WHERE process_id = @ProcessId";
+                MySqlCommand command = new MySqlCommand(sql, connection);
+                command.Parameters.AddWithValue("@ProcessId", processId);
+
+                using (MySqlDataReader reader = command.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        receiverAccountId = reader.GetString(0); // Assuming receiver_account_id is at index 0
+                    }
+                    else
+                    {
+                        throw new Exception("Process id not found.");
+                    }
+                }
+            }
+            using (MySqlConnection connection = MySQLDatabase.OpenConnection())
+            {
+                // Get the customer_id from the account table
+                string sql = "SELECT customer_id FROM account WHERE account_id = @AccountId";
+                MySqlCommand command = new MySqlCommand(sql, connection);
+                command.Parameters.AddWithValue("@AccountId", receiverAccountId);
+
+                using (MySqlDataReader reader = command.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        customerId = reader.GetInt32(0); // Assuming customer_id is at index 0
+                    }
+                    else
+                    {
+                        throw new Exception("Account id not found.");
+                    }
+                }
+            }
+
+            return customerId;
         }
     }
 }

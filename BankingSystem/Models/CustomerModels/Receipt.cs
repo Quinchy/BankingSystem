@@ -6,13 +6,16 @@ using System.Threading.Tasks;
 
 namespace BankingSystem.Models.CustomerModels
 {
-    // Defines the Customer class.
     internal class Receipt
     {
-        // Gets or sets the full name.
-        public string FullName { get; set; }
-        // Gets or sets the account id.
-        public string AccountID { get; set; }
+        // Gets or sets the sender full name.
+        public string SenderFullName { get; set; }
+        // Gets or sets the sender account id.
+        public string SenderAccountID { get; set; }
+        // Gets or sets the receiver full name.
+        public string ReceiverFullName { get; set; }
+        // Gets or sets the receiver account id.
+        public string ReceiverAccountID { get; set; }
         // Gets or sets the transaction type.
         public string TransactionType { get; set; }
         // Gets or sets the amount.
@@ -21,13 +24,18 @@ namespace BankingSystem.Models.CustomerModels
         public string ReferenceNumber { get; set; }
         // Gets or sets the date of transaction
         public DateTime TransactionDate { get; set; }
+
         // Initializes a new instance of the Receipt class.
-        public Receipt(string fullName, string accountId, string transactionType, double amount, string referenceNumber, DateTime transactionDate)
+        public Receipt(string senderFullName, string senderAccountId, string receiverFullName, string receiverAccountId, string transactionType, double amount, string referenceNumber, DateTime transactionDate)
         {
-            // Set the full name.
-            FullName = fullName;
-            // Set the account ID.
-            AccountID = accountId;
+            // Set the sender full name.
+            SenderFullName = senderFullName;
+            // Set the sender account ID.
+            SenderAccountID = senderAccountId;
+            // Set the receiver full name.
+            ReceiverFullName = receiverFullName;
+            // Set the receiver account ID.
+            ReceiverAccountID = receiverAccountId;
             // Set the transaction type.
             TransactionType = transactionType;
             // Set the amount.

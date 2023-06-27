@@ -13,7 +13,7 @@ namespace BankingSystem.Services.CustomerServices
     internal class BankingServices
     {
         // This method retrieves the first name of a customer using their email.
-        public static string retrieveCustomerFirstName(string email)
+        public static string RetrieveCustomerFirstName(string email)
         {
             // Initialize the first name as null.
             string firstName = null;
@@ -43,7 +43,7 @@ namespace BankingSystem.Services.CustomerServices
             return firstName;
         }
         // Retrieves the balance of a customer's account using their email.
-        public static double retrieveAccountBalance(string email)
+        public static double RetrieveAccountBalance(string email)
         {
             // Initialize balance to 0
             double balance = 0;
@@ -73,7 +73,7 @@ namespace BankingSystem.Services.CustomerServices
             return balance;
         }
         // Check if the account id they provided is theirs.
-        public static bool isTheirAccount(string email, string accountId)
+        public static bool IsTheirAccount(string email, string accountId)
         {
             // Open a connection to the MySQL database using a connection pool
             using (var conn = MySQLDatabase.OpenConnection())
@@ -96,7 +96,7 @@ namespace BankingSystem.Services.CustomerServices
                 }
             }
         }
-        public static bool checkPendingRequests(string email)
+        public static bool CheckPendingRequests(string email)
         {
             using (MySqlConnection connection = MySQLDatabase.OpenConnection())
             {
@@ -106,7 +106,7 @@ namespace BankingSystem.Services.CustomerServices
                     {
                         string query = @"SELECT tp.process_id 
                                  FROM transaction_processing tp 
-                                 JOIN account a ON tp.account_id = a.account_id
+                                 JOIN account a ON tp.sender_account_id = a.account_id
                                  JOIN customer_information ci ON a.customer_id = ci.customer_id
                                  WHERE ci.email = @Email AND tp.process_status = 'Pending'";
 
@@ -141,16 +141,48 @@ namespace BankingSystem.Services.CustomerServices
                 }
             }
         }
+        public static List<Notification> GetUnseenNotifications(int customerId)
+        {
+            List<Notification> notifications = new List<Notification>();
+
+            using (MySqlConnection connection = MySQLDatabase.OpenConnection())
+            {
+                string query = "SELECT * FROM notifications WHERE customer_id = @customerId AND is_seen = 0";
+
+                using (MySqlCommand cmd = new MySqlCommand(query, connection))
+                {
+                    cmd.Parameters.AddWithValue("@customerId", customerId);
+
+                    using (MySqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            Notification notification = new Notification(
+                                reader.GetInt32(0),  // Assuming Id is at index 0
+                                reader.GetInt32(1),  // Assuming CustomerId is at index 1
+                                reader.GetString(2),  // Assuming Message is at index 2
+                                reader.GetBoolean(3),  // Assuming IsSeen is at index 4 and is stored as a boolean
+                                reader.GetDateTime(4)  // Assuming CreatedAt is at index 3
+                            );
+
+                            notifications.Add(notification);
+                        }
+                    }
+                }
+            }
+
+            return notifications;
+        }
         // Checks if a receiver ID exists in the database
-        public static bool isReceiverIDExist(string receiverID)
+        public static bool IsReceiverIDExist(string receiverID)
         {
             // Open a connection to the MySQL database using a connection pool
-            using (var conn = MySQLDatabase.OpenConnection())
+            using (MySqlConnection connection = MySQLDatabase.OpenConnection())
             {
                 // Construct the SQL query to check if the receiver ID exists
                 string query = "SELECT EXISTS(SELECT 1 FROM account WHERE account_id = @ReceiverID)";
                 // Create a MySqlCommand object with the query and connection
-                using (MySqlCommand command = new MySqlCommand(query, conn))
+                using (MySqlCommand command = new MySqlCommand(query, connection))
                 {
                     // Add the receiver ID as a parameter to the query to prevent SQL injection
                     command.Parameters.AddWithValue("@ReceiverID", receiverID);
@@ -162,15 +194,15 @@ namespace BankingSystem.Services.CustomerServices
             }
         }
         // Requests a deposit transaction for a given account ID and amount
-        public static void requestDeposit(string accountId, double depositAmount)
+        public static void RequestDeposit(string accountId, double depositAmount)
         {
             // Open a connection to the MySQL database using a connection pool
-            using (var conn = MySQLDatabase.OpenConnection())
+            using (MySqlConnection connection = MySQLDatabase.OpenConnection())
             {
                 // Construct the SQL query to insert a deposit transaction
-                string query = "INSERT INTO transaction_processing (account_id, transaction_type, amount, process_status) VALUES (@accountId, 'Deposit', @amount, 'Pending')";
+                string query = "INSERT INTO transaction_processing (sender_account_id, transaction_type, amount, process_status) VALUES (@accountId, 'Deposit', @amount, 'Pending')";
                 // Create a MySqlCommand object with the query and connection
-                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                using (MySqlCommand cmd = new MySqlCommand(query, connection))
                 {
                     // Add parameters to the query to prevent SQL injection
                     cmd.Parameters.AddWithValue("@accountId", accountId);
@@ -181,15 +213,15 @@ namespace BankingSystem.Services.CustomerServices
             }
         }
         // Requests a withdrawal transaction for a given account ID and amount
-        public static void requestWithdraw(string accountId, double withdrawAmount)
+        public static void RequestWithdraw(string accountId, double withdrawAmount)
         {
             // Open a connection to the MySQL database using a connection pool
-            using (var conn = MySQLDatabase.OpenConnection())
+            using (MySqlConnection connection = MySQLDatabase.OpenConnection())
             {
                 // Construct the SQL query to insert a withdrawal transaction
-                string query = "INSERT INTO transaction_processing (account_id, transaction_type, amount, process_status) VALUES (@accountId, 'Withdraw', @amount, 'Pending')";
+                string query = "INSERT INTO transaction_processing (sender_account_id, transaction_type, amount, process_status) VALUES (@accountId, 'Withdraw', @amount, 'Pending')";
                 // Create a MySqlCommand object with the query and connection
-                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                using (MySqlCommand cmd = new MySqlCommand(query, connection))
                 {
                     // Add parameters to the query to prevent SQL injection
                     cmd.Parameters.AddWithValue("@accountId", accountId);
@@ -199,19 +231,20 @@ namespace BankingSystem.Services.CustomerServices
                 }
             }
         }
+
         // Requests a transfer transaction from the sender account to the receiver account with a given amount
-        public static void requestTransfer(string senderAccountId, string receiverAccountId, double transferAmount)
+        public static void RequestTransfer(string senderAccountId, string receiverAccountId, double transferAmount)
         {
             // Open a connection to the MySQL database using a connection pool
-            using (var conn = MySQLDatabase.OpenConnection())
+            using (MySqlConnection connection = MySQLDatabase.OpenConnection())
             {
                 // Construct the SQL query to insert a transfer transaction
-                string query = "INSERT INTO transaction_processing (account_id, transaction_type, amount, process_status, receiver_account_id) VALUES (@accountId, 'Transfer', @amount, 'Pending', @receiverAccountId)";
+                string query = "INSERT INTO transaction_processing (sender_account_id, transaction_type, amount, process_status, receiver_account_id) VALUES (@senderAccountId, 'Transfer', @amount, 'Pending', @receiverAccountId)";
                 // Create a MySqlCommand object with the query and connection
-                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                using (MySqlCommand cmd = new MySqlCommand(query, connection))
                 {
                     // Add parameters to the query to prevent SQL injection
-                    cmd.Parameters.AddWithValue("@accountId", senderAccountId);
+                    cmd.Parameters.AddWithValue("@senderAccountId", senderAccountId);
                     cmd.Parameters.AddWithValue("@amount", transferAmount);
                     cmd.Parameters.AddWithValue("@receiverAccountId", receiverAccountId);
                     // Execute the query to insert the transfer transaction
@@ -219,5 +252,61 @@ namespace BankingSystem.Services.CustomerServices
                 }
             }
         }
+        public static void CreateNotification(int customerId, string message)
+        {
+            using (MySqlConnection connection = MySQLDatabase.OpenConnection())
+            {
+                string query = "INSERT INTO notifications(customer_id, message, created_at) VALUES (@customerId, @message, @createdAt)";
+
+                using (MySqlCommand cmd = new MySqlCommand(query, connection))
+                {
+                    cmd.Parameters.AddWithValue("@customerId", customerId);
+                    cmd.Parameters.AddWithValue("@message", message);
+                    cmd.Parameters.AddWithValue("@createdAt", DateTime.Now);
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public static void MarkNotificationAsSeen(int notificationId)
+        {
+            using (MySqlConnection connection = MySQLDatabase.OpenConnection())
+            {
+                string query = "UPDATE notifications SET is_seen = 1 WHERE notification_id = @notificationId";
+
+                using (MySqlCommand cmd = new MySqlCommand(query, connection))
+                {
+                    cmd.Parameters.AddWithValue("@notificationId", notificationId);
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+        public static int RetrieveCustomerId(string email)
+        {
+            int customerId = 0;
+
+            using (MySqlConnection connection = MySQLDatabase.OpenConnection())
+            {
+                string query = "SELECT customer_id FROM customer_information WHERE email = @Email";
+
+                using (MySqlCommand cmd = new MySqlCommand(query, connection))
+                {
+                    cmd.Parameters.AddWithValue("@Email", email);
+
+                    using (MySqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            customerId = reader.GetInt32(0);  // Assuming customer_id is at index 0
+                        }
+                    }
+                }
+            }
+
+            return customerId;
+        }
+
     }
 }

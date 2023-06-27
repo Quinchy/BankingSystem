@@ -14,25 +14,27 @@ namespace BankingSystem.Services.CustomerServices
         public static List<Transaction> RetrieveTransactions(string email, int limit = 6, int offset = 0)
         {
             List<Transaction> transactions = new List<Transaction>();
-            // Open a connection to the MySQL database
             using (MySqlConnection connection = MySQLDatabase.OpenConnection())
             {
-                // SQL query to retrieve transactions
                 string sql = @"
-                    SELECT th.transaction_id, th.amount, th.date, th.transaction_type
+                    (SELECT th.transaction_id, th.amount, th.date, th.transaction_type
                     FROM transaction_history th
-                    JOIN account a ON th.account_id = a.account_id
+                    JOIN account a ON th.sender_account_id = a.account_id
                     JOIN customer_information ci ON a.customer_id = ci.customer_id
-                    WHERE ci.email = @Email
-                    ORDER BY th.date DESC
+                    WHERE ci.email = @Email)
+                    UNION ALL
+                    (SELECT th.transaction_id, th.amount, th.date, th.transaction_type
+                    FROM transaction_history th
+                    JOIN account a ON th.receiver_account_id = a.account_id
+                    JOIN customer_information ci ON a.customer_id = ci.customer_id
+                    WHERE ci.email = @Email)
+                    ORDER BY transaction_id DESC
                     LIMIT @Limit
                     OFFSET @Offset";
                 MySqlCommand command = new MySqlCommand(sql, connection);
-                // Use the email and limit parameters in the SQL query
                 command.Parameters.AddWithValue("@Email", email);
                 command.Parameters.AddWithValue("@Limit", limit);
                 command.Parameters.AddWithValue("@Offset", offset);
-                // Execute the command and process the results
                 using (MySqlDataReader reader = command.ExecuteReader())
                 {
                     while (reader.Read())
@@ -58,10 +60,19 @@ namespace BankingSystem.Services.CustomerServices
                 // SQL query to count transactions
                 string sql = @"
                     SELECT COUNT(*)
-                    FROM transaction_history th
-                    JOIN account a ON th.account_id = a.account_id
-                    JOIN customer_information ci ON a.customer_id = ci.customer_id
-                    WHERE ci.email = @Email";
+                    FROM (
+                        SELECT th.transaction_id
+                        FROM transaction_history th
+                        JOIN account a ON th.sender_account_id = a.account_id
+                        JOIN customer_information ci ON a.customer_id = ci.customer_id
+                        WHERE ci.email = @Email
+                        UNION ALL
+                        SELECT th.transaction_id
+                        FROM transaction_history th
+                        JOIN account a ON th.receiver_account_id = a.account_id
+                        JOIN customer_information ci ON a.customer_id = ci.customer_id
+                        WHERE ci.email = @Email
+                    ) AS total";
                 MySqlCommand command = new MySqlCommand(sql, connection);
                 // Use the email parameter in the SQL query
                 command.Parameters.AddWithValue("@Email", email);
@@ -69,6 +80,6 @@ namespace BankingSystem.Services.CustomerServices
                 count = Convert.ToInt32(command.ExecuteScalar());
             }
             return count;
-        }       
+        }
     }
 }

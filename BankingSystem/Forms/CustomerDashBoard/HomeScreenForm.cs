@@ -19,9 +19,33 @@ namespace BankingSystem.Forms.CustomerDashBoard
         private string email;
         public HomeScreenForm(string email)
         {
+            Email.email = email;
             this.email = email;
             InitializeComponent();
             InitializeAccountInformation(email);
+            // Subscribe to the Load event.
+            this.Load += HomeScreenForm_Shown;
+        }
+
+        private async void HomeScreenForm_Shown(object sender, EventArgs e)
+        {
+            await Task.Delay(300);
+
+            // Now the notifications will be shown after a delay.
+            ShowUnseenNotifications(email);
+        }
+        private void ShowUnseenNotifications(string email)
+        {
+            int customerId = BankingServices.RetrieveCustomerId(email);
+            List<Notification> unseenNotifications = BankingServices.GetUnseenNotifications(customerId);
+
+            foreach (var notification in unseenNotifications)
+            {
+                // Show each notification to the user...
+                ShowMessageBox(notification.Message);
+                // Mark the notification as seen
+                BankingServices.MarkNotificationAsSeen(notification.Id);
+            }
         }
         // Handles the Click event of the deposit button.
         // Validates the input, checks if the account belongs to the user, and sends a deposit request.
@@ -36,13 +60,13 @@ namespace BankingSystem.Forms.CustomerDashBoard
                 return; // Exit the method
             }
             // If the account ID does not belong to the user
-            if (!BankingServices.isTheirAccount(email, accountId))
+            if (!BankingServices.IsTheirAccount(email, accountId))
             {
                 ShowMessageBox("This is not your account ID.");
                 return; // Exit the method
             }
             // Check if there are any pending requests
-            if (BankingServices.checkPendingRequests(email))
+            if (BankingServices.CheckPendingRequests(email))
             {
                 ShowMessageBox("You have a pending request. You cannot perform another transaction until your pending request has been dealt with.");
                 return; // Exit the method
@@ -55,7 +79,7 @@ namespace BankingSystem.Forms.CustomerDashBoard
                 try
                 {
                     // Send a deposit request
-                    BankingServices.requestDeposit(accountId, depositAmount);
+                    BankingServices.RequestDeposit(accountId, depositAmount);
                     ShowMessageBox("Your deposit request has been sent to the teller for review.");
                 }
                 catch (Exception ex)
@@ -77,20 +101,20 @@ namespace BankingSystem.Forms.CustomerDashBoard
                 return; // Exit the method
             }
             // If the account ID does not belong to the user
-            if (!BankingServices.isTheirAccount(email, accountId))
+            if (!BankingServices.IsTheirAccount(email, accountId))
             {
                 ShowMessageBox("This is not your account ID.");
                 return; // Exit the method
             }
             // Check if the withdraw amount is greater than the account balance
-            double balance = BankingServices.retrieveAccountBalance(email);
+            double balance = BankingServices.RetrieveAccountBalance(email);
             if (withdrawAmount > balance)
             {
                 ShowMessageBox("Insufficient balance.");
                 return; // Exit the method
             }
             // Check if there are any pending requests
-            if (BankingServices.checkPendingRequests(email))
+            if (BankingServices.CheckPendingRequests(email))
             {
                 ShowMessageBox("You have a pending request. You cannot perform another transaction until your pending request has been dealt with.");
                 return; // Exit the method
@@ -103,7 +127,7 @@ namespace BankingSystem.Forms.CustomerDashBoard
                 try
                 {
                     // Send a withdraw request
-                    BankingServices.requestWithdraw(accountId, withdrawAmount);
+                    BankingServices.RequestWithdraw(accountId, withdrawAmount);
                     ShowMessageBox("Your withdraw request has been sent to the teller for review.");
                 }
                 catch (Exception ex)
@@ -127,7 +151,7 @@ namespace BankingSystem.Forms.CustomerDashBoard
                 return; // Exit the method
             }
             // If the sender account ID does not belong to the user
-            if (!BankingServices.isTheirAccount(email, senderAccountId))
+            if (!BankingServices.IsTheirAccount(email, senderAccountId))
             {
                 ShowMessageBox("This is not your account ID.");
                 return; // Exit the method
@@ -139,20 +163,20 @@ namespace BankingSystem.Forms.CustomerDashBoard
                 return; // Exit the method
             }
             // If the receiver account ID does not exist
-            if (!BankingServices.isReceiverIDExist(receiverAccountId))
+            if (!BankingServices.IsReceiverIDExist(receiverAccountId))
             {
                 ShowMessageBox("The receiver account ID does not exist.");
                 return; // Exit the method
             }
             // If the balance is less than the transfer amount
-            double balance = BankingServices.retrieveAccountBalance(email);
+            double balance = BankingServices.RetrieveAccountBalance(email);
             if (transferAmount > balance)
             {
                 ShowMessageBox("Insufficient balance.");
                 return; // Exit the method
             }
             // Check if there are any pending requests
-            if (BankingServices.checkPendingRequests(email))
+            if (BankingServices.CheckPendingRequests(email))
             {
                 ShowMessageBox("You have a pending request. You cannot perform another transaction until your pending request has been dealt with.");
                 return; // Exit the method
@@ -165,7 +189,7 @@ namespace BankingSystem.Forms.CustomerDashBoard
                 try
                 {
                     // Send a transfer request
-                    BankingServices.requestTransfer(senderAccountId, receiverAccountId, transferAmount);
+                    BankingServices.RequestTransfer(senderAccountId, receiverAccountId, transferAmount);
                     ShowMessageBox("Your transfer request has been sent to the teller for review.");
                 }
                 catch (Exception ex)
@@ -178,8 +202,8 @@ namespace BankingSystem.Forms.CustomerDashBoard
         public static void InitializeAccountInformation(string email)
         {
             // Retrieve the customer's first name, account balance, and transaction history
-            string customerFirstName = BankingServices.retrieveCustomerFirstName(email);
-            double accountBalance = BankingServices.retrieveAccountBalance(email);
+            string customerFirstName = BankingServices.RetrieveCustomerFirstName(email);
+            double accountBalance = BankingServices.RetrieveAccountBalance(email);
             // Set the account balance and greet the user with their first name
             balanceLabel.Text = "₱ " + accountBalance;
             greetUserLabel.Text = "Welcome, " + customerFirstName;

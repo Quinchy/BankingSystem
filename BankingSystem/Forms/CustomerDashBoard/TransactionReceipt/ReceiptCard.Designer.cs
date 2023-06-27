@@ -14,7 +14,7 @@
         private void InitializeComponent()
         {
             appLogoIcon = new Panel();
-            fullNameLabel = new Label();
+            receiverNameValue = new Label();
             accountIdLabel = new Label();
             accountIdPanel = new Utils.Components.RoundedPanel();
             transactionTypeLabel = new Label();
@@ -26,8 +26,10 @@
             referenceNumberLabel = new Label();
             transactionDateLabel = new Label();
             transactionReferenceNumberLabel = new Label();
-            label1 = new Label();
+            receiverName = new Label();
             label2 = new Label();
+            senderName = new Label();
+            senderNameValue = new Label();
             accountIdPanel.SuspendLayout();
             amountPanel.SuspendLayout();
             SuspendLayout();
@@ -41,17 +43,17 @@
             appLogoIcon.Size = new Size(61, 50);
             appLogoIcon.TabIndex = 8;
             // 
-            // fullNameLabel
+            // receiverNameValue
             // 
-            fullNameLabel.AutoSize = true;
-            fullNameLabel.Font = new Font("Century Gothic", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            fullNameLabel.ForeColor = SystemColors.WindowFrame;
-            fullNameLabel.Location = new Point(90, 355);
-            fullNameLabel.Name = "fullNameLabel";
-            fullNameLabel.Size = new Size(106, 21);
-            fullNameLabel.TabIndex = 9;
-            fullNameLabel.Text = "Samuel Cruz";
-            fullNameLabel.TextAlign = ContentAlignment.MiddleCenter;
+            receiverNameValue.AutoSize = true;
+            receiverNameValue.Font = new Font("Century Gothic", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            receiverNameValue.ForeColor = SystemColors.WindowFrame;
+            receiverNameValue.Location = new Point(110, 376);
+            receiverNameValue.Name = "receiverNameValue";
+            receiverNameValue.Size = new Size(106, 21);
+            receiverNameValue.TabIndex = 9;
+            receiverNameValue.Text = "Samuel Cruz";
+            receiverNameValue.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // accountIdLabel
             // 
@@ -137,7 +139,7 @@
             // 
             referenceNumberLabel.AutoSize = true;
             referenceNumberLabel.Font = new Font("Century Gothic", 12F, FontStyle.Italic, GraphicsUnit.Point);
-            referenceNumberLabel.Location = new Point(25, 385);
+            referenceNumberLabel.Location = new Point(25, 405);
             referenceNumberLabel.Name = "referenceNumberLabel";
             referenceNumberLabel.Size = new Size(162, 19);
             referenceNumberLabel.TabIndex = 46;
@@ -148,7 +150,7 @@
             transactionDateLabel.AutoSize = true;
             transactionDateLabel.Font = new Font("Century Gothic", 12F, FontStyle.Italic, GraphicsUnit.Point);
             transactionDateLabel.ForeColor = SystemColors.WindowFrame;
-            transactionDateLabel.Location = new Point(84, 413);
+            transactionDateLabel.Location = new Point(84, 433);
             transactionDateLabel.Name = "transactionDateLabel";
             transactionDateLabel.Size = new Size(112, 19);
             transactionDateLabel.TabIndex = 47;
@@ -159,39 +161,63 @@
             transactionReferenceNumberLabel.AutoSize = true;
             transactionReferenceNumberLabel.Font = new Font("Century Gothic", 12F, FontStyle.Regular, GraphicsUnit.Point);
             transactionReferenceNumberLabel.ForeColor = SystemColors.WindowFrame;
-            transactionReferenceNumberLabel.Location = new Point(188, 385);
+            transactionReferenceNumberLabel.Location = new Point(188, 405);
             transactionReferenceNumberLabel.Name = "transactionReferenceNumberLabel";
             transactionReferenceNumberLabel.Size = new Size(119, 21);
             transactionReferenceNumberLabel.TabIndex = 48;
             transactionReferenceNumberLabel.Text = "0000-000-0000";
             // 
-            // label1
+            // receiverName
             // 
-            label1.AutoSize = true;
-            label1.Font = new Font("Century Gothic", 12F, FontStyle.Italic, GraphicsUnit.Point);
-            label1.Location = new Point(25, 355);
-            label1.Name = "label1";
-            label1.Size = new Size(67, 19);
-            label1.TabIndex = 49;
-            label1.Text = "Name: ";
+            receiverName.AutoSize = true;
+            receiverName.Font = new Font("Century Gothic", 12F, FontStyle.Italic, GraphicsUnit.Point);
+            receiverName.Location = new Point(25, 377);
+            receiverName.Name = "receiverName";
+            receiverName.Size = new Size(86, 19);
+            receiverName.TabIndex = 49;
+            receiverName.Text = "Receiver: ";
             // 
             // label2
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Century Gothic", 12F, FontStyle.Italic, GraphicsUnit.Point);
-            label2.Location = new Point(25, 413);
+            label2.Location = new Point(25, 433);
             label2.Name = "label2";
             label2.Size = new Size(59, 19);
             label2.TabIndex = 50;
             label2.Text = "Date: ";
             // 
+            // senderName
+            // 
+            senderName.AutoSize = true;
+            senderName.Font = new Font("Century Gothic", 12F, FontStyle.Italic, GraphicsUnit.Point);
+            senderName.Location = new Point(25, 349);
+            senderName.Name = "senderName";
+            senderName.Size = new Size(72, 19);
+            senderName.TabIndex = 52;
+            senderName.Text = "Sender: ";
+            // 
+            // senderNameValue
+            // 
+            senderNameValue.AutoSize = true;
+            senderNameValue.Font = new Font("Century Gothic", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            senderNameValue.ForeColor = SystemColors.WindowFrame;
+            senderNameValue.Location = new Point(95, 349);
+            senderNameValue.Name = "senderNameValue";
+            senderNameValue.Size = new Size(106, 21);
+            senderNameValue.TabIndex = 51;
+            senderNameValue.Text = "Samuel Cruz";
+            senderNameValue.TextAlign = ContentAlignment.MiddleCenter;
+            // 
             // ReceiptCard
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            Controls.Add(senderName);
+            Controls.Add(senderNameValue);
             Controls.Add(label2);
-            Controls.Add(label1);
-            Controls.Add(fullNameLabel);
+            Controls.Add(receiverName);
+            Controls.Add(receiverNameValue);
             Controls.Add(transactionReferenceNumberLabel);
             Controls.Add(transactionDateLabel);
             Controls.Add(referenceNumberLabel);
@@ -212,7 +238,7 @@
         }
 
         private Panel appLogoIcon;
-        public Label fullNameLabel;
+        public Label receiverNameValue;
         public Label accountIdLabel;
         private Utils.Components.RoundedPanel accountIdPanel;
         public Label transactionTypeLabel;
@@ -224,7 +250,9 @@
         private Label referenceNumberLabel;
         public Label transactionDateLabel;
         public Label transactionReferenceNumberLabel;
-        private Label label1;
+        public Label receiverName;
         private Label label2;
+        public Label senderName;
+        public Label senderNameValue;
     }
 }

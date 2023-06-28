@@ -231,7 +231,6 @@ namespace BankingSystem.Services.CustomerServices
                 }
             }
         }
-
         // Requests a transfer transaction from the sender account to the receiver account with a given amount
         public static void RequestTransfer(string senderAccountId, string receiverAccountId, double transferAmount)
         {
@@ -268,12 +267,11 @@ namespace BankingSystem.Services.CustomerServices
                 }
             }
         }
-
-        public static void MarkNotificationAsSeen(int notificationId)
+        public static void DeleteNotification(int notificationId)
         {
             using (MySqlConnection connection = MySQLDatabase.OpenConnection())
             {
-                string query = "UPDATE notifications SET is_seen = 1 WHERE notification_id = @notificationId";
+                string query = "DELETE FROM notifications WHERE notification_id = @notificationId";
 
                 using (MySqlCommand cmd = new MySqlCommand(query, connection))
                 {
@@ -307,6 +305,22 @@ namespace BankingSystem.Services.CustomerServices
 
             return customerId;
         }
+        public static void UpdateLastActivityDate(string email)
+        {
+            using (MySqlConnection connection = MySQLDatabase.OpenConnection())
+            {
+                string query = "UPDATE account " +
+                               "JOIN customer_information ON account.customer_id = customer_information.customer_id " +
+                               "SET account.last_activity_date = CURDATE() " +
+                               "WHERE customer_information.email = @email";
 
+                using (MySqlCommand cmd = new MySqlCommand(query, connection))
+                {
+                    cmd.Parameters.AddWithValue("@email", email);
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
     }
 }

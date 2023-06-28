@@ -6,6 +6,7 @@ namespace BankingSystem
         static void Main()
         {
             ApplicationConfiguration.Initialize();
+            Database.MySQLDatabase.EnableEventScheduler();
             Application.Run(new Forms.BaseForm());
         }
     }

@@ -21,6 +21,7 @@ namespace BankingSystem.Forms.CustomerDashBoard
             CurrentUser.Email = email;
             InitializeComponent();
             InitializeAccountInformation(email);
+            BankingServices.UpdateLastActivityDate(email);
             // Subscribe to the Load event.
             this.Load += HomeScreenForm_Shown;
         }
@@ -42,7 +43,7 @@ namespace BankingSystem.Forms.CustomerDashBoard
                 // Show each notification to the user...
                 ShowMessageBox(notification.Message);
                 // Mark the notification as seen
-                BankingServices.MarkNotificationAsSeen(notification.Id);
+                BankingServices.DeleteNotification(notification.Id);
             }
         }
         // Handles the Click event of the deposit button.

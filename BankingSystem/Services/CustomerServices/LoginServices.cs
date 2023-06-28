@@ -49,7 +49,7 @@ namespace BankingSystem.Services.CustomerServices
                         command.CommandText = query;
                         string status = Convert.ToString(command.ExecuteScalar());
                         // If the status is "Close", it means the account is closed and cannot login.
-                        if (status == "Close")
+                        if (status == "Closed")
                         {
                             // Account is closed
                             return -3;

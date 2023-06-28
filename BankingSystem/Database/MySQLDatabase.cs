@@ -43,5 +43,29 @@ namespace BankingSystem.Database
                 return null;
             }
         }
+        // Method to enable event scheduler
+        public static void EnableEventScheduler()
+        {
+            using (MySqlConnection connection = OpenConnection())
+            {
+                if (connection != null)
+                {
+                    try
+                    {
+                        MySqlCommand command = new MySqlCommand("SET GLOBAL event_scheduler = ON", connection);
+                        command.ExecuteNonQuery();
+                        Console.WriteLine("Event scheduler enabled.");
+                    }
+                    catch (MySqlException ex)
+                    {
+                        Console.WriteLine("Error enabling event scheduler: " + ex.Message);
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Failed to establish a database connection.");
+                }
+            }
+        }
     }
 }

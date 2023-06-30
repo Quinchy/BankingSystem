@@ -10,18 +10,17 @@ using System.Threading.Tasks;
 
 namespace BankingSystem.Services.CustomerServices
 {
-    // A service class for sending request for an account.
+    // This class contains all methods used by RegistrationForm
     internal class RegistrationServices
     {
         // Regex pattern for valid email address
         private static readonly string EmailPattern = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";
-
         // Regex pattern for PH phone number (starts with 09 and followed by 9 digits)
         private static readonly string PhoneNumberPattern = @"^09\d{9}$";
         // Registers a new user in the system
         public static void registerUser(Customer customer)
         {
-            // Open a connection to the database
+            // Open MySQL connection
             using (var connection = Database.MySQLDatabase.OpenConnection())
             {
                 if (connection != null)
@@ -30,7 +29,7 @@ namespace BankingSystem.Services.CustomerServices
                     string query = "INSERT INTO customer_information (first_name, last_name, email, phone_number, password) VALUES (@FirstName, @LastName, @Email, @PhoneNumber, @Password); SELECT LAST_INSERT_ID();";
                     using (var command = new MySqlCommand(query, connection))
                     {
-                        // Add the user's information to the query
+                        // Add parameters to the query
                         command.Parameters.AddWithValue("@FirstName", customer.FirstName);
                         command.Parameters.AddWithValue("@LastName", customer.LastName);
                         command.Parameters.AddWithValue("@Email", customer.Email);
@@ -42,7 +41,7 @@ namespace BankingSystem.Services.CustomerServices
                         query = "INSERT INTO account_request (customer_id, request_date, request_status) VALUES (@CustomerId, @RequestDate, @RequestStatus)";
                         using (var requestCommand = new MySqlCommand(query, connection))
                         {
-                            // Add the new user's ID, the current date and time, and the initial request status to the query
+                            // Add parameters to the query
                             requestCommand.Parameters.AddWithValue("@CustomerId", customerId);
                             requestCommand.Parameters.AddWithValue("@RequestDate", DateTime.Now);
                             requestCommand.Parameters.AddWithValue("@RequestStatus", "Pending");

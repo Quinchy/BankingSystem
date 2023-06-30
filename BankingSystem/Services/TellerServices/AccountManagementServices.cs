@@ -10,13 +10,14 @@ using BankingSystem.Models.TellerModels;
 
 namespace BankingSystem.Services.TellerServices
 {
-    // A service class for managing account request and also managing the closing and opening of an account.
+    // This class contains all the methods used by AccountManagementForm
     internal class AccountManagementServices
     {
+        // Retrieves all the list of pending account request from the database
         public static List<AccountRequest> RetrieveAccountRequests(int limit = 6, int offset = 0)
         {
             List<AccountRequest> requests = new List<AccountRequest>();
-            // Open a connection to the MySQL database
+            // Open MySQL connection
             using (MySqlConnection connection = MySQLDatabase.OpenConnection())
             {
                 // SQL query to retrieve account requests
@@ -53,12 +54,11 @@ namespace BankingSystem.Services.TellerServices
             }
             return requests;
         }
-        // Loads a list of accounts from the database
+        // Retrieves the list of accounts from the database
         public static List<AccountList> RetrieveAccountLists(int limit = 6, int offset = 0)
         {
             List<AccountList> accountLists = new List<AccountList>();
-
-            // Open a connection to the MySQL database
+            // Open MySQL connection
             using (MySqlConnection connection = MySQLDatabase.OpenConnection())
             {
                 // SQL query to retrieve account requests
@@ -73,7 +73,6 @@ namespace BankingSystem.Services.TellerServices
                 // Use the limit and offset parameters in the SQL query
                 command.Parameters.AddWithValue("@Limit", limit);
                 command.Parameters.AddWithValue("@Offset", offset);
-
                 // Execute the command and process the results
                 using (MySqlDataReader reader = command.ExecuteReader())
                 {
@@ -95,9 +94,11 @@ namespace BankingSystem.Services.TellerServices
             }
             return accountLists;
         }
+        // Counts all the pending account requests
         public static int RetrieveTotalAccountRequests()
         {
             int totalRequests = 0;
+            // Open MySQL connection
             using (MySqlConnection connection = MySQLDatabase.OpenConnection())
             {
                 string sql = "SELECT COUNT(*) FROM account_request WHERE request_status = 'Pending'";
@@ -106,10 +107,11 @@ namespace BankingSystem.Services.TellerServices
             }
             return totalRequests;
         }
-
+        // Counts all the account
         public static int RetrieveTotalAccountLists()
         {
             int totalAccounts = 0;
+            // Open MySQL connection
             using (MySqlConnection connection = MySQLDatabase.OpenConnection())
             {
                 string sql = "SELECT COUNT(*) FROM account";
@@ -121,76 +123,69 @@ namespace BankingSystem.Services.TellerServices
         // Approve a request for an account.
         public static void ApproveAccount(string requestId)
         {
-            using (var connection = BankingSystem.Database.MySQLDatabase.OpenConnection())
+            // Open MySQL connection
+            using (var connection = MySQLDatabase.OpenConnection())
             {
-                if (connection != null)
+                string query = "SELECT customer_id FROM account_request WHERE request_id = @RequestId";
+                using (var command = new MySqlCommand(query, connection))
                 {
-                    string query = "SELECT customer_id FROM account_request WHERE request_id = @RequestId";
-                    using (var command = new MySqlCommand(query, connection))
+                    command.Parameters.AddWithValue("@RequestId", requestId);
+                    var customerId = command.ExecuteScalar();
+
+                    query = "SELECT first_name, last_name, phone_number FROM customer_information WHERE customer_id = @CustomerId";
+                    using (var customerCommand = new MySqlCommand(query, connection))
                     {
-                        command.Parameters.AddWithValue("@RequestId", requestId);
-                        var customerId = command.ExecuteScalar();
+                        customerCommand.Parameters.AddWithValue("@CustomerId", customerId);
+                        string firstName = null;
+                        string lastName = null;
+                        string phoneNumber = null;
 
-                        query = "SELECT first_name, last_name, phone_number FROM customer_information WHERE customer_id = @CustomerId";
-                        using (var customerCommand = new MySqlCommand(query, connection))
+                        using (var reader = customerCommand.ExecuteReader())
                         {
-                            customerCommand.Parameters.AddWithValue("@CustomerId", customerId);
-                            string firstName = null;
-                            string lastName = null;
-                            string phoneNumber = null;
-
-                            using (var reader = customerCommand.ExecuteReader())
+                            while (reader.Read())
                             {
-                                while (reader.Read())
-                                {
-                                    firstName = reader["first_name"].ToString();
-                                    lastName = reader["last_name"].ToString();
-                                    phoneNumber = reader["phone_number"].ToString();
-                                }
+                                firstName = reader["first_name"].ToString();
+                                lastName = reader["last_name"].ToString();
+                                phoneNumber = reader["phone_number"].ToString();
                             }
+                        }
 
-                            string accountId = GenerateAccountId(firstName, lastName, phoneNumber);
-                            query = "INSERT INTO account (account_id, customer_id, balance, account_status) VALUES (@AccountId, @CustomerId, @Balance, @AccountStatus)";
+                        string accountId = GenerateAccountId(firstName, lastName, phoneNumber);
+                        query = "INSERT INTO account (account_id, customer_id, balance, account_status) VALUES (@AccountId, @CustomerId, @Balance, @AccountStatus)";
 
-                            using (var accountCommand = new MySqlCommand(query, connection))
-                            {
-                                accountCommand.Parameters.AddWithValue("@AccountId", accountId);
-                                accountCommand.Parameters.AddWithValue("@CustomerId", customerId);
-                                accountCommand.Parameters.AddWithValue("@Balance", 0.0);
-                                accountCommand.Parameters.AddWithValue("@AccountStatus", "Open");
-                                accountCommand.ExecuteNonQuery();
-                            }
+                        using (var accountCommand = new MySqlCommand(query, connection))
+                        {
+                            accountCommand.Parameters.AddWithValue("@AccountId", accountId);
+                            accountCommand.Parameters.AddWithValue("@CustomerId", customerId);
+                            accountCommand.Parameters.AddWithValue("@Balance", 0.0);
+                            accountCommand.Parameters.AddWithValue("@AccountStatus", "Open");
+                            accountCommand.ExecuteNonQuery();
+                        }
 
-                            query = "UPDATE account_request SET request_status = 'Approved' WHERE request_id = @RequestId";
+                        query = "UPDATE account_request SET request_status = 'Approved' WHERE request_id = @RequestId";
 
-                            using (var updateCommand = new MySqlCommand(query, connection))
-                            {
-                                updateCommand.Parameters.AddWithValue("@RequestId", requestId);
-                                updateCommand.ExecuteNonQuery();
-                            }
+                        using (var updateCommand = new MySqlCommand(query, connection))
+                        {
+                            updateCommand.Parameters.AddWithValue("@RequestId", requestId);
+                            updateCommand.ExecuteNonQuery();
                         }
                     }
                 }
             }
         }
-
         // Reject the request for an account.
         public static void RejectAccount(string requestId)
         {
-            using (var connection = BankingSystem.Database.MySQLDatabase.OpenConnection())
+            using (var connection = MySQLDatabase.OpenConnection())
             {
-                if (connection != null)
+                string query = "UPDATE account_request SET request_status = 'Rejected' WHERE request_id = @RequestId";
+                using (var command = new MySqlCommand(query, connection))
                 {
-                    string query = "UPDATE account_request SET request_status = 'Rejected' WHERE request_id = @RequestId";
-                    using (var command = new MySqlCommand(query, connection))
-                    {
-                        command.Parameters.AddWithValue("@RequestId", requestId);
-                        command.ExecuteNonQuery();
-                    }
-                }
+                    command.Parameters.AddWithValue("@RequestId", requestId);
+                    command.ExecuteNonQuery();
+                }                
             }
         }
-
         // Generate an account id for new customer
         public static string GenerateAccountId(string firstName, string lastName, string phoneNumber)
         {
@@ -207,39 +202,33 @@ namespace BankingSystem.Services.TellerServices
         // Open the account for the customer.
         public static void openAnAccount(string accountId)
         {
-            // Open connection using MySQLDatabase.OpenConnection()
+            // Open MySQL connection
             using (var connection = MySQLDatabase.OpenConnection())
             {
-                if (connection != null)
+                // Update the account_status in the account table
+                string query = "UPDATE account SET account_status = 'Open' WHERE account_id = @AccountId";
+                using (var command = new MySqlCommand(query, connection))
                 {
-                    // Update the account_status in the account table
-                    string query = "UPDATE account SET account_status = 'Open' WHERE account_id = @AccountId";
-                    using (var command = new MySqlCommand(query, connection))
-                    {
-                        command.Parameters.AddWithValue("@AccountId", accountId);
-                        // Execute the query
-                        command.ExecuteNonQuery();
-                    }
-                }
+                    command.Parameters.AddWithValue("@AccountId", accountId);
+                    // Execute the query
+                    command.ExecuteNonQuery();
+                }               
             }
         }
         // Close the account of a customer
         public static void closeAnAccount(string accountId)
         {
-            // Open connection using MySQLDatabase.OpenConnection()
+            // Open MySQL connection
             using (var connection = MySQLDatabase.OpenConnection())
             {
-                if (connection != null)
+                // Update the account_status in the account table
+                string query = "UPDATE account SET account_status = 'Closed' WHERE account_id = @AccountId";
+                using (var command = new MySqlCommand(query, connection))
                 {
-                    // Update the account_status in the account table
-                    string query = "UPDATE account SET account_status = 'Closed' WHERE account_id = @AccountId";
-                    using (var command = new MySqlCommand(query, connection))
-                    {
-                        command.Parameters.AddWithValue("@AccountId", accountId);
-                        // Execute the query
-                        command.ExecuteNonQuery();
-                    }
-                }
+                    command.Parameters.AddWithValue("@AccountId", accountId);
+                    // Execute the query
+                    command.ExecuteNonQuery();
+                }             
             }
         }
     }

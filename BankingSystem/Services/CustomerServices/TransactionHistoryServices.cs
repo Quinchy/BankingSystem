@@ -9,13 +9,16 @@ using System.Threading.Tasks;
 
 namespace BankingSystem.Services.CustomerServices
 {
+    // This class contains all the method used by TransactionHistoryForm
     internal class TransactionHistoryServices
     {
         public static List<Transaction> RetrieveTransactions(string email, int limit = 6, int offset = 0)
         {
             List<Transaction> transactions = new List<Transaction>();
+            // Open MySQL connection
             using (MySqlConnection connection = MySQLDatabase.OpenConnection())
             {
+                // SQL query that selects all transaction of the user including when they are the receiver.
                 string sql = @"
                     (SELECT th.transaction_id, th.amount, th.date, th.transaction_type
                     FROM transaction_history th
@@ -32,11 +35,13 @@ namespace BankingSystem.Services.CustomerServices
                     LIMIT @Limit
                     OFFSET @Offset";
                 MySqlCommand command = new MySqlCommand(sql, connection);
+                // Add parameters to the query
                 command.Parameters.AddWithValue("@Email", email);
                 command.Parameters.AddWithValue("@Limit", limit);
                 command.Parameters.AddWithValue("@Offset", offset);
                 using (MySqlDataReader reader = command.ExecuteReader())
                 {
+                    // Iterate through the results and create a new transaction object for each one
                     while (reader.Read())
                     {
                         Transaction transaction = new Transaction(
@@ -49,12 +54,14 @@ namespace BankingSystem.Services.CustomerServices
                     }
                 }
             }
+            // Returns the list of transaction
             return transactions;
         }
+        // Counts the number of transaction the customer has.
         public static int GetTransactionCount(string email)
         {
             int count = 0;
-            // Open a connection to the MySQL database
+            // Open MySQL connection
             using (MySqlConnection connection = MySQLDatabase.OpenConnection())
             {
                 // SQL query to count transactions
@@ -74,7 +81,7 @@ namespace BankingSystem.Services.CustomerServices
                         WHERE ci.email = @Email
                     ) AS total";
                 MySqlCommand command = new MySqlCommand(sql, connection);
-                // Use the email parameter in the SQL query
+                // Add parameters to the query
                 command.Parameters.AddWithValue("@Email", email);
                 // Execute the command and process the result
                 count = Convert.ToInt32(command.ExecuteScalar());

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace BankingSystem.Services.TellerServices
 {
-    // A service class for managing customer' transaction request. Also performs the withdrawal, deposit and transfer of money.
+    // This class contains all the methods used by TransactionProcessingForm
     internal class TransactionProcessingServices
     {
         public static int RetrieveTotalTransactionRequests()
@@ -28,11 +28,23 @@ namespace BankingSystem.Services.TellerServices
             int totalHistory = 0;
             using (MySqlConnection connection = MySQLDatabase.OpenConnection())
             {
-                string sql = @"SELECT COUNT(*) FROM transaction_processing WHERE process_status IN ('Approved', 'Rejected')";
+                string sql = @"
+                    SELECT COUNT(*) as total_history
+                    FROM transaction_history";
                 MySqlCommand command = new MySqlCommand(sql, connection);
                 totalHistory = Convert.ToInt32(command.ExecuteScalar());
             }
-            return totalHistory;
+            int totalRejected = 0;
+            using (MySqlConnection connection = MySQLDatabase.OpenConnection())
+            {
+                string sql = @"
+                    SELECT COUNT(*) as total_rejected
+                    FROM transaction_processing
+                    WHERE process_status = 'Rejected'";
+                MySqlCommand command = new MySqlCommand(sql, connection);
+                totalRejected = Convert.ToInt32(command.ExecuteScalar());
+            }
+            return totalHistory + totalRejected;
         }
         public static List<TransactionRequest> RetrieveTransactionRequests(int limit = 4, int offset = 0)
         {

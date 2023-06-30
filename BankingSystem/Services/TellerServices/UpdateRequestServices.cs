@@ -10,8 +10,10 @@ using System.Threading.Tasks;
 
 namespace BankingSystem.Services.TellerServices
 {
+    // This class contains all method used by UpdateRequestForms
     internal class UpdateRequestServices
     {
+        // Counts the number of update requests
         public static int RetrieveTotalUpdateRequests()
         {
             using (MySqlConnection connection = MySQLDatabase.OpenConnection())
@@ -22,6 +24,7 @@ namespace BankingSystem.Services.TellerServices
                 return totalRequests;
             }
         }
+        // Retrieves  all the list of pending update request from the database
         public static List<UpdateRequest> RetrieveUpdateRequests(int limit = 4, int offset = 0)
         {
             List<UpdateRequest> updates = new List<UpdateRequest>();
@@ -63,6 +66,7 @@ namespace BankingSystem.Services.TellerServices
             }
             return updates;
         }
+        // Approve then update the email of that user.
         public static void ApproveEmailChange(string updateId)
         {
             using (MySqlConnection connection = MySQLDatabase.OpenConnection())
@@ -103,6 +107,7 @@ namespace BankingSystem.Services.TellerServices
                 }
             }
         }
+        // Approve and update the phone number of that user
         public static void ApprovePhoneNumberChange(string updateId)
         {
             using (MySqlConnection connection = MySQLDatabase.OpenConnection())
@@ -143,7 +148,7 @@ namespace BankingSystem.Services.TellerServices
                 }
             }
         }
-
+        // Approve and update the password of that user
         public static void ApprovePasswordChange(string updateId)
         {
             using (MySqlConnection connection = MySQLDatabase.OpenConnection())
@@ -184,6 +189,7 @@ namespace BankingSystem.Services.TellerServices
                 }
             }
         }
+        // Reject the update request of that user.
         public static void RejectUpdate(string updateId)
         {
             using (MySqlConnection connection = MySQLDatabase.OpenConnection())

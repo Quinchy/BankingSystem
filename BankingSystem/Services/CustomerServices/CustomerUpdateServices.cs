@@ -8,11 +8,13 @@ using System.Threading.Tasks;
 
 namespace BankingSystem.Services.CustomerServices
 {
+    // This class contains all the methods used by CustomerUpdateForm.
     internal class CustomerUpdateServices
     {
-        // Method to request an email update
+        // Sends an email update request.
         public static void requestEmailUpdate(string accountId, string newEmail)
         {
+            // Open MySQL connection
             using (MySqlConnection conn = MySQLDatabase.OpenConnection())
             {
                 // Check if there's a pending request in the database
@@ -31,19 +33,23 @@ namespace BankingSystem.Services.CustomerServices
                 reader = cmd.ExecuteReader();
                 if (reader.HasRows)
                 {
+                    // Alert the user that the email is already linked to an account
                     throw new Exception("The new email is already linked to an account. Please use a different email.");
                 }
                 reader.Close();
                 // Insert the new email update request into the customer_update table
                 cmd = new MySqlCommand("INSERT INTO customer_update (account_id, information_type, changed_information, update_status) VALUES (@accountId, 'Email', @newEmail, 'Pending')", conn);
+                // Add parameters to the query
                 cmd.Parameters.AddWithValue("@accountId", accountId);
                 cmd.Parameters.AddWithValue("@newEmail", newEmail);
+                // Execute the query and insert the update
                 cmd.ExecuteNonQuery();
             }
         }
-        // Method to request a phone number update
+        // Sends a phone number update request.
         public static void requestPhoneNumberUpdate(string accountId, string newPhoneNumber)
         {
+            // Open MySQL connection
             using (MySqlConnection conn = MySQLDatabase.OpenConnection())
             {
                 // Check if there's a pending request in the database
@@ -62,19 +68,23 @@ namespace BankingSystem.Services.CustomerServices
                 reader = cmd.ExecuteReader();
                 if (reader.HasRows)
                 {
+                    // Alert the user that the phone number is already linked to an account
                     throw new Exception("The new phone number is already linked to an account. Please use a different phone number.");
                 }
                 reader.Close();
                 // Insert the new phone number update request into the customer_update table
                 cmd = new MySqlCommand("INSERT INTO customer_update (account_id, information_type, changed_information, update_status) VALUES (@accountId, 'Phone Number', @newPhoneNumber, 'Pending')", conn);
+                // Add parameters to the query
                 cmd.Parameters.AddWithValue("@accountId", accountId);
                 cmd.Parameters.AddWithValue("@newPhoneNumber", newPhoneNumber);
+                // Execute the query and insert the update
                 cmd.ExecuteNonQuery();
             }
         }
-        // Method to request a password update
+        // Sends a password update request.
         public static void requestPasswordUpdate(string accountId, string newPassword)
         {
+            // Open MySQL connection
             using (MySqlConnection conn = MySQLDatabase.OpenConnection())
             {
                 // Check if there's a pending request in the database
@@ -94,13 +104,16 @@ namespace BankingSystem.Services.CustomerServices
                 reader = cmd.ExecuteReader();
                 if (reader.HasRows)
                 {
+                    // Alert the user that the password they put is the same to the current one
                     throw new Exception("The new password is the same as the current one. Please use a different password.");
                 }
                 reader.Close();
                 // Insert the new password update request into the customer_update table
                 cmd = new MySqlCommand("INSERT INTO customer_update (account_id, information_type, changed_information, update_status) VALUES (@accountId, 'Password', @newPassword, 'Pending')", conn);
+                // Add parameters to the query
                 cmd.Parameters.AddWithValue("@accountId", accountId);
                 cmd.Parameters.AddWithValue("@newPassword", newPassword);
+                // Execute the query and insert the update
                 cmd.ExecuteNonQuery();
             }
         }

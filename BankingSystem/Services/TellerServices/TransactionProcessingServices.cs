@@ -12,6 +12,7 @@ namespace BankingSystem.Services.TellerServices
     // This class contains all the methods used by TransactionProcessingForm
     internal class TransactionProcessingServices
     {
+        // Counts the number of transaction requests.
         public static int RetrieveTotalTransactionRequests()
         {
             int totalRequests = 0;
@@ -23,6 +24,7 @@ namespace BankingSystem.Services.TellerServices
             }
             return totalRequests;
         }
+        // Counts the number of history and the rejected transaction.
         public static int RetrieveTotalTransactionHistory()
         {
             int totalHistory = 0;
@@ -46,6 +48,7 @@ namespace BankingSystem.Services.TellerServices
             }
             return totalHistory + totalRejected;
         }
+        // Retrieves all the list of pending transaction requests.
         public static List<TransactionRequest> RetrieveTransactionRequests(int limit = 4, int offset = 0)
         {
             List<TransactionRequest> requests = new List<TransactionRequest>();
@@ -94,6 +97,7 @@ namespace BankingSystem.Services.TellerServices
             }
             return requests;
         }
+        // Retrieves all the list of transaction history and rejected transactions.
         public static List<Transaction> RetrieveTransactionHistory(int limit = 4, int offset = 0)
         {
             List<Transaction> transactions = new List<Transaction>();
@@ -166,6 +170,7 @@ namespace BankingSystem.Services.TellerServices
             }
             return transactions;
         }
+        // Approve the withdraw request then Update the balance, Create a history and receipt, and Send notification  
         public static void ApproveWithdraw(string processId)
         {
             using (MySqlConnection connection = MySQLDatabase.OpenConnection())
@@ -204,6 +209,7 @@ namespace BankingSystem.Services.TellerServices
                 }
             }
         }
+        // Approve the deposit request then Update the balance, Create a history and receipt, and Send notification  
         public static void ApproveDeposit(string processId)
         {
             using (MySqlConnection connection = MySQLDatabase.OpenConnection())
@@ -242,6 +248,7 @@ namespace BankingSystem.Services.TellerServices
                 }
             }
         }
+        // Approve the transfer request then Update the balance of sender and receiver, Create a history and receipt, and Send notification  
         public static void ApproveTransfer(string processId)
         {
             using (MySqlConnection connection = MySQLDatabase.OpenConnection())

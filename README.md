@@ -26,7 +26,7 @@ A Mock-Up Banking System Project made to mimic how a bank transaction system wor
 
 ## Screenshots
 
-![Screenshot](https://i.imgur.com/lyAgpZW.png)
+![Screenshot](https://i.imgur.com/IyAgpZW.png)
 ![Screenshot](https://i.imgur.com/X7VhOYi.png)
 ![Screenshot](https://i.imgur.com/9CFfQeM.png)
 ![Screenshot](https://i.imgur.com/dpkUZcN.png)
